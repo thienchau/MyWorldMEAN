@@ -17,7 +17,7 @@ const db = mongoose.connect(mongoDB, {
 });
 mongoose.Promise = global.Promise;
 var app = express();
-console.log(process.env.MONGODB_URI);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
