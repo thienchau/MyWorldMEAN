@@ -70,4 +70,4 @@ const logger = {
   },
 };
 
-export {errors, jsonSuccess, jsonError, logger};
+module.exports = {errors, jsonSuccess, jsonError, logger};

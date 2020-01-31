@@ -6,4 +6,4 @@ const postSchema = mongoose.Schema({
     imagePath: { type: String, require: true}
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Posts', postSchema);
