@@ -9,7 +9,7 @@ const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg',
-}
+};
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     cb(null, name + '-' + Date.now() + '.' + ext)
       ;
   }
-})
+});
 
 router.post('', multer({ storage: storage }).single("image"), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
@@ -57,7 +57,8 @@ router.put('/:id', multer({ storage: storage }).single("image"), (req, res, next
     title: req.body.title,
     content: req.body.content,
     imagePath: imagePath
-  })
+  });
+
   Post.updateOne({ _id: req.params.id }, post).then(result => {
     res.status(200).json({
       message: "Update successful!"
@@ -69,7 +70,7 @@ router.get('', (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
-  let fetchedPosts
+  let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery
       .skip(pageSize * (currentPage - 1))
