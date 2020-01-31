@@ -26,4 +26,44 @@ const create = async function (req) {
         return jsonError(e);
     }
 };
-module.exports = {create};
+
+const findById = async function (req) {
+    Post.findById(req.params.id).then(post => {
+        return post;
+    });
+};
+
+const likePost = async function (req) {
+    let post = await findById(req);
+    if (post) {
+
+    } else {
+        return jsonError('No post match');
+    }
+};
+
+const getAll = async function (req, res) {
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
+    const postQuery = Post.find();
+    let fetchedPosts;
+    console.log('Get call');
+    if (pageSize && currentPage) {
+        postQuery
+            .skip(pageSize * (currentPage - 1))
+            .limit(pageSize);
+    }
+    let posts = await postQuery.then(documents => {
+        fetchedPosts = documents;
+        return Post.count();
+    }).then(count => {
+        let data = {
+            posts: fetchedPosts,
+            maxPosts: count
+        };
+        console.log(data);
+        return data;
+    });
+    return posts;
+};
+module.exports = {create, findById, likePost, getAll};

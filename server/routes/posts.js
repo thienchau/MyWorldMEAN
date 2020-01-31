@@ -25,15 +25,11 @@ const storage = multer.diskStorage({
         cb(null, name + '-' + Date.now() + '.' + ext);
     }
 });
-
+//Create Post with params
 router.post('', multer({storage: storage}).single("media"), async (req, res, next) => {
     console.log('Create Post');
     const result = await controller.create(req);
-    if (result.success) {
-        res.json(result);
-    } else {
-        next(result)
-    }
+    returnResult(result, res);
 });
 
 router.put('/:id', multer({storage: storage}).single("media"), (req, res, next) => {
@@ -56,39 +52,22 @@ router.put('/:id', multer({storage: storage}).single("media"), (req, res, next) 
     });
 });
 
-router.get('', (req, res, next) => {
-    const pageSize = +req.query.pagesize;
-    const currentPage = +req.query.page;
-    const postQuery = Post.find();
-    let fetchedPosts;
-    console.log('Get call');
-    if (pageSize && currentPage) {
-        postQuery
-            .skip(pageSize * (currentPage - 1))
-            .limit(pageSize);
-    }
-    postQuery.then(documents => {
-        fetchedPosts = documents;
-        return Post.count();
-    }).then(count => {
-        res.status(200).json({
-            message: 'successfully!',
-            posts: fetchedPosts,
-            maxPosts: count
-        });
-    });
+router.get('', async (req, res, next) => {
+    let posts = await controller.getAll(req,res);
+    posts.message = 'successfully!';
+    console.log(posts);
+    res.status(200).json(posts);
 });
 
-router.get('/:id', (req, res, next) => {
-    Post.findById(req.params.id).then(post => {
-        if (post) {
-            res.status(200).json(post);
-        } else {
-            res.status(404).json({
-                message: 'Post not found!'
-            });
-        }
-    });
+router.get('/:id', async (req, res, next) => {
+    let post = await controller.findById(req);
+    if (post) {
+        return res.status(200).json(post);
+    } else {
+        res.status(404).json({
+            message: 'Post not found!'
+        });
+    }
 });
 
 router.delete('/:id', (req, res, next) => {
@@ -100,5 +79,16 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
+router.post('/like/:id', (req, res, next) => {
+    let result = controller.likePost(req);
+    returnResult(result, res);
+});
 
+function returnResult(result, res) {
+    if (result.success) {
+        res.json(result);
+    } else {
+        next(result)
+    }
+}
 module.exports = router;
