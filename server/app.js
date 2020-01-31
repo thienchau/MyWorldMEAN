@@ -8,6 +8,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var advertisementRouter = require('./routes/advertisement')
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1/user', usersRouter);
+app.use('/api/v1/advertisements', advertisementRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -42,7 +44,7 @@ app.use(function (err, req, res, next) {
   console.log(res.locals.error);
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({err: err});
 });
 
 module.exports = app;

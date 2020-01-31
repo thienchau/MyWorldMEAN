@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/register", (req, res, next) => {
   const body = req.body;
   console.log(body);
-  
+
   const result = userController.register(body)
   if (result.success) {
     res.json(result);
@@ -52,19 +52,35 @@ router.post('/login', (req, res, next) => {
     })
 });
 
-router.get('', async function (req, res, next) {
-  res.json({ hello: 'dsadsa' })
-});
-
-router.post('/follow/:id', async function (req, res) {
+router.post('/follow/:id', async function (req, res, next) {
   const { id } = req.params;
   //Hard code
   const userID = 1;
-  const result = await userController.followUser(1, id);
+  const result = await UserController.followUser(1, id);
   if (result.success) {
     res.json(result);
   } else {
-    next(result);
+    next(result)
+  }
+});
+
+router.get('/following', async (req, res, next) => {
+  const fakeUser = '5e3494ad2ff05016cc0a540e';
+  const followings = await UserController.getFollowing(fakeUser);
+  if (followings.success) {
+    res.json(followings);
+  } else {
+    next(followings)
+  }
+});
+
+router.get('/follower', async (req, res, next) => {
+  const fakeUser = '5e3494ad2ff05016cc0a540f';
+  const followers = await UserController.getFollower(fakeUser);
+  if (followers.success) {
+    res.json(followers);
+  } else {
+    next(followers)
   }
 });
 
