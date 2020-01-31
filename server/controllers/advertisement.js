@@ -19,10 +19,7 @@ const getAdvertisement = async (req, res) => {
             {'target.zip_code': '52556'} //user.address.zip_code
         ]}
     ]}).limit(3)
-    res.status(200).json({
-        message: `Get some advertisements`,
-        data: advertisements
-    })
+    res.status(200).json(advertisements)
 }
 
 const advertisementController = {
