@@ -46,7 +46,7 @@ const errors = {
 };
 
 const jsonSuccess = (result) => {
-  return {success: true, result};
+  return {success: true, data: result};
 };
 
 const jsonError = (err) => {
