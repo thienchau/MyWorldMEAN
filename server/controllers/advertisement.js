@@ -11,18 +11,15 @@ const getAdvertisement = async (req, res) => {
             {'target.gender': 'all'}
         ]},
         {$and: [
-            {'target.age_from': {$lte: 20}}, //user.age
-            {'target.age_to': {$gte: 20}} //user.age
+            {'target.ageFrom': {$lte: 20}}, //user.age
+            {'target.ageTo': {$gte: 20}} //user.age
         ]},
         {$or: [
-            {'target.zip_code': 'all'},
-            {'target.zip_code': '52556'} //user.address.zip_code
+            {'target.zipCode': 'all'},
+            {'target.zipCode': '52556'} //user.address.zip_code
         ]}
     ]}).limit(3)
-    res.status(200).json({
-        message: `Get some advertisements`,
-        data: advertisements
-    })
+    res.status(200).json(advertisements)
 }
 
 const advertisementController = {
