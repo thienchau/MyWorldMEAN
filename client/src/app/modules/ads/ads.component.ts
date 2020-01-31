@@ -11,16 +11,17 @@ export class AdsComponent implements OnInit {
 
   advertisements: Array<Advertisement> = [];
 
-  constructor(private advService: AdsService) { }
+  constructor(private adsService: AdsService) { }
 
   ngOnInit() {
     this.loadAds();
   }
 
   loadAds() {
-    this.advService.getAdvertisements().subscribe(
+    this.adsService.getAdvertisements().subscribe(
         data => {
             this.advertisements = data;
+            console.log(this.advertisements);
         }, error => {
             // show error
         });

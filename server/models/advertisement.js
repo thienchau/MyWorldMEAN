@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 const advertisementSchema = mongoose.Schema({
-    additional_content: { type: String },
+    additionalContent: { type: String },
     content: { type: String, require: true },
-    image_url: { type: String, require: true},
+    imageUrl: { type: String, require: true},
     url: { type: String, require: true },
     target: {
-        age_from: {
+        ageFrom: {
             type: Number,
             require: true
         },
-        age_to: {
+        ageTo: {
             type: Number,
             require: true
         },
@@ -18,7 +18,7 @@ const advertisementSchema = mongoose.Schema({
             type: String,
             require: true
         },
-        zip_code: {
+        zipCode: {
             type: String,
             require: true
         }
