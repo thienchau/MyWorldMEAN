@@ -8,7 +8,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var advertisementRouter = require('./routes/advertisement')
+let postRouter = require('./routes/posts');
+var advertisementRouter = require('./routes/advertisement');
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -41,8 +42,9 @@ app.use((req, res, next) => {
 })
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/advertisements', advertisementRouter);
+app.use('/api/v1/post', postRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -53,6 +55,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(res.locals.error);
 
   // render the error page
   res.status(err.status || 500);
