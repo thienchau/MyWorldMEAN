@@ -4,6 +4,7 @@ const multer = require('multer');
 const Post = require('../models/post');
 
 const router = express.Router();
+const mg = require("mongoose");
 
 const MIME_TYPE_MAP = {
   'image/png': 'png',
@@ -23,17 +24,21 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + Date.now() + '.' + ext)
-      ;
+    cb(null, name + '-' + Date.now() + '.' + ext);
   }
 });
 
-router.post('', multer({ storage: storage }).single("image"), (req, res, next) => {
+router.post('', multer({ storage: storage }).single("media"), (req, res, next) => {
+  console.log('Post call' + JSON.stringify(req.body));
   const url = req.protocol + '://' + req.get('host');
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + '/images/' + req.file.filename
+    media: {
+      url: url + '/images/' + req.file.filename,
+      type: 'img'
+    },
+    user: req.body.uid
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -46,7 +51,7 @@ router.post('', multer({ storage: storage }).single("image"), (req, res, next) =
   });
 });
 
-router.put('/:id', multer({ storage: storage }).single("image"), (req, res, next) => {
+router.put('/:id', multer({ storage: storage }).single("media"), (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + '://' + req.get('host');
@@ -71,6 +76,7 @@ router.get('', (req, res, next) => {
   const currentPage = +req.query.page;
   const postQuery = Post.find();
   let fetchedPosts;
+  console.log('Get call');
   if (pageSize && currentPage) {
     postQuery
       .skip(pageSize * (currentPage - 1))

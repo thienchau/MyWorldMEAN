@@ -9,7 +9,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let postRouter = require('./routes/posts');
-var advertisementRouter = require('./routes/advertisement')
+var advertisementRouter = require('./routes/advertisement');
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -42,6 +42,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(res.locals.error);
 
   // render the error page
   res.status(err.status || 500);
