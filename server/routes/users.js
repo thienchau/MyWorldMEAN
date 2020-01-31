@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const UserController = require('../controllers/user_controller');
 
 const User = require('../models/user');
 
@@ -56,6 +57,14 @@ router.post('/login', (req, res, next) => {
         message: 'Auth failed'
       })
     })
+});
+
+router.post('/follow/:id', async function (req, res) {
+  const { id } = req.params;
+  //Hard code
+  const userID = 1;
+  const result = await UserController.followUser(1, id);
+  if (result.success) res.json(result);
 });
 
 module.exports = router;
