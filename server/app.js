@@ -1,3 +1,5 @@
+const preBoot = "./utils/boot";
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,9 +8,16 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+require('dotenv').config();
 
+const mongoose = require('mongoose');
+const mongoDB = process.env.MONGODB_URI;
+const db = mongoose.connect(mongoDB, {
+  useNewUrlParser: true
+});
+mongoose.Promise = global.Promise;
 var app = express();
-
+console.log(process.env.MONGODB_URI);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

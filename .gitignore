@@ -6,3 +6,4 @@ server/node_modules
 .idea/modules.xml
 .idea/vcs.xml
 .idea/inspectionProfiles/Project_Default.xml
+server/.env
