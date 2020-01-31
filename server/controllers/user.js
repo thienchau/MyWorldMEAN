@@ -33,7 +33,7 @@ const login = async (body) => {
         console.log(body);
         const user = await User.findOne({ email: body.username });
         if (!user) {
-            return jsonError(err, 'Auth failed!');
+            return jsonError('', 'Auth failed!');
         }
         console.log(body);
 

@@ -9,12 +9,14 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let postRouter = require('./routes/posts');
+const checkAuth = require('./middlewares/check-auth');
+
 var advertisementRouter = require('./routes/advertisement');
 require('dotenv').config();
 
 const mongoose = require('mongoose');
 const mongoDB = process.env.MONGODB_URI;
-const db = mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.Promise = global.Promise;
 var app = express();
 
@@ -30,8 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1/user', usersRouter);
-app.use('/api/v1/advertisements', advertisementRouter);
-app.use('/api/v1/post', postRouter);
+app.use('/api/v1/advertisements', checkAuth, advertisementRouter);
+app.use('/api/v1/post', checkAuth, postRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

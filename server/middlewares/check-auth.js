@@ -1,14 +1,20 @@
 const jwt = require('jsonwebtoken');
+const { errors, jsonError, jsonSuccess } = require("../utils/system");
+const User = require('../models/user');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, process.env.SECRETE_KEY);
+    var decoded = jwt.decode(token, { complete: true });
+    const user = await User.findById(decoded.payload.userId);
+    user.password = '';
+    req.user = user;
+    console.log(req.user);
+
     next();
   } catch (error) {
-    res.status(401).json({
-      message: "Auth failed!"
-    })
+    next(jsonError('', 'Auth failed!'))
   }
 
 }
