@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Follow = require('../models/follow');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 const register = async (body) => {
     try {
@@ -20,7 +21,34 @@ const register = async (body) => {
             zipCode: body.zipCode,
         })
         const result = await user.save();
+        result.password = '';
         return jsonSuccess(result);
+    } catch (err) {
+        return jsonError(err);
+    };
+}
+
+const login = async (body) => {
+    try {
+        console.log(body);
+        const user = await User.findOne({ email: body.username });
+        if (!user) {
+            return jsonError(err, 'Auth failed!');
+        }
+        console.log(body);
+
+        const compare = await bcrypt.compare(body.password, user.password);
+        if (!compare) {
+            return jsonError(err, 'Auth failed!');
+        }
+        const token = jwt.sign({ email: user.email, userId: user._id },
+            process.env.SECRETE_KEY,
+            { expiresIn: '1h' });
+        user.password = '';
+        return jsonSuccess({
+            user,
+            token
+        });
     } catch (err) {
         return jsonError(err);
     };
@@ -60,7 +88,7 @@ const unfollowUser = async (follower, following) => {
 
 const getFollowing = async (userId) => {
     try {
-        const following = await Follow.find({follower: userId}).select('-follower').lean();
+        const following = await Follow.find({ follower: userId }).select('-follower').lean();
         const totalFollowing = following.length;
         return jsonSuccess({ following, totalFollowing });
     } catch (e) {
@@ -71,7 +99,7 @@ const getFollowing = async (userId) => {
 
 const getFollower = async (userId) => {
     try {
-        const follower = await Follow.find({following: userId}).select('-following').lean();
+        const follower = await Follow.find({ following: userId }).select('-following').lean();
         const totalFollower = follower.length;
         return jsonSuccess({ follower, totalFollower });
     } catch (e) {
@@ -79,4 +107,5 @@ const getFollower = async (userId) => {
         return jsonError();
     }
 };
-module.exports = { register, followUser, getFollowing, getFollower, unfollowUser };
+
+module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser };
