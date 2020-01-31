@@ -67,4 +67,16 @@ router.post('/follow/:id', async function (req, res) {
   if (result.success) res.json(result);
 });
 
+router.get('/following', async (req, res) => {
+  const fakeUser = '5e3494ad2ff05016cc0a540e';
+  const followings = await UserController.getFollowing(fakeUser);
+  res.json(followings);
+});
+
+router.get('/follower', async (req, res) => {
+  const fakeUser = '5e3494ad2ff05016cc0a540f';
+  const followers = await UserController.getFollower(fakeUser);
+  res.json(followers);
+});
+
 module.exports = router;
