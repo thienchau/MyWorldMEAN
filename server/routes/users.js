@@ -1,22 +1,29 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const userController = require('../controllers/user');
+const UserController = require('../controllers/user');
 
 const User = require('../models/user');
 
 const router = express.Router();
 
-router.post("/register", (req, res, next) => {
-  const body = req.body;
-  console.log(body);
-
-  const result = userController.register(body)
-  if (result.success) {
-    res.json(result);
-  } else {
-    next(result);
-  }
+router.post("/signup", (req, res, next) => {
+  bcrypt.hash(req.body.password, 10).then(hash => {
+    const user = new User({
+      email: req.body.email,
+      password: hash
+    })
+    user.save().then(result => {
+      res.status(201).json({
+        message: 'User created!',
+        result: result
+      });
+    }).catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    })
+  });
 });
 
 router.post('/login', (req, res, next) => {
@@ -57,6 +64,18 @@ router.post('/follow/:id', async function (req, res, next) {
   //Hard code
   const userID = 1;
   const result = await UserController.followUser(1, id);
+  if (result.success) {
+    res.json(result);
+  } else {
+    next(result)
+  }
+});
+
+router.post('/unfollow/:id', async function (req, res, next) {
+  const { id } = req.params;
+  //Hard code
+  const userID = 1;
+  const result = await UserController.unfollowUser('5e3494ad2ff05016cc0a540e', id);
   if (result.success) {
     res.json(result);
   } else {

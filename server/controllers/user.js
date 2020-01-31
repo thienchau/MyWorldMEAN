@@ -44,6 +44,20 @@ const followUser = async (follower, following) => {
     }
 };
 
+const unfollowUser = async (follower, following) => {
+    try {
+        const checkExist = await Follow.findOne({ follower, following });
+        console.log(checkExist);
+        if (checkExist) {
+            await checkExist.remove();
+        }
+        return jsonSuccess();
+    } catch (e) {
+        console.log(e);
+        return jsonError();
+    }
+};
+
 const getFollowing = async (userId) => {
     try {
         const following = await Follow.find({follower: userId}).select('-follower').lean();
@@ -65,4 +79,4 @@ const getFollower = async (userId) => {
         return jsonError();
     }
 };
-module.exports = { register, followUser, getFollowing, getFollower };
+module.exports = { register, followUser, getFollowing, getFollower, unfollowUser };
