@@ -45,7 +45,7 @@ router.post('/login', (req, res, next) => {
         })
       }
       const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id },
-        'secret_this_should_be_longer',
+        process.env.SECRETE_KEY,
         { expiresIn: '1h' });
       res.status(200).json({
         token: token
@@ -57,5 +57,10 @@ router.post('/login', (req, res, next) => {
       })
     })
 });
+
+router.get('', async (req, res, next) => {
+  const data = await User.find();
+  res.json(data);
+})
 
 module.exports = router;
