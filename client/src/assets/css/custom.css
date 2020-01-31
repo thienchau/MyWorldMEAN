@@ -1,0 +1,41 @@
+.error-msg {
+    color: #f72626;
+    display: none;
+}
+
+.in-error .error-msg{
+    display: block;
+}
+
+.post-comt-box form input {
+    background: #f3f3f3 none repeat scroll 0 0;
+    border-color: transparent;
+    border-radius: 3px;
+    color: #696969;
+    font-size: 13px;
+    font-weight: 400;
+    height: 40px;
+    line-height: 16px;
+    width: 100%;
+}
+
+.profile_55 {
+    width: 55px;
+    height: 55px;
+}
+
+.profile_42 {
+    width: 42px;
+    height: 42px;
+}
+
+.profile_37 {
+    width: 37px;
+    height: 37px;
+}
+
+.divider_space{
+    width:10px;
+    height:auto;
+    display:inline-block;
+}
