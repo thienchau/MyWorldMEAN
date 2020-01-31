@@ -1,6 +1,30 @@
-const {errors, jsonError, jsonSuccess} = require("../utils/system");
+const { errors, jsonError, jsonSuccess } = require("../utils/system");
 const mongoose = require('mongoose');
 const Follow = require('../models/follow');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+
+const register = async (body) => {
+    try {
+        const hash = await bcrypt.hash(body.password, 10);
+        const user = new User({
+            firstName: body.firstName,
+            lastName: body.lastName,
+            email: body.email,
+            password: hash,
+            dob: body.dob,
+            gender: body.gender,
+            phone: body.phone,
+            city: body.city,
+            street: body.street,
+            zipCode: body.zipCode,
+        })
+        const result = await user.save();
+        return jsonSuccess(result);
+    } catch (err) {
+        return jsonError(err);
+    };
+}
 
 const example = async () => {
     return {};
@@ -26,4 +50,4 @@ const followUser = async (follower, following) => {
         return jsonError();
     }
 };
-module.exports = { example, followUser };
+module.exports = { example, followUser, register };
