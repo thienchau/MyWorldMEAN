@@ -11,8 +11,9 @@ const postSchema = mongoose.Schema({
         ref: 'Users'
     },
     media: {
+        mime: String,
         url: String,
-        type: String,
+        type: Object,
     },
     comment: [{
         content: String,
@@ -29,4 +30,4 @@ const postSchema = mongoose.Schema({
     }]
 });
 
-module.exports = mongoose.model('Posts', postSchema);
+module.exports = mongoose.model('posts', postSchema);
