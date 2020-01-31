@@ -1,0 +1,19 @@
+@baseURL = http://localhost:3000
+@userURL = {{baseURL}}/users
+
+GET {{userURL}}
+###
+
+GET {{userURL}}/2
+###
+
+POST {{userURL}}
+Content-Type: application/json
+
+{
+    "name": "thien",
+}
+
+###
+
+DELETE {{userURL}}/2
