@@ -14,6 +14,8 @@ const userSchema = mongoose.Schema({
     city: { type: String, require: false },
     street: { type: String, require: false },
     zipCode: { type: String, require: true },
+    avatar: { type: String, require: false },
+    cover: { type: String, require: false },
 });
 
 userSchema.plugin(uniqueValidator);
