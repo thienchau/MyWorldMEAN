@@ -37,9 +37,7 @@ router.get('', (req, res) => {
 
 router.post('/follow/:id', async function (req, res, next) {
   const { id } = req.params;
-  //Hard code
-  const userID = 1;
-  const result = await userController.followUser(1, id);
+  const result = await userController.followUser(req.user._id, id);
   if (result.success) {
     res.json(result);
   } else {
@@ -49,9 +47,7 @@ router.post('/follow/:id', async function (req, res, next) {
 
 router.post('/unfollow/:id', async function (req, res, next) {
   const { id } = req.params;
-  //Hard code
-  const userID = 1;
-  const result = await userController.unfollowUser('5e3494ad2ff05016cc0a540e', id);
+  const result = await userController.unfollowUser(req.user._id, id);
   if (result.success) {
     res.json(result);
   } else {
@@ -60,8 +56,7 @@ router.post('/unfollow/:id', async function (req, res, next) {
 });
 
 router.get('/following', async (req, res, next) => {
-  const fakeUser = '5e3494ad2ff05016cc0a540e';
-  const followings = await userController.getFollowing(fakeUser);
+  const followings = await userController.getFollowing(req.user._id);
   if (followings.success) {
     res.json(followings);
   } else {
@@ -70,8 +65,7 @@ router.get('/following', async (req, res, next) => {
 });
 
 router.get('/follower', async (req, res, next) => {
-  const fakeUser = '5e3494ad2ff05016cc0a540f';
-  const followers = await userController.getFollower(fakeUser);
+  const followers = await userController.getFollower(req.user._id);
   if (followers.success) {
     res.json(followers);
   } else {

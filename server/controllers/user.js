@@ -53,13 +53,11 @@ const login = async (body) => {
 
 const followUser = async (follower, following) => {
     try {
-        const fake1 = mongoose.Types.ObjectId();
-        const fake2 = mongoose.Types.ObjectId();
-        const checkExist = await Follow.findOne({ follower: fake1, following: fake2 });
+        const checkExist = await Follow.findOne({ follower, following });
         if (!checkExist) {
             let newFollow = await new Follow({
-                follower: fake1,
-                following: fake2
+                follower,
+                following
             }).save();
         }
         return jsonSuccess();
@@ -72,7 +70,6 @@ const followUser = async (follower, following) => {
 const unfollowUser = async (follower, following) => {
     try {
         const checkExist = await Follow.findOne({ follower, following });
-        console.log(checkExist);
         if (checkExist) {
             await checkExist.remove();
         }
