@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AdsComponent } from '../modules/ads/ads.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {FooterComponent} from './footer/footer.component';
+import {HeaderComponent} from './header/header.component';
+import {LayoutComponent} from './layout/layout.component';
 
 @NgModule({
   imports: [
@@ -16,6 +19,10 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   declarations: [
+    HeaderComponent,
+    FooterComponent,
+    LayoutComponent,
+    AdsComponent,
     AdsComponent,
   ],
   exports: [
@@ -25,7 +32,11 @@ import { TranslateModule } from '@ngx-translate/core';
     HttpClientModule,
     RouterModule,
     AdsComponent,
-    TranslateModule
+    TranslateModule,
+    HeaderComponent,
+    FooterComponent,
+    LayoutComponent,
+    AdsComponent,
   ]
 })
 export class SharedModule {

@@ -26,7 +26,14 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": ["./node_modules"]
+            },
+            "scripts": [
+              "src/assets/js/main.min.js",
+              "src/assets/js/script.js",
+              "src/assets/js/map-init.js"
+            ]
           },
           "configurations": {
             "production": {
