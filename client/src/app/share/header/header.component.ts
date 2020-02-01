@@ -15,7 +15,10 @@ declare var $: any;
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-
+  searchForm: FormGroup;
+  notifications: any[];
+  currentUser: User;
+  currentLang: string;
 
   constructor(
     private userService: UserService,
@@ -24,7 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     public translate: TranslateService,
   ) {
-
+    this.searchForm = this.fb.group({
+      searchKey: ['']
+    });
   }
 
 
@@ -32,11 +37,82 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      this.useLangugage(user.lang != null ? user.lang : 'en');
+    });
+    this.headerAnimation();
   }
 
   logout() {
     this.authService.purgeAuth();
     this.router.navigateByUrl('/login');
+  }
+
+  headerAnimation() {
+    //------- Notifications Dropdowns
+    $('.top-area > .setting-area > li > a').on('click', function () {
+      var $parent = $(this).parent('li');
+      $parent.siblings().children('div').removeClass('active');
+      $(this).siblings('div').addClass('active');
+      return false;
+    });
+
+
+    //------- remove class active on body
+    $('body *').not('.top-area > .setting-area > li > a').on('click', function () {
+      $('.top-area > .setting-area > li > div').not('.searched').removeClass('active');
+
+    });
+    $('.user-img').on('click', function () {
+      $('.user-setting').toggleClass('active');
+    });
+
+    // Sticky Sidebar & header
+    if ($(window).width() < 769) {
+      $('.sidebar').children().removeClass('stick-widget');
+    }
+
+    if ($.isFunction($.fn.stick_in_parent)) {
+      $('.stick-widget').stick_in_parent({
+        parent: '#page-contents',
+        offset_top: 60,
+      });
+
+
+      $('.stick').stick_in_parent({
+        parent: 'body',
+        offset_top: 0,
+      });
+
+    }
+  }
+
+  countTime(date: string): string {
+    const postTime = moment.utc(date, 'YYYY-MM-DD HH:mm:ss');
+    moment.locale(this.currentLang);
+    return postTime.fromNow();
+  }
+
+  search() {
+    const value = this.searchForm.get('searchKey').value;
+    this.router.navigateByUrl('/search/' + value).then(() => {
+      window.location.reload();
+    });
+  }
+
+  gotoTimeline() {
+    this.router.navigateByUrl('/timeline/' + this.currentUser.id);
+  }
+
+  useLangugage(lang: string) {
+    this.translate.use(lang);
+    this.currentLang = lang;
+    this.currentUser.lang = lang;
+    this.userService.updateLang(lang).subscribe(data => {
+      console.log('updated lang');
+    }, error => {
+      console.log('updated lang failed');
+    });
   }
 }
