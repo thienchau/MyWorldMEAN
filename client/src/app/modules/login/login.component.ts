@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UserService } from '../../core/service/user.service';
 import { TranslateService } from '@ngx-translate/core';
 
-declare var $: any;
+ declare var $: any;
 
 @Component({
   templateUrl: './login.component.html',
@@ -55,15 +55,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // login & register form
-    // $('button.signup').on('click', function () {
-    //   $('.login-reg-bg').addClass('show');
-    //   return false;
-    // });
+    $('button.signup').on('click', function () {
+      $('.login-reg-bg').addClass('show');
+      return false;
+    });
 
-    // $('.already-have').on('click', function () {
-    //   $('.login-reg-bg').removeClass('show');
-    //   return false;
-    // });
+    $('.already-have').on('click', function () {
+      $('.login-reg-bg').removeClass('show');
+      return false;
+    });
   }
 
   login() {
