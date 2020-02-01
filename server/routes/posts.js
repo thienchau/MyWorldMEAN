@@ -1,28 +1,24 @@
 const express = require('express');
 const multer = require('multer');
+const mime = require('../utils/Mime');
 
 
 const router = express.Router();
 const controller = require('../controllers/posts');
-const MIME_TYPE_MAP = {
-    'image/png': 'png',
-    'image/jpeg': 'jpg',
-    'image/jpg': 'jpg',
-};
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const isValid = MIME_TYPE_MAP[file.mimetype];
+        console.log(file.mimetype);
+        const isValid = mime.MIME_TYPE_MAP[file.mimetype];
         let error = new Error("Invalid mime type");
         if (isValid) {
             error = null;
         }
-        cb(error, "backend/images");
+        cb(error, "public/media");
     },
     filename: (req, file, cb) => {
-        const name = file.originalname.toLowerCase().split(' ').join('-');
-        const ext = MIME_TYPE_MAP[file.mimetype];
-        cb(null, name + '-' + Date.now() + '.' + ext);
+        // const name = Date.now().join('.');
+        const ext = mime.MIME_TYPE_MAP[file.mimetype];
+        cb(null, Date.now() + '.' + ext);
     }
 });
 //Create Post with params
@@ -79,13 +75,13 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
-router.post('/like/:id', async (req, res, next) => {
-    let result = await controller.likePost(req.params.id, req.body.uid, true);
+router.post('/like', async (req, res, next) => {
+    let result = await controller.likePost(req.body.pid, req.body.uid, true);
     returnResult(result, res, next)
 });
 
-router.post('/unlike/:id', async (req, res, next) => {
-   let result = await controller.likePost(req.params.id, req.body.uid, false);
+router.post('/unlike', async (req, res, next) => {
+   let result = await controller.likePost(req.body.pid, req.body.uid, false);
     returnResult(result, res, next)
 });
 
