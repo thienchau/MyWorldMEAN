@@ -19,8 +19,7 @@ const userSchema = mongoose.Schema({
         isRead: {type: Boolean, default: false},
         type: {type: String, required: true},
         url: {type: String},
-        content: {type: String},
-        default: []
+        content: {type: String}
     }]
 });
 

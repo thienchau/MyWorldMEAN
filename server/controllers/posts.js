@@ -3,16 +3,16 @@ const {errors, jsonError, jsonSuccess} = require("../utils/system");
 const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
+const User = require('../models/user');
 
 const create = async function (req) {
     try {
-        // console.log('Post call' + JSON.stringify(req.body));
         const url = req.protocol + '://' + req.get('host');
         let media = '';
         if (req.hasOwnProperty('file') && req.file.hasOwnProperty('filename')) {
             media = url + '/images/' + req.file.filename;
         }
-        let result = Post({
+        let result = await Post({
             title: req.body.title,
             content: req.body.content,
             media: {
@@ -22,7 +22,6 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         createNotification(req.user._id, result);
-        // console.log(result);
         return jsonSuccess();
     } catch (e) {
         return jsonError(e);
@@ -30,12 +29,14 @@ const create = async function (req) {
 };
 
 const createNotification = async function (uid, post) {
-    const followers = await Follow.find({following: uid})
-    console.log(user);
+    let followers = await Follow.find({following: uid}).select('follower -_id')
+    followers = followers.map(follower => follower.follower)
     const notification = {
         senderId: uid,
         url: post._id,
         content: post.content,
+        isRead: false,
+        type: 'post'
     }
     await User.updateMany(
         {"_id": {"$in": followers}},
