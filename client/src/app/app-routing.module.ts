@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: '',
     component: AppComponent
+  },
+  {
+    path: 'timeline',
+    loadChildren: () => import('./modules/timeline/timeline.module').then(m => m.TimelineModule)
   }
 ];
 

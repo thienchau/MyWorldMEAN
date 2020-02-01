@@ -79,6 +79,17 @@ router.get('/follower', async (req, res, next) => {
   }
 });
 
-// router.get('/:id'())
+router.get('/:id', async (req, res, next) => {
+  if (req.params.id === req.user.id) {
+    res.json(req.user);
+  } else {
+    const user = await userController.getUserById(req.params.id);
+    if (user.success) {
+      res.json(user);
+    } else {
+      next(user);
+    }
+  }
+});
 
 module.exports = router;
