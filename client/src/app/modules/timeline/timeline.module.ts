@@ -6,7 +6,7 @@ import {TimelineLayoutComponent} from './timeline.layout.component';
 // import {FollowComponent} from './follow.component';
 import {TimelineHeaderComponent} from './timeline-header.component';
 import {TimelineResolver} from './timeline-resolver.service';
-// import {ProfileComponent} from './profile.component';
+import {ProfileComponent} from './profile.component';
 
 @NgModule({
   imports: [TimeLineRoutingModule, SharedModule],
@@ -14,7 +14,7 @@ import {TimelineResolver} from './timeline-resolver.service';
     // TimelineComponent,
     // FollowComponent,
     TimelineLayoutComponent,
-    // ProfileComponent
+    ProfileComponent
   ],
   exports: [
     TimelineHeaderComponent
