@@ -14,6 +14,13 @@ const userSchema = mongoose.Schema({
     city: { type: String, require: false },
     street: { type: String, require: false },
     zipCode: { type: String, require: true },
+    notification: [{
+        senderId: {type: mongoose.Schema.ObjectId, required: true},
+        isRead: {type: Boolean, default: false},
+        url: {type: String, required: true},
+        content: {type: String},
+        type: {type: String},
+    }]
 });
 
 userSchema.plugin(uniqueValidator);
