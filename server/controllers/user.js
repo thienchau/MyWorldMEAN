@@ -20,6 +20,8 @@ const register = async (body) => {
             street: body.street,
             zipCode: body.zipCode,
         })
+        console.log(user);
+        
         const result = await user.save();
         result.password = '';
         return jsonSuccess(result);

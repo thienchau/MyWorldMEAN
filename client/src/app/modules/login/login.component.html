@@ -76,7 +76,7 @@
                 <button
                   class="mtr-btn signin"
                   type="submit"
-                  [disabled]="isSubmitting"
+                  [disabled]="authForm.invalid"
                 >
                   <span>{{ "login.login" | translate }}</span>
                 </button>
@@ -92,10 +92,6 @@
           </div>
           <div class="log-reg-area reg">
             <h2 class="log-title">{{ "login.register" | translate }}</h2>
-            <!--                        <p>-->
-            <!--                            Don’t use Myworld Yet? <a href="#" title="">Take the tour</a> or <a href="#" title="">Join-->
-            <!--                            now</a>-->
-            <!--                        </p>-->
             <div *ngIf="errorMessage != ''" class="in-error">
               <p class="error-msg">{{ errorMessage }}</p>
             </div>
@@ -233,7 +229,7 @@
                 "login.have-account" | translate
               }}</a>
               <div class="submit-btns">
-                <button class="mtr-btn" type="submit" [disabled]="isSubmitting">
+                <button class="mtr-btn" type="submit" [disabled]="registerForm.invalid">
                   <span>{{ "login.register" | translate }}</span>
                 </button>
               </div>
