@@ -64,11 +64,11 @@ const likePost = async function (postId, uid, toLike) {
     let likes = post.likes;
     // console.log('ORIGINAL ' + likes + uid);
     if (toLike) {
-         //todo check post like = null or not
+        //todo check post like = null or not
         if (!post.likes) {
             post.likes = [];
         }
-         post.likes.push(mongoose.Types.ObjectId(uid));
+        post.likes.push(mongoose.Types.ObjectId(uid));
     } else {
         post.likes.pull({_id: uid});
     }
@@ -76,4 +76,22 @@ const likePost = async function (postId, uid, toLike) {
     return jsonSuccess()
 };
 
-module.exports = {create, findById, getAll, likePost};
+const comment = async function (postId, comment, uid) {
+    try {
+        let post = await Post.findById(postId).populate('comments');
+        let id = mongoose.Types.ObjectId(uid);
+        let c = {
+            content: comment,
+            user: id
+        };
+        if (!post.comments) {
+            post.comments = [];
+        }
+        post.comments.push(c);
+        let data = await post.save();
+        return jsonSuccess(post);
+    } catch (e) {
+        return jsonError(e);
+    }
+};
+module.exports = {create, findById, getAll, likePost, comment};

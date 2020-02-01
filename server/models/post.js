@@ -13,17 +13,19 @@ const postSchema = mongoose.Schema({
         url: String,
         type: Object,
     },
-    comment: [{
+    comments: [{
         content: String,
         user: {
             type: mongoose.Types.ObjectId,
-            ref: 'Users'
-        }
+            ref: 'Users',
+        },
+        default: []
     }],
     likes: [
         {
             type: mongoose.Types.ObjectId,
-            ref: 'Users'
+            ref: 'Users',
+            default: []
         }
     ]
 });

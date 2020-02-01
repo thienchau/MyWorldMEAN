@@ -89,6 +89,10 @@ router.post('/unlike/:id', async (req, res, next) => {
     returnResult(result, res, next)
 });
 
+router.post('/comment', async (req, res, next) => {
+    let result = await controller.comment(req.body.pid, req.body.content, req.body.uid);
+    returnResult(result, res, next);
+});
 
 function returnResult(result, res, next) {
     if (result.success) {
