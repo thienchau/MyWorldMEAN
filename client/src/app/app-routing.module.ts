@@ -11,8 +11,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LayoutComponent
-  }
+    component: LayoutComponent,
+    children: [
+      {
+        path: 'timeline',
+        loadChildren: './modules/timeline/timeline.module#TimelineModule'
+      },
+    ]
+  },
 ];
 
 @NgModule({
