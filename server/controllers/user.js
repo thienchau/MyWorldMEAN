@@ -55,7 +55,7 @@ const login = async (body) => {
         }
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
-            return jsonError(err, 'Auth failed!', '003');
+            return jsonError('', 'Auth failed!', '003');
         }
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,
