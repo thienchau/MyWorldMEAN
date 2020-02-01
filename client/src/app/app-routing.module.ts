@@ -17,6 +17,10 @@ const routes: Routes = [
         path: 'timeline',
         loadChildren: './modules/timeline/timeline.module#TimelineModule'
       },
+      {
+        path: '',
+        loadChildren: './modules/newfeed/newfeed.module#NewFeedModule'
+      },
     ]
   },
 ];
