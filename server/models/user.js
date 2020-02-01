@@ -20,7 +20,9 @@ const userSchema = mongoose.Schema({
         type: {type: String, required: true},
         url: {type: String},
         content: {type: String}
-    }]
+    }],
+    avatar: { type: String, require: false },
+    cover: { type: String, require: false },
 });
 
 userSchema.plugin(uniqueValidator);
