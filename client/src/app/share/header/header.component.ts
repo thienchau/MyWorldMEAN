@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../core/model/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '../../core/service/user.service';
-
+import { NotificationService } from './../../core/service/notification.service';
+import { PostNotification } from './../../core/model/postNotification.model';
 declare var $: any;
 
 @Component({
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     public translate: TranslateService,
+    private notificationService: NotificationService,
   ) {
     this.searchForm = this.fb.group({
       searchKey: ['']
@@ -107,6 +109,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   gotoTimeline() {
     this.router.navigateByUrl('/timeline/' + this.currentUser.id);
+  }
+
+  loadNotifications() {
+    this.notificationService.getNotifications().subscribe(
+        data => {
+            this.notifications = data;
+        }, error => {
+        });
+  }
+
+  clickNotification(noti: PostNotification) {
+    this.notificationService.mark1Read(noti.id).subscribe(data => {
+        this.loadNotifications();
+        this.router.navigateByUrl('/post/' + noti.url);
+    }, error => {
+
+    });
+  }
+
+  markAllRead() {
+    this.notificationService.markAllRead().subscribe(data => {
+        this.loadNotifications();
+    }, error => {
+    });
   }
 
   useLangugage(lang: string) {
