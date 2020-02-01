@@ -32,7 +32,10 @@ const findById = async function (postId) {
 
 
 const getAll = async function (req) {
-    const pageSize = +req.query.pagesize;
+    let pageSize = +req.query.pagesize;
+    if (pageSize) {
+        pageSize = 100;
+    }
     const currentPage = +req.query.page;
     const postQuery = Post.find();
     let fetchedPosts;
@@ -45,11 +48,10 @@ const getAll = async function (req) {
         fetchedPosts = documents;
         return Post.count();
     }).then(count => {
-        let data = {
+        return {
             posts: fetchedPosts,
             maxPosts: count
         };
-        return data;
     });
 };
 

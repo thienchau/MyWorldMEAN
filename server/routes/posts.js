@@ -90,6 +90,14 @@ router.post('/comment', async (req, res, next) => {
     returnResult(result, res, next);
 });
 
+router.get('/newfeed?', async (req, res, next) => {
+    let page = req.query.page;
+    let posts = await controller.getAll(req,res);
+    posts.message = 'successfully!';
+    console.log(posts);
+    res.status(200).json(posts);
+});
+
 function returnResult(result, res, next) {
     if (result.success) {
         res.json(result);

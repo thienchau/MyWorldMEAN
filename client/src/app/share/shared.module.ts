@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
 import {LayoutComponent} from './layout/layout.component';
+import {PostComponent} from './post/post.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {LayoutComponent} from './layout/layout.component';
     LayoutComponent,
     AdsComponent,
     AdsComponent,
+    PostComponent
   ],
   exports: [
     CommonModule,
@@ -37,6 +39,7 @@ import {LayoutComponent} from './layout/layout.component';
     FooterComponent,
     LayoutComponent,
     AdsComponent,
+    PostComponent
   ]
 })
 export class SharedModule {
