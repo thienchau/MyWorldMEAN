@@ -4,7 +4,9 @@ import {Observable} from 'rxjs';
 import {PostNotification} from '../model/postNotification.model';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NotificationService {
 
     constructor(private apiService: ApiService) {
