@@ -3,11 +3,11 @@ import { AuthService } from '../../core/service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../core/service/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public translate: TranslateService
   ) {
 
     // use FormBuilder to create a form group

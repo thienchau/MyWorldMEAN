@@ -7,7 +7,7 @@ import { Advertisement } from '../model/ads.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AdsService {
+export class AdvertisementService {
 
   constructor(private apiService: ApiService) { }
 
