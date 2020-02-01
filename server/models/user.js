@@ -20,6 +20,7 @@ const userSchema = mongoose.Schema({
         type: {type: String, required: true},
         url: {type: String},
         content: {type: String},
+        default: []
     }]
 });
 
