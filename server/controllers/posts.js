@@ -28,18 +28,10 @@ const create = async function (req) {
 };
 
 const findById = async function (postId) {
-   let post = await Post.findById(postId);
-   return post;
+    let post = await Post.findById(postId);
+    return post;
 };
 
-const likePost = async function (req) {
-    let post = await findById(req);
-    if (post) {
-
-    } else {
-        return jsonError('No post match');
-    }
-};
 
 const getAll = async function (req) {
     const pageSize = +req.query.pagesize;
@@ -66,36 +58,22 @@ const getAll = async function (req) {
 };
 
 
-const unlike = async function (postId, uid) {
+const likePost = async function (postId, uid, toLike) {
     let post = await Post.findById(postId).populate('likes');
-    console.log(' postID: ' + postId + " / " + uid);
-    // mongoose.set('useFindAndModify', false);
-    const result = await Post.findOneAndUpdate(postId,
-        {
-            $pull: {
-                likes: { "_id": uid }
-            }
-        }, {useFindAndModify: false}).populate('likes');
-    if (result)
-        console.log('THE RESULT' + result);
-
-
-    // console.log(post.likes);
-    // if (post.likes) {
-    //     let pull = await post.likes.pull(uid);
-    //     console.log('Pull ' + pull);
-    //   let err = post.save();
-    //     if (err)
-    //     {
-    //         console.log('error : ' + err);
-    //         return jsonError(err);
-    //     }
-    //     console.log('success');
-    //     return jsonSuccess()
-    // } else {
-    //     console.log('failed');
-    //     return jsonSuccess();
-    // }
-
+    // console.log('POST: ' + post);
+    let likes = post.likes;
+    // console.log('ORIGINAL ' + likes + uid);
+    if (toLike) {
+         //todo check post like = null or not
+        if (!post.likes) {
+            post.likes = [];
+        }
+         post.likes.push(mongoose.Types.ObjectId(uid));
+    } else {
+        post.likes.pull({_id: uid});
+    }
+    await post.save();
+    return jsonSuccess()
 };
-module.exports = {create, findById, likePost, getAll, unlike};
+
+module.exports = {create, findById, getAll, likePost};
