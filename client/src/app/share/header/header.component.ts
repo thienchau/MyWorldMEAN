@@ -145,12 +145,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   console.log('updated lang failed');
     // });
   }
-
-  clickNotification(noti) {
-
-  }
-
-  markAllRead() {
-
-  }
 }
