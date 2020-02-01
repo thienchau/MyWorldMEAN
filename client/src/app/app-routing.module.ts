@@ -3,6 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { LoginComponent } from './modules/login/login.component';
 import { AppComponent } from './app.component';
 import {LayoutComponent} from './share/layout/layout.component';
+import {AuthGuard} from './core/service/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'timeline',
