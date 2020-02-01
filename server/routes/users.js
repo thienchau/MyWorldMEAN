@@ -86,4 +86,13 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.post('/update', async (req, res, next) => {
+  Object.keys(req.body).forEach(key => {
+    console.log(key);
+    req.user[key] = req.body[key] ? req.body[key] : req.user[key]
+  });
+  await req.user.save();
+  res.json();
+});
+
 module.exports = router;
