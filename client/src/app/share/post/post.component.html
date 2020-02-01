@@ -2,8 +2,8 @@
     <div class="user-post">
         <div class="friend-info">
             <figure>
-                <img *ngIf="post.user.avatar == null" src="assets/images/resources/no_avatar.png" class="profile_42">
-                <img *ngIf="post.user.avatar" [src]="post.user.avatar" alt="" class="profile_42">
+                <img *ngIf="post.user == null || post.user.avatar == null" src="assets/images/resources/no_avatar.png" class="profile_42">
+                <img *ngIf="post.user != null && post.user.avatar" [src]="post.user.avatar" alt="" class="profile_42">
             </figure>
             <div class="friend-name">
                 <ins><a [routerLink]="['/timeline/' , post.user.id, 'timeline']"

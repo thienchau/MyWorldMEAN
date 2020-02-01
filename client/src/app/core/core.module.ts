@@ -6,6 +6,7 @@ import { AdvertisementService, ApiService, AuthService, JwtService, FollowServic
 import { CommonModule } from '@angular/common';
 import { AuthGuard } from './service/auth-guard.service';
 import { UserService } from './service/user.service';
+import {PostService} from './service/post.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { UserService } from './service/user.service';
     AdvertisementService,
     AuthGuard,
     UserService,
-    FollowService
+    FollowService,
+    PostService
   ],
   exports: [],
   declarations: []

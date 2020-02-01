@@ -27,28 +27,28 @@ router.post('', multer({storage: storage}).single("media"), async (req, res, nex
     const result = await controller.create(req);
     returnResult(result, res);
 });
+//
+// router.put('/:id', multer({storage: storage}).single("media"), (req, res, next) => {
+//     let imagePath = req.body.imagePath;
+//     if (req.file) {
+//         const url = req.protocol + '://' + req.get('host');
+//         imagePath = url + '/images/' + req.file.filename
+//     }
+//     const post = new Post({
+//         _id: req.params.id,
+//         title: req.body.title,
+//         content: req.body.content,
+//         imagePath: imagePath
+//     });
+//
+//     Post.updateOne({_id: req.params.id}, post).then(result => {
+//         res.status(200).json({
+//             message: "Update successful!"
+//         });
+//     });
+// });
 
-router.put('/:id', multer({storage: storage}).single("media"), (req, res, next) => {
-    let imagePath = req.body.imagePath;
-    if (req.file) {
-        const url = req.protocol + '://' + req.get('host');
-        imagePath = url + '/images/' + req.file.filename
-    }
-    const post = new Post({
-        _id: req.params.id,
-        title: req.body.title,
-        content: req.body.content,
-        imagePath: imagePath
-    });
-
-    Post.updateOne({_id: req.params.id}, post).then(result => {
-        res.status(200).json({
-            message: "Update successful!"
-        });
-    });
-});
-
-router.get('', async (req, res, next) => {
+router.get('/newfeed', async (req, res, next) => {
     let posts = await controller.getAll(req,res);
     posts.message = 'successfully!';
     console.log(posts);
@@ -88,14 +88,6 @@ router.post('/unlike', async (req, res, next) => {
 router.post('/comment', async (req, res, next) => {
     let result = await controller.comment(req.body.pid, req.body.content, req.body.uid);
     returnResult(result, res, next);
-});
-
-router.get('/newfeed?', async (req, res, next) => {
-    let page = req.query.page;
-    let posts = await controller.getAll(req,res);
-    posts.message = 'successfully!';
-    console.log(posts);
-    res.status(200).json(posts);
 });
 
 function returnResult(result, res, next) {

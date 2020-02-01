@@ -9,6 +9,7 @@ import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
 import {LayoutComponent} from './layout/layout.component';
 import {PostComponent} from './post/post.component';
+import {ShortcutComponent} from './shortcut/shortcut.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import {PostComponent} from './post/post.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
   ],
   declarations: [
     HeaderComponent,
@@ -25,7 +26,8 @@ import {PostComponent} from './post/post.component';
     LayoutComponent,
     AdsComponent,
     AdsComponent,
-    PostComponent
+    PostComponent,
+    ShortcutComponent
   ],
   exports: [
     CommonModule,
@@ -39,7 +41,8 @@ import {PostComponent} from './post/post.component';
     FooterComponent,
     LayoutComponent,
     AdsComponent,
-    PostComponent
+    PostComponent,
+    ShortcutComponent
   ]
 })
 export class SharedModule {

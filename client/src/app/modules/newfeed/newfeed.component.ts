@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PostService} from '../../core/service/post.service';
 import {Post} from '../../core/model/post.model';
 import {Router} from '@angular/router';
@@ -13,7 +13,7 @@ declare var $: any;
 })
 export class NewFeedComponent implements OnInit {
 
-    posts: Array<Post> = [];
+   @Input() posts: Array<Post> = [];
     newPostText: string;
     notify: boolean;
     newComment: string;
