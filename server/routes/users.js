@@ -3,8 +3,7 @@ const userController = require('../controllers/user');
 const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
-  const body = req.body;
-  const result = await userController.register(body)
+  const result = await userController.register(req)
   if (result.success) {
     res.json(result);
   } else {
@@ -25,9 +24,9 @@ router.post('/login', async (req, res, next) => {
 
 router.get('/info', async (req, res, next) => {
   console.log('info');
-  
+
   console.log(req.user);
-  
+
   res.json(req.user);
 });
 
