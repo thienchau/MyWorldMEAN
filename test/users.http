@@ -2,18 +2,33 @@
 @userURL = {{baseURL}}/user
 
 GET {{userURL}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoaWVuMTJAZ21haWwuY29tIiwidXNlcklkIjoiNWUzNGE0Y2MwZGVkNTY0ZjIxMjQ4OGIxIiwiaWF0IjoxNTgwNTEyNDg2LCJleHAiOjE1ODA1MTYwODZ9.ZeEyHQj_GrNNtEqkfTsORZeAvfXE0EXGsxcKfd40R_Y
 ###
 
-GET {{userURL}}/2
-###
-
-POST {{userURL}}
+POST {{userURL}}/login
 Content-Type: application/json
 
 {
-    "name": "thien",
+    "username": "thien12@gmail.com",
+    "password": "thienchau"
 }
 
 ###
 
-DELETE {{userURL}}/2
+POST {{userURL}}/register
+Content-Type: application/json
+
+{
+	"firstName": "Thien",
+	"lastName": "Chau",
+	"email": "thien21@gmail.com",
+	"password": "thienchau",
+	"dob": "1988-01-01",
+	"gender": "male",
+	"phone": "1234",
+	"city": "Fairfield",
+	"street": "5th",
+	"zipCode": "52556"
+}
+###
+

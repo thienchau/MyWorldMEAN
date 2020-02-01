@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/user');
 const router = express.Router();
+const checkAuth = require('../middlewares/check-auth');
 
 router.post("/register", async (req, res, next) => {
   const body = req.body;
@@ -22,7 +23,11 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.post('/follow/:id', async function (req, res, next) {
+router.get('', checkAuth, (req, res) => {
+  res.json({ hello: 'hihi' });
+})
+
+router.post('/follow/:id', checkAuth, async function (req, res, next) {
   const { id } = req.params;
   //Hard code
   const userID = 1;
@@ -34,7 +39,7 @@ router.post('/follow/:id', async function (req, res, next) {
   }
 });
 
-router.post('/unfollow/:id', async function (req, res, next) {
+router.post('/unfollow/:id', checkAuth, async function (req, res, next) {
   const { id } = req.params;
   //Hard code
   const userID = 1;
@@ -46,7 +51,7 @@ router.post('/unfollow/:id', async function (req, res, next) {
   }
 });
 
-router.get('/following', async (req, res, next) => {
+router.get('/following', checkAuth, async (req, res, next) => {
   const fakeUser = '5e3494ad2ff05016cc0a540e';
   const followings = await userController.getFollowing(fakeUser);
   if (followings.success) {
@@ -56,7 +61,7 @@ router.get('/following', async (req, res, next) => {
   }
 });
 
-router.get('/follower', async (req, res, next) => {
+router.get('/follower', checkAuth, async (req, res, next) => {
   const fakeUser = '5e3494ad2ff05016cc0a540f';
   const followers = await userController.getFollower(fakeUser);
   if (followers.success) {
