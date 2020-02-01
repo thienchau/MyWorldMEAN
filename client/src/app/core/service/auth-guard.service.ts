@@ -19,8 +19,6 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
 
     this.authService.isAuthenticated.subscribe(loggined => {
-      console.log(loggined);
-
       if (!loggined) {
         // not logged in so redirect to login page with the return url and return false
         this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });

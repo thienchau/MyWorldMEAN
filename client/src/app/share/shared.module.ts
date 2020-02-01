@@ -8,6 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
 import {LayoutComponent} from './layout/layout.component';
+import {PostComponent} from './post/post.component';
+import {ShortcutComponent} from './shortcut/shortcut.component';
 
 @NgModule({
   imports: [
@@ -16,7 +18,7 @@ import {LayoutComponent} from './layout/layout.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    TranslateModule
+    TranslateModule,
   ],
   declarations: [
     HeaderComponent,
@@ -24,6 +26,8 @@ import {LayoutComponent} from './layout/layout.component';
     LayoutComponent,
     AdsComponent,
     AdsComponent,
+    PostComponent,
+    ShortcutComponent
   ],
   exports: [
     CommonModule,
@@ -37,6 +41,8 @@ import {LayoutComponent} from './layout/layout.component';
     FooterComponent,
     LayoutComponent,
     AdsComponent,
+    PostComponent,
+    ShortcutComponent
   ]
 })
 export class SharedModule {

@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'eafrontenduser';
+  title = 'myWorld';
 
   constructor(private authService: AuthService, public translate: TranslateService) {
     this.initLang(translate);

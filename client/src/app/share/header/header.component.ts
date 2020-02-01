@@ -17,7 +17,7 @@ declare var $: any;
 export class HeaderComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
-  notifications: any[];
+  notifications: Array<any>;
   currentUser: User;
   currentLang: string;
 
@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.searchForm = this.fb.group({
       searchKey: ['']
     });
+    this.notifications = [];
   }
 
 
@@ -39,11 +40,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.headerAnimation();
     this.authService.currentUser.subscribe(user => {
+      console.log(user);
+
       this.currentUser = user;
       this.useLangugage(user.lang != null ? user.lang : 'en');
     });
-    this.headerAnimation();
+
   }
 
   logout() {
@@ -135,10 +139,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.translate.use(lang);
     this.currentLang = lang;
     this.currentUser.lang = lang;
-    this.userService.updateLang(lang).subscribe(data => {
-      console.log('updated lang');
-    }, error => {
-      console.log('updated lang failed');
-    });
+    // this.userService.updateLang(lang).subscribe(data => {
+    //   console.log('updated lang');
+    // }, error => {
+    //   console.log('updated lang failed');
+    // });
   }
 }
