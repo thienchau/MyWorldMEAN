@@ -24,9 +24,9 @@ POST {{userURL}}/register
 Content-Type: application/json
 
 {
-	"firstName": "Ho",
-	"lastName": "Ha",
-	"email": "hi2@gmail.com",
+	"firstName": "thi",
+	"lastName": "thi",
+	"email": "thi@gmail.com",
 	"password": "123",
 	"dob": "1996-07-08",
 	"gender": "male",
