@@ -131,4 +131,12 @@ const getUserById = async (userId) => {
     }
 };
 
-module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById };
+const getAllNotifications = async (req) => {
+    try {
+        return jsonSuccess(req.user.notification)
+    } catch (e) {
+        return jsonError(e);
+    }
+}
+
+module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById, getAllNotifications };
