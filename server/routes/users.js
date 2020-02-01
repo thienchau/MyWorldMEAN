@@ -1,7 +1,6 @@
 const express = require('express');
 const userController = require('../controllers/user');
 const router = express.Router();
-const checkAuth = require('../middlewares/check-auth');
 
 router.post("/register", async (req, res, next) => {
   const body = req.body;
@@ -24,7 +23,7 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.get('/info', checkAuth, async (req, res, next) => {
+router.get('/info', async (req, res, next) => {
   console.log('info');
   
   console.log(req.user);
@@ -32,15 +31,13 @@ router.get('/info', checkAuth, async (req, res, next) => {
   res.json(req.user);
 });
 
-router.get('', checkAuth, (req, res) => {
+router.get('', (req, res) => {
   res.json({ hello: 'hihi' });
 })
 
-router.post('/follow/:id', checkAuth, async function (req, res, next) {
+router.post('/follow/:id', async function (req, res, next) {
   const { id } = req.params;
-  //Hard code
-  const userID = 1;
-  const result = await userController.followUser(1, id);
+  const result = await userController.followUser(req.user._id, id);
   if (result.success) {
     res.json(result);
   } else {
@@ -48,11 +45,9 @@ router.post('/follow/:id', checkAuth, async function (req, res, next) {
   }
 });
 
-router.post('/unfollow/:id', checkAuth, async function (req, res, next) {
+router.post('/unfollow/:id', async function (req, res, next) {
   const { id } = req.params;
-  //Hard code
-  const userID = 1;
-  const result = await userController.unfollowUser('5e3494ad2ff05016cc0a540e', id);
+  const result = await userController.unfollowUser(req.user._id, id);
   if (result.success) {
     res.json(result);
   } else {
@@ -60,9 +55,8 @@ router.post('/unfollow/:id', checkAuth, async function (req, res, next) {
   }
 });
 
-router.get('/following', checkAuth, async (req, res, next) => {
-  const fakeUser = '5e3494ad2ff05016cc0a540e';
-  const followings = await userController.getFollowing(fakeUser);
+router.get('/following', async (req, res, next) => {
+  const followings = await userController.getFollowing(req.user._id);
   if (followings.success) {
     res.json(followings);
   } else {
@@ -70,13 +64,25 @@ router.get('/following', checkAuth, async (req, res, next) => {
   }
 });
 
-router.get('/follower', checkAuth, async (req, res, next) => {
-  const fakeUser = '5e3494ad2ff05016cc0a540f';
-  const followers = await userController.getFollower(fakeUser);
+router.get('/follower', async (req, res, next) => {
+  const followers = await userController.getFollower(req.user._id);
   if (followers.success) {
     res.json(followers);
   } else {
     next(followers)
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  if (req.params.id === req.user.id) {
+    res.json(req.user);
+  } else {
+    const user = await userController.getUserById(req.params.id);
+    if (user.success) {
+      res.json(user);
+    } else {
+      next(user);
+    }
   }
 });
 

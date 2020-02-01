@@ -9,18 +9,18 @@ export class FollowService {
     }
 
     getFollowers(): Observable<any[]> {
-        return this.apiService.get('/users/follower');
+        return this.apiService.get('/user/follower');
     }
 
     getFollowing(): Observable<any[]> {
-        return this.apiService.get('/users/following');
+        return this.apiService.get('/user/following');
     }
 
     follow(userId): Observable<any> {
-        return this.apiService.post('/users/follow/' + userId);
+        return this.apiService.post('/user/follow/' + userId);
     }
 
     unFollow(userId): Observable<any> {
-        return this.apiService.post('/users/unFollow/' + userId);
+        return this.apiService.post('/user/unFollow/' + userId);
     }
 }

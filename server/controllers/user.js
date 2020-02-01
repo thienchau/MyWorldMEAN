@@ -48,18 +48,16 @@ const login = async (body) => {
         });
     } catch (err) {
         return jsonError(err);
-    };
-}
+    }
+};
 
 const followUser = async (follower, following) => {
     try {
-        const fake1 = mongoose.Types.ObjectId();
-        const fake2 = mongoose.Types.ObjectId();
-        const checkExist = await Follow.findOne({ follower: fake1, following: fake2 });
+        const checkExist = await Follow.findOne({ follower, following });
         if (!checkExist) {
             let newFollow = await new Follow({
-                follower: fake1,
-                following: fake2
+                follower,
+                following
             }).save();
         }
         return jsonSuccess();
@@ -72,7 +70,6 @@ const followUser = async (follower, following) => {
 const unfollowUser = async (follower, following) => {
     try {
         const checkExist = await Follow.findOne({ follower, following });
-        console.log(checkExist);
         if (checkExist) {
             await checkExist.remove();
         }
@@ -105,4 +102,14 @@ const getFollower = async (userId) => {
     }
 };
 
-module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser };
+const getUserById = async (userId) => {
+    try {
+        const user = await User.findById(userId).lean();
+        return jsonSuccess(user);
+    } catch (e) {
+        console.log(e);
+        return jsonError();
+    }
+};
+
+module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById };
