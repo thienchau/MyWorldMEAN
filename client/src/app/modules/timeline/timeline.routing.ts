@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {TimelineLayoutComponent} from './timeline.layout.component';
 // import {FollowComponent} from './follow.component';
 import {TimelineResolver} from './timeline-resolver.service';
-// import {ProfileComponent} from './profile.component';
+import {ProfileComponent} from './profile.component';
 
 const routes: Routes = [
     {
@@ -13,20 +13,20 @@ const routes: Routes = [
         resolve: {
             user: TimelineResolver
         },
-        // children: [
-        //     {
-        //         path: 'timeline',
-        //         component: TimelineComponent
-        //     },
-        //     {
-        //         path: 'follow',
-        //         component: FollowComponent
-        //     },
-        //     {
-        //         path: 'profile',
-        //         component: ProfileComponent
-        //     }
-        // ]
+        children: [
+            // {
+            //     path: 'timeline',
+            //     component: TimelineComponent
+            // },
+            // {
+            //     path: 'follow',
+            //     component: FollowComponent
+            // },
+            {
+                path: 'profile',
+                component: ProfileComponent
+            }
+        ]
     },
 ];
 

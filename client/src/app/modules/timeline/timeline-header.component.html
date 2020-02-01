@@ -35,12 +35,12 @@
                                 <h5>{{user.firstName + ' ' + user.lastName}}</h5>
                             </li>
                             <li>
-                                <a [routerLink]="['/timeline/',user.id, 'timeline']"
+                                <a [routerLink]="['/timeline/',user._id, 'timeline']"
                                    routerLinkActive="active">{{'timeline.header.timeline' | translate}}</a>
                                 <a *ngIf="isMyProfile()" routerLinkActive="active"
-                                   [routerLink]="['/timeline/',user.id,'profile']">{{'timeline.header.profile' | translate}}</a>
+                                   [routerLink]="['/timeline/',user._id,'profile']">{{'timeline.header.profile' | translate}}</a>
                                 <a *ngIf="isMyProfile()" routerLinkActive="active"
-                                   [routerLink]="['/timeline/',user.id, 'follow']">{{'timeline.header.friend' | translate}}</a>
+                                   [routerLink]="['/timeline/',user._id, 'follow']">{{'timeline.header.friend' | translate}}</a>
                             </li>
                         </ul>
                     </div>
