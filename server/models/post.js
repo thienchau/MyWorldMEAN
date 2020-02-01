@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 const Schema = require('mongoose');
 const postSchema = mongoose.Schema({
@@ -22,12 +21,12 @@ const postSchema = mongoose.Schema({
             ref: 'Users'
         }
     }],
-    like: [{
-        user: {
+    likes: [
+        {
             type: Schema.ObjectId,
             ref: 'Users'
         }
-    }]
+    ]
 });
 
 module.exports = mongoose.model('posts', postSchema);

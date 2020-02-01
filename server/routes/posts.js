@@ -60,7 +60,7 @@ router.get('', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    let post = await controller.findById(req);
+    let post = await controller.findById(req.params.id);
     if (post) {
         return res.status(200).json(post);
     } else {
@@ -84,7 +84,14 @@ router.post('/like/:id', (req, res, next) => {
     returnResult(result, res);
 });
 
-function returnResult(result, res) {
+router.post('/unlike/:id', async (req, res, next) => {
+    console.log(req.params.id + '/n' + req.body.uid);
+   let result = await controller.unlike(req.params.id, req.body.uid);
+    returnResult(result, res, next)
+});
+
+
+function returnResult(result, res, next) {
     if (result.success) {
         res.json(result);
     } else {
