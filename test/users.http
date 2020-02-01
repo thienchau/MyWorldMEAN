@@ -14,8 +14,8 @@ POST {{userURL}}/login
 Content-Type: application/json
 
 {
-    "username": "thien12@gmail.com",
-    "password": "thienchau"
+    "username": "dat@gmail.com",
+    "password": "123"
 }
 
 ###
@@ -24,11 +24,11 @@ POST {{userURL}}/register
 Content-Type: application/json
 
 {
-	"firstName": "Thien",
-	"lastName": "Chau",
-	"email": "thien21@gmail.com",
-	"password": "thienchau",
-	"dob": "1988-01-01",
+	"firstName": "Ho",
+	"lastName": "Ha",
+	"email": "hoha@gmail.com",
+	"password": "123",
+	"dob": "1996-07-08",
 	"gender": "male",
 	"phone": "1234",
 	"city": "Fairfield",

@@ -5,3 +5,4 @@ export * from './auth.service';
 export * from './ads.service';
 export * from './auth-guard.service';
 export * from './follow.service';
+export * from './notification.service';
