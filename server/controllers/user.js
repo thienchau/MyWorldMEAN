@@ -5,7 +5,18 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
-const register = async (body) => {
+const covers = [
+    '/covers/cover1.jpg',
+    '/covers/cover2.jpg',
+    '/covers/cover3.jpg',
+    '/covers/cover4.jpg',
+    '/covers/cover5.jpg',
+];
+
+const default_avatar = '/avatars/no_avatar.png';
+
+const register = async (req) => {
+    const body = req.body;
     try {
         const hash = await bcrypt.hash(body.password, 10);
         const user = new User({
@@ -20,6 +31,14 @@ const register = async (body) => {
             street: body.street,
             zipCode: body.zipCode,
         })
+        const url = req.protocol + '://' + req.get('host');
+        const ran = Math.floor(Math.random() * 5);
+        const cover = url + covers[ran];
+        const avatar = url + default_avatar;
+        user.cover = cover;
+        user.avatar = avatar;
+        console.log(cover);
+        
         const result = await user.save();
         result.password = '';
         return jsonSuccess(result);
@@ -36,7 +55,7 @@ const login = async (body) => {
         }
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
-            return jsonError(err, 'Auth failed!', '003');
+            return jsonError('', 'Auth failed!', '003');
         }
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,

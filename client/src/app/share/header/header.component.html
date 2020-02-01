@@ -1,1 +1,131 @@
-header
+<div class="postoverlay"></div>
+<div class="responsive-header">
+  <div class="mh-head first Sticky">
+    <span class="mh-btns-left">
+      <a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
+    </span>
+    <span class="mh-text">
+      <a href="/" title=""><img src="assets/images/logo2.png" alt=""/></a>
+    </span>
+    <span class="mh-btns-right">
+      <a class="fa fa-sliders" href="#shoppingbag"></a>
+    </span>
+  </div>
+  <div class="mh-head second">
+    <form class="mh-form">
+      <input placeholder="search" />
+      <a href="#/" class="fa fa-search"></a>
+    </form>
+  </div>
+  <nav id="menu" class="res-menu"></nav>
+</div>
+<!-- responsive header -->
+<div class="topbar stick">
+  <div class="logo">
+    <a title="" href="/"><img src="assets/images/logo.png" alt=""/></a>
+  </div>
+
+  <div class="top-area">
+    <ul class="setting-area">
+      <li>
+        <a title="Home" data-ripple=""><i class="ti-search"></i></a>
+        <div class="searched">
+          <form
+            method="post"
+            class="form-search"
+            [formGroup]="searchForm"
+            (submit)="search()"
+          >
+            <input
+              type="text"
+              placeholder="{{ 'pheader.search' | translate }}"
+              formControlName="searchKey"
+            />
+            <button data-ripple><i class="ti-search"></i></button>
+          </form>
+        </div>
+      </li>
+      <li>
+        <a href="#" title="Notification" data-ripple="">
+          <i class="ti-bell"></i
+          ><span *ngIf="notifications.length > 0">{{
+            notifications.length
+          }}</span>
+        </a>
+        <div class="dropdowns">
+          <span
+            >{{ notifications.length }}
+            {{ "pheader.new-notify" | translate }}</span
+          ><a
+            *ngIf="notifications.length > 0"
+            (click)="markAllRead()"
+            title=""
+            class="more-mesg"
+            >{{ "pheader.mark-as-read" | translate }}</a
+          >
+          <ul class="drops-menu">
+            <li *ngFor="let noti of notifications">
+              <a (click)="clickNotification(noti)">
+                <img
+                  src="{{ noti.sender.avatar }}"
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+                <div class="mesg-meta">
+                  <h6>
+                    {{ noti.sender.firstName + " " + noti.sender.lastName }}
+                  </h6>
+                  <span>{{ noti.content }}</span>
+                  <i>{{ countTime(noti.createDate) }}</i>
+                </div>
+              </a>
+              <span class="tag green">New</span>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a href="#" title="Languages" data-ripple=""
+          ><i class="fa fa-globe"></i
+        ></a>
+        <div class="dropdowns languages">
+          <div>
+            <a (click)="useLangugage('en')" title=""
+              >English<i *ngIf="currentLang === 'en'" class="ti-check"></i
+            ></a>
+          </div>
+          <div>
+            <a (click)="useLangugage('vi')" title=""
+              >Vietnamese<i *ngIf="currentLang === 'vi'" class="ti-check"></i
+            ></a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="user-img">
+      <img
+        *ngIf="!currentUser.avatar"
+        src="assets/images/resources/no_avatar.png"
+        alt=""
+        class="profile_37"
+      />
+      <a (click)="logout()" title=""
+        ><i class="ti-power-off"></i>{{ "pheader.logout" | translate }}</a
+      >
+      <!-- <img
+        *ngIf="currentUser.avatar"
+        [src]="currentUser.avatar"
+        alt=""
+        class="profile_37"
+      />
+
+      <div class="user-setting">
+        <a (click)="logout()" title=""
+          ><i class="ti-power-off"></i>{{ "pheader.logout" | translate }}</a
+        >
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- topbar -->

@@ -3,6 +3,8 @@ const mime = require('../utils/Mime');
 const {errors, jsonError, jsonSuccess} = require("../utils/system");
 const mongoose = require('mongoose');
 const Post = require('../models/post');
+const Follow = require('../models/follow');
+const User = require('../models/user');
 
 const create = async function (req) {
     try {
@@ -11,20 +13,37 @@ const create = async function (req) {
         if (req.hasOwnProperty('file') && req.file.hasOwnProperty('filename')) {
             media = url + '/images/' + req.file.filename;
         }
-        let result = Post({
+        let result = await Post({
             title: req.body.title,
             content: req.body.content,
             media: {
                 url: media,
                 mime: mime.MIME_TYPE_MAP[req.file.mimetype]
             },
-            user: req.body.uid
+            user: req.user._id
         }).save();
+        createNotification(req.user._id, result);
         return jsonSuccess();
     } catch (e) {
         return jsonError(e);
     }
 };
+
+const createNotification = async function (uid, post) {
+    let followers = await Follow.find({following: uid}).select('follower -_id')
+    followers = followers.map(follower => follower.follower)
+    const notification = {
+        senderId: uid,
+        url: post._id,
+        content: post.content,
+        isRead: false,
+        type: 'post'
+    }
+    await User.updateMany(
+        {"_id": {"$in": followers}},
+        {"$push": {"notification": notification}}
+    )
+}
 
 const findById = async function (postId) {
     return Post.findById(postId);

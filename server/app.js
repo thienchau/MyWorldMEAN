@@ -53,5 +53,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ err: err });
 });
-mongoose.set('debug', true);
+mongoose.set('debug', false);
 module.exports = app;
