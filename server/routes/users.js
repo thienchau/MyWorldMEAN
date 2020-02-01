@@ -17,10 +17,19 @@ router.post('/login', async (req, res, next) => {
   const body = req.body;
   const result = await userController.login(body)
   if (result.success) {
-    res.json(result);
+    console.log(result);
+    return res.json(result);
   } else {
     next(result);
   }
+});
+
+router.get('/info', checkAuth, async (req, res, next) => {
+  console.log('info');
+  
+  console.log(req.user);
+  
+  res.json(req.user);
 });
 
 router.get('', checkAuth, (req, res) => {

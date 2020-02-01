@@ -55,15 +55,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // login & register form
-    $('button.signup').on('click', function () {
-      $('.login-reg-bg').addClass('show');
-      return false;
-    });
+    // $('button.signup').on('click', function () {
+    //   $('.login-reg-bg').addClass('show');
+    //   return false;
+    // });
 
-    $('.already-have').on('click', function () {
-      $('.login-reg-bg').removeClass('show');
-      return false;
-    });
+    // $('.already-have').on('click', function () {
+    //   $('.login-reg-bg').removeClass('show');
+    //   return false;
+    // });
   }
 
   login() {
@@ -74,10 +74,7 @@ export class LoginComponent implements OnInit {
         .login(payload)
         .subscribe(
           data => {
-            this.authService.getUserInfo().subscribe(user => {
-              this.authService.setUserInfo(user);
-              this.router.navigateByUrl('/');
-            });
+            this.router.navigateByUrl('/');
           },
           err => {
             this.loginFail = true;

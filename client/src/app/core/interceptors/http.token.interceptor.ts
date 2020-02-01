@@ -1,23 +1,26 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import {JwtService} from '../service/jwt.service';
-import {AuthService} from "../service/auth.service";
-import {Router} from "@angular/router";
+import { JwtService } from '../service/jwt.service';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
 
   constructor(private jwtService: JwtService,
-              private authService: AuthService,
-              private router: Router) {
+    private authService: AuthService,
+    private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // bypass oauth token api
-    if (req.url.indexOf('/oauth/token') > 0) {
+    if (req.url.indexOf('/user/login') > 0) {
+      return next.handle(req);
+    }
+    if (req.url.indexOf('/user/register') > 0) {
       return next.handle(req);
     }
     const token = this.jwtService.getToken();
@@ -27,21 +30,21 @@ export class HttpTokenInterceptor implements HttpInterceptor {
           headers: req.headers.append('Authorization', 'Bearer ' + token)
         })
       ).pipe(
-          catchError( (error: HttpErrorResponse) => {
-            let errMsg = '';
-            // Client Side Error
-            if (error.error instanceof ErrorEvent) {
-              errMsg = `Error: ${error.error.message}`;
-            } else {  // Server Side Error
-              errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-            }
-            console.log(errMsg);
-            if (error.error.errorType === '003') {
-              this.authService.purgeAuth();
-              this.router.navigateByUrl('login');
-            }
-            return throwError(errMsg);
-          })
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          let errMsg = '';
+          // Client Side Error
+          if (error.error instanceof ErrorEvent) {
+            errMsg = `Error: ${error.error.message}`;
+          } else {  // Server Side Error
+            errMsg = `Error Code: ${error.status},  Message: ${error.message}`;
+          }
+          if (error.error.err.errorType === '003') {
+            this.authService.purgeAuth();
+            this.router.navigateByUrl('login');
+          }
+          return throwError(errMsg);
+        })
       );
     }
     return next.handle(req);

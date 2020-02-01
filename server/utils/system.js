@@ -49,8 +49,8 @@ const jsonSuccess = (result, message) => {
   return { success: true, data: result };
 };
 
-const jsonError = (error, message) => {
-  return { success: false, error, message };
+const jsonError = (error, message, errorType) => {
+  return { success: false, error, message, errorType };
 };
 
 const logger = {

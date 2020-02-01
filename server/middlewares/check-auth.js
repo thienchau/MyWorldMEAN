@@ -10,11 +10,9 @@ module.exports = async (req, res, next) => {
     const user = await User.findById(decoded.payload.userId);
     user.password = '';
     req.user = user;
-    console.log(req.user);
-
     next();
   } catch (error) {
-    next(jsonError('', 'Auth failed!'))
+    next(jsonError('', 'Auth failed!', '003'))
   }
 
 }

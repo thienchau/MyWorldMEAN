@@ -5,6 +5,11 @@ GET {{userURL}}
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoaWVuMTJAZ21haWwuY29tIiwidXNlcklkIjoiNWUzNGE0Y2MwZGVkNTY0ZjIxMjQ4OGIxIiwiaWF0IjoxNTgwNTEyNDg2LCJleHAiOjE1ODA1MTYwODZ9.ZeEyHQj_GrNNtEqkfTsORZeAvfXE0EXGsxcKfd40R_Y
 ###
 
+
+GET {{userURL}}/info
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoaWVuMTJAZ21haWwuY29tIiwidXNlcklkIjoiNWUzNGE0Y2MwZGVkNTY0ZjIxMjQ4OGIxIiwiaWF0IjoxNTgwNTEyNDg2LCJleHAiOjE1ODA1MTYwODZ9.ZeEyHQj_GrNNtEqkfTsORZeAvfXE0EXGsxcKfd40R_Y
+###
+
 POST {{userURL}}/login
 Content-Type: application/json
 
