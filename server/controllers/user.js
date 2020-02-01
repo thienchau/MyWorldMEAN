@@ -48,8 +48,8 @@ const login = async (body) => {
         });
     } catch (err) {
         return jsonError(err);
-    };
-}
+    }
+};
 
 const followUser = async (follower, following) => {
     try {
@@ -105,4 +105,14 @@ const getFollower = async (userId) => {
     }
 };
 
-module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser };
+const getUserById = async (userId) => {
+    try {
+        const user = await User.findById(userId).lean();
+        return jsonSuccess(user);
+    } catch (e) {
+        console.log(e);
+        return jsonError();
+    }
+};
+
+module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById };
