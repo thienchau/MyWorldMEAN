@@ -3,19 +3,20 @@ const User = require('../models/user')
 
 const getAdvertisement = async (req, res) => {
     const user = req.user;
+    const userAge = new Date().getFullYear() - req.user.dob.getFullYear();
     const advertisements = await Advertisement
     .find({$and: [
         {$or: [
-            {'target.gender': user.gender}, //user.gender
+            {'target.gender': user.gender},
             {'target.gender': 'all'}
         ]},
         {$and: [
-            {'target.ageFrom': {$lte: user.age}}, //user.age
-            {'target.ageTo': {$gte: user.age}} //user.age
+            {'target.ageFrom': {$lte: userAge}},
+            {'target.ageTo': {$gte: userAge}}
         ]},
         {$or: [
             {'target.zipCode': 'all'},
-            {'target.zipCode': user.address.zip_code} //user.address.zip_code
+            {'target.zipCode': user.zipCode}
         ]}
     ]}).limit(3)
     res.status(200).json(advertisements)
