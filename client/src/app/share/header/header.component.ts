@@ -17,7 +17,7 @@ declare var $: any;
 export class HeaderComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
-  notifications: Array<any>;
+  notifications: Array<any> = [];
   currentUser: User;
   currentLang: string;
 
@@ -112,26 +112,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   loadNotifications() {
-    this.notificationService.getNotifications().subscribe(
-        data => {
-            this.notifications = data;
-            console.log(this.notifications)
-        }, error => {
-        });
+    // this.notificationService.getNotifications().subscribe(
+    //     data => {
+    //         this.notifications = data;
+    //         console.log(this.notifications)
+    //     }, error => {
+    //     });
   }
 
   clickNotification(noti: PostNotification) {
-    this.notificationService.mark1Read(noti.id).subscribe(data => {
-        this.loadNotifications();
-        this.router.navigateByUrl('/post/' + noti.url);
-    }, error => {
+    // this.notificationService.mark1Read(noti.id).subscribe(data => {
+    //     this.loadNotifications();
+    //     this.router.navigateByUrl('/post/' + noti.url);
+    // }, error => {
 
-    });
+    // });
   }
 
   markAllRead() {
     this.notificationService.markAllRead().subscribe(data => {
-        this.loadNotifications();
+      this.loadNotifications();
     }, error => {
     });
   }
