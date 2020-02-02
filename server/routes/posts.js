@@ -51,7 +51,6 @@ router.post('', multer({storage: storage}).single("media"), async (req, res, nex
 router.get('/newfeed', async (req, res, next) => {
     let posts = await controller.getAll(req,res);
     posts.message = 'successfully!';
-    console.log(posts);
     res.status(200).json(posts);
 });
 
@@ -68,7 +67,6 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
     Post.deleteOne({_id: req.params.id}).then(result => {
-        console.log(result);
         res.status(200).json({
             message: "Post deleted!"
         });
@@ -88,6 +86,12 @@ router.post('/unlike', async (req, res, next) => {
 router.post('/comment', async (req, res, next) => {
     let result = await controller.comment(req.body.pid, req.body.content, req.body.uid);
     returnResult(result, res, next);
+});
+
+router.get('/timeline/:id', async (req, res, next) => {
+   const { page } = req.query.page;
+   let result = await controller.getPostByUserId(req.params.id, page);
+   returnResult(result, res, next);
 });
 
 function returnResult(result, res, next) {

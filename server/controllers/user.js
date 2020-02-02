@@ -53,8 +53,6 @@ const login = async (body) => {
         if (!user) {
             return jsonError('', 'Auth failed! Not found user', '003');
         }
-        console.log(user);
-        console.log(body.password);
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
             return jsonError('', 'Auth failed! Wrong password', '003');

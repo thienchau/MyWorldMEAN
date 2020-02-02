@@ -110,4 +110,15 @@ const comment = async function (postId, comment, uid) {
         return jsonError(e);
     }
 };
-module.exports = {create, findById, getAll, likePost, comment};
+
+const getPostByUserId = async (userId, page) => {
+    try {
+        let pageQuery = +page || 1;
+        let posts = await Post.find({ user: userId }).skip(10*(pageQuery - 1)).populate('user').limit(10).lean();
+        return jsonSuccess(posts);
+    } catch (e) {
+        console.log(e);
+        return jsonError(e);
+    }
+};
+module.exports = {create, findById, getAll, likePost, comment, getPostByUserId};

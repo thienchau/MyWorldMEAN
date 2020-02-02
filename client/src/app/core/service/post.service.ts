@@ -17,7 +17,7 @@ export class PostService {
         return this.apiService.get('/post/newfeed?page=' + page);
     }
 
-    getTimeline(userId: string, page: number): Observable<Post[]> {
+    getTimeline(userId: string, page: number): Observable<any> {
         return this.apiService.get('/post/timeline/' + userId + '?page=' + page);
     }
 

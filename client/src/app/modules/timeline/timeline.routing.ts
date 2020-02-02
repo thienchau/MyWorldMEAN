@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-// import {TimelineComponent} from './timeline.component';
+import {TimelineComponent} from './timeline.component';
 import {TimelineLayoutComponent} from './timeline.layout.component';
 import {FollowComponent} from './follow.component';
 import {TimelineResolver} from './timeline-resolver.service';
@@ -14,10 +14,10 @@ const routes: Routes = [
             user: TimelineResolver
         },
         children: [
-            // {
-            //     path: 'timeline',
-            //     component: TimelineComponent
-            // },
+            {
+                path: 'timeline',
+                component: TimelineComponent
+            },
             {
                 path: 'follow',
                 component: FollowComponent
