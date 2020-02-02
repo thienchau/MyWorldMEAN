@@ -15,7 +15,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.get('/notifications', async (req, res, next) => {
-  const result = await controller.getAllNotifications(req);
+  const result = await controller.getNewNotifications(req);
   returnResult(result, res, next);
 });
 

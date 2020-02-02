@@ -2,21 +2,21 @@ const Advertisement = require('../models/advertisement');
 const User = require('../models/user')
 
 const getAdvertisement = async (req, res) => {
-    // const idUser;
-    // const user = await User.findById(id)
+    const user = req.user;
+    const userAge = new Date().getFullYear() - req.user.dob.getFullYear();
     const advertisements = await Advertisement
     .find({$and: [
         {$or: [
-            {'target.gender': 'male'}, //user.gender
+            {'target.gender': user.gender},
             {'target.gender': 'all'}
         ]},
         {$and: [
-            {'target.ageFrom': {$lte: 20}}, //user.age
-            {'target.ageTo': {$gte: 20}} //user.age
+            {'target.ageFrom': {$lte: userAge}},
+            {'target.ageTo': {$gte: userAge}}
         ]},
         {$or: [
             {'target.zipCode': 'all'},
-            {'target.zipCode': '52556'} //user.address.zip_code
+            {'target.zipCode': user.zipCode}
         ]}
     ]}).limit(3)
     res.status(200).json(advertisements)
