@@ -64,12 +64,8 @@ const getAll = async function (req) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
-    const postQuery = Post.find().populate('user').lean();
-    let list = await postQuery.map((posts) => {
-        console.log(posts);
-        // post.liked = post.likes.includes(req.user._id)
-    });
-    console.log(list);
+    const postQuery = Post.find().populate('user');
+
     let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
@@ -80,6 +76,11 @@ const getAll = async function (req) {
         fetchedPosts = documents;
         return Post.count();
     }).then(count => {
+        fetchedPosts.map((post) => {
+            post.likes.findIndex((f) => {
+                post.liked = f.equals(req.user._id)
+            });
+        });
         return fetchedPosts;
         // return {
         //     posts: fetchedPosts,
