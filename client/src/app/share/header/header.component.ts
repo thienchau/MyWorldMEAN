@@ -115,14 +115,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.notificationService.getNotifications().subscribe(
         data => {
             this.notifications = data.data.notification;
+            console.log(this.notifications)
         }, error => {
         });
   }
 
-  clickNotification(noti: PostNotification) {
-    this.notificationService.mark1Read(noti.id).subscribe(data => {
+  clickNotification(notification: PostNotification) {
+    this.notificationService.mark1Read(notification._id).subscribe(data => {
         this.loadNotifications();
-        this.router.navigateByUrl('/post/' + noti.url);
+        this.router.navigateByUrl('/post/' + notification.url);
     }, error => {
 
     });
