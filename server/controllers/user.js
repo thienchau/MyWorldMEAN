@@ -124,6 +124,7 @@ const getFollower = async (userId) => {
 const getUserById = async (userId) => {
     try {
         const user = await User.findById(userId).lean();
+        user.follower = await Follow.find( { following: user._id} ).lean();
         return jsonSuccess(user);
     } catch (e) {
         console.log(e);

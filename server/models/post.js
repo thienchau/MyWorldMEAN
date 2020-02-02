@@ -35,5 +35,8 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    liked: Boolean,
+    likeNum: Number,
 });
+
 module.exports = mongoose.model('posts', postSchema);
