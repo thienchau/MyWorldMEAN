@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
 const User = require('../models/user');
-const Notification = require('../models/notification')
+const Notification = require('../models/notification');
 
 const create = async function (req) {
     try {
@@ -49,7 +49,7 @@ const createNotification = async function (post) {
         isRead: false,
         type: post.media.mediaType || 'post',
         additionalContent: 'additional content',
-    }).save()
+    }).save();
     await User.updateMany(
         {"_id": {"$in": followers}},
         {"$push": {"notification": notification._id}}
@@ -69,7 +69,7 @@ const getAll = async function (req) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
-    const postQuery = Post.find().populate('user');
+    const postQuery = Post.find().sort({createDate: -1}).populate('user');
 
     let fetchedPosts;
     if (pageSize && currentPage) {
