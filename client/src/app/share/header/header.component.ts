@@ -17,7 +17,7 @@ declare var $: any;
 export class HeaderComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
-  notifications: Array<any>;
+  notifications: Array<any> = [];
   currentUser: User;
   currentLang: string;
 
@@ -114,8 +114,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loadNotifications() {
     this.notificationService.getNotifications().subscribe(
         data => {
-            this.notifications = data;
-            console.log(this.notifications)
+            this.notifications = data.data.notification;
         }, error => {
         });
   }
@@ -131,7 +130,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   markAllRead() {
     this.notificationService.markAllRead().subscribe(data => {
-        this.loadNotifications();
+      this.loadNotifications();
     }, error => {
     });
   }

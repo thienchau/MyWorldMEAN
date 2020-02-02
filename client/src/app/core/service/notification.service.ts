@@ -12,15 +12,15 @@ export class NotificationService {
     constructor(private apiService: ApiService) {
     }
 
-    getNotifications(): Observable<PostNotification[]> {
-        return this.apiService.get('/user/notifications');
+    getNotifications(): Observable<any> {
+        return this.apiService.get('/notifications');
     }
 
     markAllRead(): Observable<any> {
-        return this.apiService.post('/user/markAllAsRead');
+        return this.apiService.post('/notifications/markAllAsRead');
     }
 
     mark1Read(id): Observable<any> {
-        return this.apiService.post('/user/markAsRead/' + id);
+        return this.apiService.post('/notifications/markAsRead/' + id);
     }
 }

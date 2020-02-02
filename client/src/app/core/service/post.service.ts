@@ -9,11 +9,11 @@ export class PostService {
     constructor(private apiService: ApiService) {
     }
 
-    newPost(payload): Observable<Post> {
+    newPost(payload): Observable<any> {
         return this.apiService.uploadFile('/post', payload);
     }
 
-    getNewFeed(page: number): Observable<Post[]> {
+    getNewFeed(page: number): Observable<any> {
         return this.apiService.get('/post/newfeed?page=' + page);
     }
 

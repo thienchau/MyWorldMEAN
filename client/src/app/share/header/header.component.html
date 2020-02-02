@@ -64,20 +64,20 @@
             >{{ "pheader.mark-as-read" | translate }}</a
           >
           <ul class="drops-menu">
-            <li *ngFor="let noti of notifications">
-              <a (click)="clickNotification(noti)">
+            <li *ngFor="let notification of notifications">
+              <a (click)="clickNotification(notification)">
                 <img
-                  src="{{ noti.sender.avatar }}"
+                  src="{{ notification.senderId.avatar }}"
                   alt=""
                   width="40px"
                   height="40px"
                 />
                 <div class="mesg-meta">
                   <h6>
-                    {{ noti.sender.firstName + " " + noti.sender.lastName }}
+                    {{ notification.senderId.firstName + " " + notification.senderId.lastName }}
                   </h6>
-                  <span>{{ noti.content }}</span>
-                  <i>{{ countTime(noti.createDate) }}</i>
+                  <span>{{ notification.content }}</span>
+                  <i>{{ countTime(notification.createDate) }}</i>
                 </div>
               </a>
               <span class="tag green">New</span>

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
 const User = require('../models/user');
-const Notification = require('../models/notification')
+const Notification = require('../models/notification');
 
 const create = async function (req) {
     try {
@@ -31,7 +31,7 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
-        await createNotification(req.user._id, result);
+        await createNotification(result);
         return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
@@ -41,7 +41,6 @@ const create = async function (req) {
 const createNotification = async function (post) {
     let followers = await Follow.find({following: post.user._id}).select('follower -_id')
     followers = followers.map(follower => follower.follower)
-    console.log(post);
     const notification = await Notification({
         senderId: post.user._id,
         url: post._id,
@@ -49,7 +48,8 @@ const createNotification = async function (post) {
         isRead: false,
         type: post.media.mediaType || 'post',
         additionalContent: 'additional content',
-    }).save()
+        createDate: post.createDate
+    }).save();
     await User.updateMany(
         {"_id": {"$in": followers}},
         {"$push": {"notification": notification._id}}
@@ -69,7 +69,7 @@ const getAll = async function (req) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
-    const postQuery = Post.find().populate('user');
+    const postQuery = Post.find().sort({createDate: -1}).populate('user');
 
     let fetchedPosts;
     if (pageSize && currentPage) {
