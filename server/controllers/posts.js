@@ -71,7 +71,7 @@ const getNewFeed = async function (req) {
     const currentPage = +req.query.page;
     let followings = await FollowController.getFollowingId(req.user._id);
     const postQuery = Post
-        .find ({$or: [{user:req.user._id}, {user: {$in:followings}}] })
+        .find({$or: [{user: req.user._id}, {user: {$in: followings}}]})
         .sort({createDate: -1}).populate('user');
     let fetchedPosts;
     if (pageSize && currentPage) {
@@ -106,7 +106,7 @@ const likePost = async function (req, toLike) {
             post.likes.push(mongoose.Types.ObjectId(req.user._id));
         }
     } else {
-        post.likes.pull({_id: uid});
+        post.likes.pull({_id: req.user._id});
     }
     await post.save();
     return jsonSuccess()
@@ -137,6 +137,7 @@ const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
         let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate('user').sort({createdDate: -1}).limit(10).lean();
+        setupLikePosts(posts, userId);
         return jsonSuccess(posts);
     } catch (e) {
         console.log(e);
@@ -144,15 +145,20 @@ const getPostByUserId = async (userId, page) => {
     }
 };
 
-const search = async function (key) {
+const search = async function (req) {
     try {
-        let posts = await Post.find({"content": {"$regex": key, "$options": "i"}}).populate('user').limit(10);
+        let posts = await Post.find({"content": {"$regex": req.params.key, "$options": "i"}}).populate('user').limit(10);
+        setupLikePosts(posts, req.user._id);
         return jsonSuccess(posts);
     } catch (e) {
         return jsonError(e);
     }
 };
-
+const setupLikePosts = function (posts, userId) {
+    posts.map((p) => {
+        setupLikePost(p, userId);
+    });
+};
 const setupLikePost = function (post, userId) {
     if (post) {
         post.liked = false;
