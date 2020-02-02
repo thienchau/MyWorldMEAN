@@ -22,6 +22,24 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
+router.get('/notifications', async (req, res, next) => {
+  const result = await userController.getAllNotifications(req);
+  if(result.success) {
+    res.json(result);
+  } else {
+    next(result);
+  }
+});
+
+router.get('/marlAsRead/:notificationId', async (req, res, next) => {
+  const result = await userController.markAsRead(req.params.notificationId, req.user._id);
+  if(result.success) {
+    res.json(result);
+  } else {
+    next(result);
+  }
+});
+
 router.get('/info', async (req, res, next) => {
   res.json(req.user);
 });

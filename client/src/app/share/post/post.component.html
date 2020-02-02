@@ -1,0 +1,92 @@
+<div class="central-meta item">
+    <div class="user-post">
+        <div class="friend-info">
+            <figure>
+                <img *ngIf="post.user == null || post.user.avatar == null" src="assets/images/resources/no_avatar.png" class="profile_42">
+                <img *ngIf="post.user != null && post.user.avatar" [src]="post.user.avatar" alt="" class="profile_42">
+            </figure>
+            <div class="friend-name">
+                <ins><a [routerLink]="['/timeline/' , post.user.id, 'timeline']"
+                        title="">{{post.user.firstName}} {{post.user.lastName}}</a></ins>
+                <span>{{'post.published' | translate}}: {{countTime(post.createDate)}}</span>
+            </div>
+            <div class="post-meta">
+                <div class="photos">
+                    <div *ngFor="let media of post.medias">
+                        <a class="strip" *ngIf="media.mediaType === 'IMAGE'"
+                           [href]="media.url"
+                           data-strip-group-options="side: 'top'">
+                            <img [src]="media.url"/>
+                        </a>
+                        <video *ngIf="media.mediaType === 'VIDEO'" width="100%" height controls>
+                            <source [src]="media.url"
+                                    type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="we-video-info">
+                    <ul>
+                        <li>
+
+                            <span *ngIf="post.liked" [ngClass]="{'dislike': post.liked}" data-toggle="tooltip"
+                                  (click)="post.liked = false ; post.likeNum = post.likeNum - 1 ; unlike(post.id)">
+                                <i class="ti-heart"></i>
+                                <ins>{{post.likeNum}}</ins>
+                            </span>
+                            <span *ngIf="!post.liked" [ngClass]="{'like': !post.liked}" data-toggle="tooltip"
+                                  (click)="post.liked = true ;post.likeNum = post.likeNum + 1 ; like(post.id)">
+                                <i class="ti-heart"></i>
+                                <ins>{{post.likeNum}}</ins>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="comment" data-toggle="tooltip"
+                                  title="Comments">
+                                <i class="fa fa-comments-o"></i>
+                                <ins>{{post.commentNum}}</ins>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="description">
+                    <p>
+                        {{post.content}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="coment-area">
+            <ul class="we-comet">
+                <li *ngFor="let comment of post.comments">
+                    <div class="comet-avatar">
+                        <img *ngIf="comment.commentUserAvatar== null" src="assets/images/resources/comet-1.jpg"
+                             class="profile_37">
+                        <img *ngIf="comment.commentUserAvatar" [src]="comment.commentUserAvatar" class="profile_37">
+                    </div>
+                    <div class="we-comment">
+                        <div class="coment-head">
+                            <h5><a href="time-line.html" title="">{{comment.commentUser}}</a></h5>
+                            <span>{{countTime(comment.createDate)}}</span>
+                        </div>
+                        <p>{{comment.contain}}</p>
+                    </div>
+                </li>
+                <li class="post-comment">
+                    <div class="comet-avatar">
+                        <img *ngIf="currentUser.avatar == null" src="assets/images/resources/no_avatar.png"
+                             class="profile_37">
+                        <img *ngIf="currentUser.avatar" [src]="currentUser.avatar" alt="" class="profile_37">
+                    </div>
+                    <div class="post-comt-box">
+                        <form method="post" (ngSubmit)="comment(post.id); post.commentNum = post.commentNum + 1;">
+                            <input placeholder="{{'post.post-comment' | translate}}" [(ngModel)]="newComment"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

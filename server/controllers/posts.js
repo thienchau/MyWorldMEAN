@@ -51,9 +51,12 @@ const findById = async function (postId) {
 
 
 const getAll = async function (req) {
-    const pageSize = +req.query.pagesize;
+    let pageSize = +req.query.pagesize;
+    if (pageSize) {
+        pageSize = 100;
+    }
     const currentPage = +req.query.page;
-    const postQuery = Post.find();
+    const postQuery = Post.find().populate('user');
     let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
@@ -64,11 +67,11 @@ const getAll = async function (req) {
         fetchedPosts = documents;
         return Post.count();
     }).then(count => {
-        let data = {
-            posts: fetchedPosts,
-            maxPosts: count
-        };
-        return data;
+        return fetchedPosts;
+        // return {
+        //     posts: fetchedPosts,
+        //     maxPosts: count
+        // };
     });
 };
 

@@ -133,4 +133,33 @@ const getUserById = async (userId) => {
     }
 };
 
-module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById };
+const getAllNotifications = async (req) => {
+    try {
+        return jsonSuccess(req.user.notification)
+    } catch (e) {
+        return jsonError(e);
+    }
+}
+
+const markAsRead = async (notificationId, userId) => {
+    try {
+        // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
+        await User.updateOne(
+            {'notification._id': notificationId, '_id': userId},
+            {$set: {'notification.$.isRead': true}})
+        return jsonSuccess('', 'Marked as read')
+    } catch (e) {
+        return jsonError(e)
+    }
+}
+module.exports = {
+    register,
+    login,
+    followUser,
+    getFollowing,
+    getFollower,
+    unfollowUser,
+    getUserById,
+    getAllNotifications,
+    markAsRead
+};
