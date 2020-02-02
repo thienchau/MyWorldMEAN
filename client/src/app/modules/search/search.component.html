@@ -48,7 +48,7 @@
                                 >
                               </h4>
                               <span>{{ user.email }}</span>
-                              <p *ngIf="!user.followed">
+                              <p *ngIf="currentUser._id !== user._id && !user.followed">
                                 <a
                                   style="color: white"
                                   (click)="
@@ -60,7 +60,7 @@
                                   >{{ "search.follow" | translate }}</a
                                 >
                               </p>
-                              <p *ngIf="user.followed">
+                              <p *ngIf="currentUser._id !== user._id && user.followed">
                                 <a
                                   style="color: white; cursor: pointer; background-color: orangered"
                                   (click)="
