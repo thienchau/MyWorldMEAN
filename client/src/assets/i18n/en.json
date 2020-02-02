@@ -18,7 +18,7 @@
       "password-required" : "Password is requried",
       "male": "Male",
       "female": "Female",
-	  "dob" : "Date of birth",
+	    "dob" : "Date of birth",
       "dob-required" : "Date of birth is requried",
       "zip" : "ZipCode",
       "zip-required" : "Zip code is required",

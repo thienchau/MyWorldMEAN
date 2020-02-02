@@ -31,7 +31,7 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
-        await createNotification(req.user._id, result);
+        await createNotification(result);
         return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
@@ -39,9 +39,8 @@ const create = async function (req) {
 };
 
 const createNotification = async function (post) {
-    let followers = await Follow.find({following: post.user._id}).select('follower -_id');
-    followers = followers.map(follower => follower.follower);
-    console.log(post);
+    let followers = await Follow.find({following: post.user._id}).select('follower -_id')
+    followers = followers.map(follower => follower.follower)
     const notification = await Notification({
         senderId: post.user._id,
         url: post._id,
@@ -49,6 +48,7 @@ const createNotification = async function (post) {
         isRead: false,
         type: post.media.mediaType || 'post',
         additionalContent: 'additional content',
+        createDate: post.createDate
     }).save();
     await User.updateMany(
         {"_id": {"$in": followers}},
