@@ -12,5 +12,5 @@ export interface Post {
     liked: boolean;
     commentNum: number;
     comments: Comment[];
-    medias: Media[];
+    media: Media;
 }

@@ -9,8 +9,8 @@ export class PostService {
     constructor(private apiService: ApiService) {
     }
 
-    newPost(text: string, notify: boolean): Observable<Post> {
-        return this.apiService.post('/post', {content: text, notify});
+    newPost(payload): Observable<Post> {
+        return this.apiService.uploadFile('/post', payload);
     }
 
     getNewFeed(page: number): Observable<Post[]> {
