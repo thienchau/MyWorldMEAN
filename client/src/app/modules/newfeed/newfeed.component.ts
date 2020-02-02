@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {PostService} from '../../core/service/post.service';
-import {Post} from '../../core/model/post.model';
-import {Router} from '@angular/router';
-import {User} from '../../core/model/user.model';
-import {AuthService} from '../../core/service/auth.service';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { PostService } from '../../core/service/post.service';
+import { Post } from '../../core/model/post.model';
+import { Router } from '@angular/router';
+import { User } from '../../core/model/user.model';
+import { AuthService } from '../../core/service/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var $: any;
 
@@ -52,7 +52,7 @@ export class NewFeedComponent implements OnInit {
     this.postService.newPost(formData).subscribe(data => {
       this.newPostText = '';
       $('.postoverlay').fadeOut(500);
-      this.posts.unshift(data);
+      this.posts.unshift(data.data);
       console.log(JSON.stringify(this.posts, null, 4));
     });
   }

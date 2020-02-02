@@ -25,6 +25,8 @@ const storage = multer.diskStorage({
 router.post('', multer({ storage: storage }).single("media"), async (req, res, next) => {
     console.log('Create Post');
     const result = await controller.create(req);
+    console.log(result);
+    
     returnResult(result, res, next);
 });
 //

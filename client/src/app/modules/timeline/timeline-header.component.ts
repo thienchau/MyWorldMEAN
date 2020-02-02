@@ -31,7 +31,7 @@ export class TimelineHeaderComponent implements OnInit {
     }
 
     isMyProfile() {
-        return this.currentUser.id === this.user.id;
+        return this.currentUser._id === this.user._id;
     }
 
     onFileChange(event) {
