@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/user');
 const router = express.Router();
+const User = require('../models/user');
 
 router.post("/register", async (req, res, next) => {
   const result = await userController.register(req)
@@ -15,7 +16,6 @@ router.post('/login', async (req, res, next) => {
   const body = req.body;
   const result = await userController.login(body)
   if (result.success) {
-    console.log(result);
     return res.json(result);
   } else {
     next(result);
@@ -95,11 +95,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.post('/update', async (req, res, next) => {
+  req.user.password = undefined;
+  let updateData = {};
   Object.keys(req.body).forEach(key => {
-    console.log(key);
-    req.user[key] = req.body[key] ? req.body[key] : req.user[key]
+    updateData[key] = req.body[key] ? req.body[key] : req.user[key]
   });
-  await req.user.save();
+  await User.findByIdAndUpdate(req.user._id, updateData);
   res.json();
 });
 

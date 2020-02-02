@@ -7,13 +7,15 @@
             <div class="form-group">
                 <div>{{user.email}} </div>
             </div>
-            <div class="form-group half">
-                <input type="text" id="input"  formControlName="firstName" >
+            <div class="form-group half" [ngClass]="{ 'in-error': isFieldInValidRegister('firstName') }">
+                <input type="text" id="input" formControlName="firstName" required="required">
                 <label class="control-label" >{{'timeline.profile.fname' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.fname-required" | translate }}</p>
             </div>
-            <div class="form-group half">
-                <input type="text"  name="lastName" formControlName="lastName" >
+            <div class="form-group half" [ngClass]="{ 'in-error': isFieldInValidRegister('lastName') }">
+                <input type="text"  name="lastName" formControlName="lastName" required="required">
                 <label class="control-label" >{{'timeline.profile.lname' | translate}}</label><i class="mtrl-select"></i>
+              <p class="error-msg">{{ "login.lname-required" | translate }}</p>
             </div>
             <div class="form-group">
                 <input type="text"  formControlName="phone">
@@ -32,9 +34,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="date" formControlName="dob">
+                <input type="date" formControlName="dob" [ngClass]="{ 'in-error': isFieldInValidRegister('dob') }" required="required">
 
                 <label class="control-label">{{'timeline.profile.dob' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.dob-required" | translate }}</p>
             </div>
             <div class="form-group">
                 <input type="text" formControlName="street">
@@ -42,8 +45,9 @@
                 <label class="control-label">{{'timeline.profile.street' | translate}}</label><i class="mtrl-select"></i>
             </div>
             <div class="form-group">
-                <input type="number" formControlName="zipCode">
+                <input type="number" formControlName="zipCode" [ngClass]="{ 'in-error': isFieldInValidRegister('zipCode') }" min="0" max="99999">
                 <label class="control-label" >{{'timeline.profile.zip' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.zip-required" | translate }}</p>
             </div>
             <div class="form-group">
                 <input type="text" formControlName="city">
