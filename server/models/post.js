@@ -15,7 +15,11 @@ const postSchema = mongoose.Schema({
         mediaType: String,
     },
     comments: [{
-        content: String,
+        contain: String,
+        createDate: {
+            type: Date,
+            default: Date.now
+        },
         user: {
             type: mongoose.Types.ObjectId,
             ref: 'Users',

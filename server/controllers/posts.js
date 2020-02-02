@@ -18,7 +18,7 @@ const create = async function (req) {
             m = mime.MIME_TYPE_MAP[req.file.mimetype];
             type = mime.TYPE[req.file.mimetype];
         }
-        if (!req.body.content || !media) {
+        if (!req.body.content && !media) {
             return jsonError('Null body');
         }
         let result = await Post({
@@ -30,9 +30,9 @@ const create = async function (req) {
             },
             user: req.user._id
         }).save();
-        let data = await Post.findById(result._id).populate('user');
-        await createNotification(req.user._id, data);
-        return jsonSuccess(data);
+        result.user = req.user;
+        await createNotification(req.user._id, result);
+        return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
     }
@@ -87,15 +87,15 @@ const getAll = async function (req) {
 };
 
 
-const likePost = async function (postId, uid, toLike) {
-    let post = await Post.findById(postId).populate('likes');
+const likePost = async function (req, toLike) {
+    let post = await Post.findById(req.body.postId).populate('likes');
     let likes = post.likes;
     if (toLike) {
         //todo check post like = null or not
         if (!post.likes) {
             post.likes = [];
         }
-        post.likes.push(mongoose.Types.ObjectId(uid));
+        post.likes.push(mongoose.Types.ObjectId(req.user._id));
     } else {
         post.likes.pull({ _id: uid });
     }
@@ -103,13 +103,15 @@ const likePost = async function (postId, uid, toLike) {
     return jsonSuccess()
 };
 
-const comment = async function (postId, comment, uid) {
+const comment = async function (req) {
     try {
-        let post = await Post.findById(postId).populate('comments');
-        let id = mongoose.Types.ObjectId(uid);
+        let post = await Post.findById(req.body.postId).populate('comments');
+        let id = mongoose.Types.ObjectId(req.user._id);
+        let date = Date.now();
         let c = {
-            content: comment,
-            user: id
+            contain: req.body.comment,
+            user: id,
+            createDate: date
         };
         if (!post.comments) {
             post.comments = [];
@@ -125,7 +127,7 @@ const comment = async function (postId, comment, uid) {
 const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
-        let posts = await Post.find({ user: userId }).skip(10*(pageQuery - 1)).populate('user').limit(10).lean();
+        let posts = await Post.find({ user: userId }).skip(10 * (pageQuery - 1)).populate('user').limit(10).lean();
         return jsonSuccess(posts);
     } catch (e) {
         console.log(e);

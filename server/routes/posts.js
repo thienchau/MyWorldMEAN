@@ -74,17 +74,17 @@ router.delete('/:id', (req, res, next) => {
 });
 
 router.post('/like', async (req, res, next) => {
-    let result = await controller.likePost(req.body.pid, req.body.uid, true);
+    let result = await controller.likePost(req, true);
     returnResult(result, res, next)
 });
 
 router.post('/unlike', async (req, res, next) => {
-    let result = await controller.likePost(req.body.pid, req.body.uid, false);
+    let result = await controller.likePost(req, false);
     returnResult(result, res, next)
 });
 
 router.post('/comment', async (req, res, next) => {
-    let result = await controller.comment(req.body.pid, req.body.content, req.body.uid);
+    let result = await controller.comment(req);
     returnResult(result, res, next);
 });
 

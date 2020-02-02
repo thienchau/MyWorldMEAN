@@ -40,7 +40,7 @@ export class PostComponent implements OnInit, OnChanges {
 
     comment(postId: string) {
         const payload = {
-            postId,
+            postId: this.post._id,
             comment: this.newComment
         };
         this.postService.comment(payload).subscribe(data => {
