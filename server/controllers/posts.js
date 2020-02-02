@@ -41,7 +41,7 @@ const create = async function (req) {
 const createNotification = async function (post) {
     let followers = await Follow.find({ following: post.user._id }).select('follower -_id')
     followers = followers.map(follower => follower.follower)
-    console.log(post)
+    console.log(post);
     const notification = await Notification({
         senderId: post.user._id,
         url: post._id,
@@ -54,7 +54,7 @@ const createNotification = async function (post) {
         { "_id": { "$in": followers } },
         { "$push": { "notification": notification._id } }
     )
-}
+};
 
 const findById = async function (postId) {
     return Post.findById(postId);
@@ -80,28 +80,30 @@ const getAll = async function (req) {
         return Post.count();
     }).then(count => {
         fetchedPosts.map((post) => {
+            post.likeNum = post.likes.length;
             post.likes.findIndex((f) => {
                 post.liked = f.equals(req.user._id)
             });
         });
         return fetchedPosts;
-        // return {
-        //     posts: fetchedPosts,
-        //     maxPosts: count
-        // };
     });
 };
 
 
 const likePost = async function (req, toLike) {
     let post = await Post.findById(req.params.postId).populate('likes');
-    let likes = post.likes;
     if (toLike) {
         //todo check post like = null or not
         if (!post.likes) {
             post.likes = [];
         }
-        post.likes.push(mongoose.Types.ObjectId(req.user._id));
+        let has = false;
+        post.likes.findIndex((f) => {
+            has = f.equals(req.user._id)
+        });
+        if (!has) {
+            post.likes.push(mongoose.Types.ObjectId(req.user._id));
+        }
     } else {
         post.likes.pull({_id: uid});
     }
@@ -123,7 +125,7 @@ const comment = async function (req) {
             post.comments = [];
         }
         post.comments.push(c);
-        let data = await post.save();
+        await post.save();
         return jsonSuccess(post);
     } catch (e) {
         return jsonError(e);
