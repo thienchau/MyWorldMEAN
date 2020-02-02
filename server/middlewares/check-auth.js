@@ -15,6 +15,6 @@ module.exports = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    next(jsonError('', 'Auth failed! Wrong token', '003'))
+    next(jsonError('', 'Auth failed! Invalid token', '003'))
   }
 };

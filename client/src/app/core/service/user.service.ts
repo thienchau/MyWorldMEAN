@@ -17,7 +17,7 @@ export class UserService {
   }
 
   search(key): Observable<any> {
-    return this.apiService.get('/user/searchUsers?key=' + key);
+    return this.apiService.get('/user/search/' + key);
   }
 
   uploadAvatar(image: FormData): Observable<any> {

@@ -23,6 +23,14 @@ const routes: Routes = [
         path: '',
         loadChildren: './modules/newfeed/newfeed.module#NewFeedModule'
       },
+      {
+        path: 'post',
+        loadChildren: './modules/postdetail/postDetail.module#PostDetailModule'
+      },
+      {
+        path: 'search/:key',
+        loadChildren: './modules/search/search.module#SearchModule'
+      },
     ]
   },
 ];

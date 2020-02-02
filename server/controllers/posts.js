@@ -1,6 +1,6 @@
 const post = require('../models/post');
 const mime = require('../utils/Mime');
-const {errors, jsonError, jsonSuccess} = require("../utils/system");
+const { errors, jsonError, jsonSuccess } = require("../utils/system");
 const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
@@ -30,7 +30,7 @@ const create = async function (req) {
 };
 
 const createNotification = async function (uid, post) {
-    let followers = await Follow.find({following: uid}).select('follower -_id')
+    let followers = await Follow.find({ following: uid }).select('follower -_id')
     followers = followers.map(follower => follower.follower)
     const notification = {
         senderId: uid,
@@ -40,8 +40,8 @@ const createNotification = async function (uid, post) {
         type: 'post'
     }
     await User.updateMany(
-        {"_id": {"$in": followers}},
-        {"$push": {"notification": notification}}
+        { "_id": { "$in": followers } },
+        { "$push": { "notification": notification } }
     )
 }
 
@@ -86,7 +86,7 @@ const likePost = async function (postId, uid, toLike) {
         }
         post.likes.push(mongoose.Types.ObjectId(uid));
     } else {
-        post.likes.pull({_id: uid});
+        post.likes.pull({ _id: uid });
     }
     await post.save();
     return jsonSuccess()
@@ -121,4 +121,14 @@ const getPostByUserId = async (userId, page) => {
         return jsonError(e);
     }
 };
-module.exports = {create, findById, getAll, likePost, comment, getPostByUserId};
+
+const search = async function (key) {
+    try {
+        let posts = await Post.find({ "content": { "$regex": key, "$options": "i" } }).populate('user').limit(10);
+        return jsonSuccess(posts);
+    } catch (e) {
+        return jsonError(e);
+    }
+};
+
+module.exports = { create, findById, getAll, likePost, comment, search, getPostByUserId };
