@@ -38,7 +38,7 @@ const register = async (req) => {
         user.cover = cover;
         user.avatar = avatar;
         console.log(cover);
-        
+
         const result = await user.save();
         result.password = '';
         return jsonSuccess(result);
@@ -145,8 +145,8 @@ const markAsRead = async (notificationId, userId) => {
     try {
         // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
         await User.updateOne(
-            {'notification._id': notificationId, '_id': userId},
-            {$set: {'notification.$.isRead': true}})
+            { 'notification._id': notificationId, '_id': userId },
+            { $set: { 'notification.$.isRead': true } })
         return jsonSuccess('', 'Marked as read')
     } catch (e) {
         return jsonError(e)
@@ -157,13 +157,28 @@ const markAllAsRead = async (userId) => {
     try {
         // console.log(await User.find({'_id': userId, 'notification._id': ''}))
         await User.updateMany(
-            {'_id': userId, 'notification.isRead': false},
-            {$set: {'notification.$[].isRead': true}})
+            { '_id': userId, 'notification.isRead': false },
+            { $set: { 'notification.$[].isRead': true } })
         return jsonSuccess('', 'Marked as read')
     } catch (e) {
         return jsonError(e)
     }
 }
+
+const search = async function (key) {
+    try {
+        let users = await User.find({
+            $or: [
+                { "firstName": { "$regex": key, "$options": "i" } },
+                { "lastName": { "$regex": key, "$options": "i" } }
+            ]
+        }).populate('user').limit(10);
+        return jsonSuccess(users);
+    } catch (e) {
+        return jsonError(e);
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -174,5 +189,6 @@ module.exports = {
     getUserById,
     getAllNotifications,
     markAsRead,
-    markAllAsRead
+    markAllAsRead,
+    search
 };
