@@ -31,7 +31,9 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
-        await createNotification(result);
+        if(req.body.notify){
+            await createNotification(result);
+        }
         return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
