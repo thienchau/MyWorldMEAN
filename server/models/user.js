@@ -12,13 +12,9 @@ const userSchema = mongoose.Schema({
     city: { type: String, require: false, default: '' },
     street: { type: String, require: false, default: '' },
     zipCode: { type: String, require: true },
-    notification: [{
-        senderId: {type: mongoose.Schema.ObjectId, ref:'Users', required: true},
-        isRead: {type: Boolean, default: false},
-        type: {type: String, required: true},
-        url: {type: String},
-        content: {type: String}
-    }],
+    notification: [
+        { type : mongoose.Schema.ObjectId, ref: 'Notifications' }
+    ],
     avatar: { type: String, require: false },
     cover: { type: String, require: false },
     lang: { type: String, require: false, default: 'en' }

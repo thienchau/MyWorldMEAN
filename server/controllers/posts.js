@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
 const User = require('../models/user');
+const Notification = require('../models/notification')
 
 const create = async function (req) {
     try {
@@ -37,19 +38,21 @@ const create = async function (req) {
     }
 };
 
-const createNotification = async function (uid, post) {
-    let followers = await Follow.find({ following: uid }).select('follower -_id')
+const createNotification = async function (post) {
+    let followers = await Follow.find({ following: post.user._id }).select('follower -_id')
     followers = followers.map(follower => follower.follower)
-    const notification = {
-        senderId: uid,
+    console.log(post)
+    const notification = await Notification({
+        senderId: post.user._id,
         url: post._id,
         content: post.content,
         isRead: false,
-        type: 'post'
-    }
+        type: post.media.mediaType || 'post',
+        additionalContent: 'additional content',
+    }).save()
     await User.updateMany(
         { "_id": { "$in": followers } },
-        { "$push": { "notification": notification } }
+        { "$push": { "notification": notification._id } }
     )
 }
 

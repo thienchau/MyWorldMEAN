@@ -14,7 +14,7 @@ POST {{userURL}}/login
 Content-Type: application/json
 
 {
-    "username": "user1@gmail.com",
+    "username": "user4@gmail.com",
     "password": "123"
 }
 
