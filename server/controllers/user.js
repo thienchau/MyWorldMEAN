@@ -60,7 +60,7 @@ const login = async (body) => {
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,
             { expiresIn: '1h' });
-        //user.password = '';
+        user.password = '';
         return jsonSuccess({
             user,
             access_token: token

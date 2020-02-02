@@ -14,7 +14,7 @@ POST {{userURL}}/login
 Content-Type: application/json
 
 {
-    "username": "dat@gmail.com",
+    "username": "user1@gmail.com",
     "password": "123"
 }
 
@@ -24,16 +24,17 @@ POST {{userURL}}/register
 Content-Type: application/json
 
 {
-	"firstName": "thi",
-	"lastName": "thi",
-	"email": "thie@gmail.com",
-	"password": "123",
 	"dob": "1996-07-08",
-	"gender": "male",
-	"phone": "1234",
-	"city": "Fairfield",
-	"street": "5th",
-	"zipCode": "52556"
+	"gender": "female",
+    "phone": "123456789",
+    "city": "Fairfield",
+    "street": "Burlington",
+    "lang": "en",
+    "firstName": "Rochelle",
+    "lastName": "Maxwell",
+    "email": "user11@gmail.com",
+    "password": "123",
+    "zipCode": "52556"
 }
 ###
 
