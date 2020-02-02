@@ -13,14 +13,14 @@ export class NotificationService {
     }
 
     getNotifications(): Observable<PostNotification[]> {
-        return this.apiService.get('/notification/getNotifications');
+        return this.apiService.get('/user/notifications');
     }
 
     markAllRead(): Observable<any> {
-        return this.apiService.post('/notification/markAllRead');
+        return this.apiService.post('/user/markAllAsRead');
     }
 
     mark1Read(id): Observable<any> {
-        return this.apiService.post('/notification/markRead/' + id);
+        return this.apiService.post('/user/markAsRead/' + id);
     }
 }

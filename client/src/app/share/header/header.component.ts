@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.currentUser = user;
       this.useLangugage(user.lang != null ? user.lang : 'en');
     });
-
+    this.loadNotifications();
   }
 
   logout() {
@@ -115,6 +115,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.notificationService.getNotifications().subscribe(
         data => {
             this.notifications = data;
+            console.log(this.notifications)
         }, error => {
         });
   }
