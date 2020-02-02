@@ -1,6 +1,6 @@
 const post = require('../models/post');
 const mime = require('../utils/Mime');
-const { errors, jsonError, jsonSuccess } = require("../utils/system");
+const {errors, jsonError, jsonSuccess} = require("../utils/system");
 const mongoose = require('mongoose');
 const Post = require('../models/post');
 const Follow = require('../models/follow');
@@ -17,7 +17,7 @@ const create = async function (req) {
             m = mime.MIME_TYPE_MAP[req.file.mimetype];
             type = mime.TYPE[req.file.mimetype];
         }
-        if (!req.body.content || !media) {
+        if (!req.body.content && !media) {
             return jsonError('Null body');
         }
         let result = await Post({
@@ -38,7 +38,7 @@ const create = async function (req) {
 };
 
 const createNotification = async function (uid, post) {
-    let followers = await Follow.find({ following: uid }).select('follower -_id')
+    let followers = await Follow.find({following: uid}).select('follower -_id')
     followers = followers.map(follower => follower.follower)
     const notification = {
         senderId: uid,
@@ -48,8 +48,8 @@ const createNotification = async function (uid, post) {
         type: 'post'
     }
     await User.updateMany(
-        { "_id": { "$in": followers } },
-        { "$push": { "notification": notification } }
+        {"_id": {"$in": followers}},
+        {"$push": {"notification": notification}}
     )
 }
 
@@ -64,7 +64,12 @@ const getAll = async function (req) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
-    const postQuery = Post.find().populate('user');
+    const postQuery = Post.find().populate('user').lean();
+    let list = await postQuery.map((posts) => {
+        console.log(posts);
+        // post.liked = post.likes.includes(req.user._id)
+    });
+    console.log(list);
     let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
@@ -84,8 +89,8 @@ const getAll = async function (req) {
 };
 
 
-const likePost = async function (req,toLike) {
-    let post = await Post.findById(req.body.postId).populate('likes');
+const likePost = async function (req, toLike) {
+    let post = await Post.findById(req.params.postId).populate('likes');
     let likes = post.likes;
     if (toLike) {
         //todo check post like = null or not
@@ -94,7 +99,7 @@ const likePost = async function (req,toLike) {
         }
         post.likes.push(mongoose.Types.ObjectId(req.user._id));
     } else {
-        post.likes.pull({ _id: uid });
+        post.likes.pull({_id: uid});
     }
     await post.save();
     return jsonSuccess()
@@ -124,7 +129,7 @@ const comment = async function (req) {
 const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
-        let posts = await Post.find({ user: userId }).skip(10*(pageQuery - 1)).populate('user').limit(10).lean();
+        let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate('user').limit(10).lean();
         return jsonSuccess(posts);
     } catch (e) {
         console.log(e);
@@ -134,11 +139,11 @@ const getPostByUserId = async (userId, page) => {
 
 const search = async function (key) {
     try {
-        let posts = await Post.find({ "content": { "$regex": key, "$options": "i" } }).populate('user').limit(10);
+        let posts = await Post.find({"content": {"$regex": key, "$options": "i"}}).populate('user').limit(10);
         return jsonSuccess(posts);
     } catch (e) {
         return jsonError(e);
     }
 };
 
-module.exports = { create, findById, getAll, likePost, comment, search, getPostByUserId };
+module.exports = {create, findById, getAll, likePost, comment, search, getPostByUserId};
