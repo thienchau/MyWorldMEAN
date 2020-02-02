@@ -51,16 +51,18 @@ const login = async (body) => {
     try {
         const user = await User.findOne({ email: body.username });
         if (!user) {
-            return jsonError('', 'Auth failed!', '003');
+            return jsonError('', 'Auth failed! Not found user', '003');
         }
+        console.log(user);
+        console.log(body.password);
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
-            return jsonError('', 'Auth failed!', '003');
+            return jsonError('', 'Auth failed! Wrong password', '003');
         }
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,
             { expiresIn: '1h' });
-        user.password = '';
+        //user.password = '';
         return jsonSuccess({
             user,
             access_token: token

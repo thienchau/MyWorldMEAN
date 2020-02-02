@@ -33,6 +33,6 @@ export class UserService {
   }
 
   updateLang(lang: string): Observable<any> {
-    return this.apiService.post('/user/saveLang?lang=' + lang);
+    return this.apiService.post('/user/lang/' + lang);
   }
 }

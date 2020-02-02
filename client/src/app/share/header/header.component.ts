@@ -139,10 +139,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.translate.use(lang);
     this.currentLang = lang;
     this.currentUser.lang = lang;
-    // this.userService.updateLang(lang).subscribe(data => {
-    //   console.log('updated lang');
-    // }, error => {
-    //   console.log('updated lang failed');
-    // });
+    this.userService.updateLang(lang).subscribe(data => {
+      console.log('updated lang');
+    }, error => {
+      console.log('updated lang failed');
+    });
   }
 }

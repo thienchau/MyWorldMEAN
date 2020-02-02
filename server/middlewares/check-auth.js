@@ -11,11 +11,10 @@ module.exports = async (req, res, next) => {
       jwt.verify(token, process.env.SECRETE_KEY);
       var decoded = jwt.decode(token, { complete: true });
       const user = await User.findById(decoded.payload.userId);
-      user.password = '';
       req.user = user;
       next();
     }
   } catch (error) {
-    next(jsonError('', 'Auth failed!', '003'))
+    next(jsonError('', 'Auth failed! Wrong token', '003'))
   }
 };
