@@ -152,6 +152,18 @@ const markAsRead = async (notificationId, userId) => {
         return jsonError(e)
     }
 }
+
+const markAllAsRead = async (userId) => {
+    try {
+        // console.log(await User.find({'_id': userId, 'notification._id': ''}))
+        await User.updateMany(
+            {'_id': userId, 'notification.isRead': false},
+            {$set: {'notification.$[].isRead': true}})
+        return jsonSuccess('', 'Marked as read')
+    } catch (e) {
+        return jsonError(e)
+    }
+}
 module.exports = {
     register,
     login,
@@ -161,5 +173,6 @@ module.exports = {
     unfollowUser,
     getUserById,
     getAllNotifications,
-    markAsRead
+    markAsRead,
+    markAllAsRead
 };

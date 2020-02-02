@@ -31,8 +31,17 @@ router.get('/notifications', async (req, res, next) => {
   }
 });
 
-router.get('/marlAsRead/:notificationId', async (req, res, next) => {
+router.get('/markAsRead/:notificationId', async (req, res, next) => {
   const result = await userController.markAsRead(req.params.notificationId, req.user._id);
+  if(result.success) {
+    res.json(result);
+  } else {
+    next(result);
+  }
+});
+
+router.get('/markAllAsRead', async (req, res, next) => {
+  const result = await userController.markAllAsRead(req.user._id);
   if(result.success) {
     res.json(result);
   } else {
