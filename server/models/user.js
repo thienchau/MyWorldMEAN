@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
     }],
     avatar: { type: String, require: false },
     cover: { type: String, require: false },
+    lang: { type: String, require: false, default: 'en' }
 });
 
 userSchema.plugin(uniqueValidator);

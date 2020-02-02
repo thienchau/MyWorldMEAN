@@ -31,11 +31,16 @@ router.get('/notifications', async (req, res, next) => {
   }
 });
 
+router.get('/marlAsRead/:notificationId', async (req, res, next) => {
+  const result = await userController.markAsRead(req.params.notificationId, req.user._id);
+  if(result.success) {
+    res.json(result);
+  } else {
+    next(result);
+  }
+});
+
 router.get('/info', async (req, res, next) => {
-  console.log('info');
-
-  console.log(req.user);
-
   res.json(req.user);
 });
 
@@ -102,6 +107,12 @@ router.post('/update', async (req, res, next) => {
   });
   await User.findByIdAndUpdate(req.user._id, updateData);
   res.json();
+});
+
+router.post('/lang/:lang', async (req, res, next) => {
+  req.user.lang = req.params.lang;
+  await req.user.save();
+  res.json(req.user);
 });
 
 module.exports = router;

@@ -51,16 +51,18 @@ const login = async (body) => {
     try {
         const user = await User.findOne({ email: body.username });
         if (!user) {
-            return jsonError('', 'Auth failed!', '003');
+            return jsonError('', 'Auth failed! Not found user', '003');
         }
+        console.log(user);
+        console.log(body.password);
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
-            return jsonError('', 'Auth failed!', '003');
+            return jsonError('', 'Auth failed! Wrong password', '003');
         }
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,
             { expiresIn: '1h' });
-        user.password = '';
+        //user.password = '';
         return jsonSuccess({
             user,
             access_token: token
@@ -139,4 +141,25 @@ const getAllNotifications = async (req) => {
     }
 }
 
-module.exports = { register, login, followUser, getFollowing, getFollower, unfollowUser, getUserById, getAllNotifications };
+const markAsRead = async (notificationId, userId) => {
+    try {
+        // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
+        await User.updateOne(
+            {'notification._id': notificationId, '_id': userId},
+            {$set: {'notification.$.isRead': true}})
+        return jsonSuccess('', 'Marked as read')
+    } catch (e) {
+        return jsonError(e)
+    }
+}
+module.exports = {
+    register,
+    login,
+    followUser,
+    getFollowing,
+    getFollower,
+    unfollowUser,
+    getUserById,
+    getAllNotifications,
+    markAsRead
+};
