@@ -84,15 +84,15 @@ const getAll = async function (req) {
 };
 
 
-const likePost = async function (postId, uid, toLike) {
-    let post = await Post.findById(postId).populate('likes');
+const likePost = async function (req,toLike) {
+    let post = await Post.findById(req.body.postId).populate('likes');
     let likes = post.likes;
     if (toLike) {
         //todo check post like = null or not
         if (!post.likes) {
             post.likes = [];
         }
-        post.likes.push(mongoose.Types.ObjectId(uid));
+        post.likes.push(mongoose.Types.ObjectId(req.user._id));
     } else {
         post.likes.pull({ _id: uid });
     }
@@ -100,13 +100,15 @@ const likePost = async function (postId, uid, toLike) {
     return jsonSuccess()
 };
 
-const comment = async function (postId, comment, uid) {
+const comment = async function (req) {
     try {
-        let post = await Post.findById(postId).populate('comments');
-        let id = mongoose.Types.ObjectId(uid);
+        let post = await Post.findById(req.body.postId).populate('comments');
+        let id = mongoose.Types.ObjectId(req.user._id);
+        let date = Date.now();
         let c = {
-            content: comment,
-            user: id
+            contain: req.body.comment,
+            user: id,
+            createDate: date
         };
         if (!post.comments) {
             post.comments = [];
