@@ -84,7 +84,7 @@ router.post('/lang/:lang', async (req, res, next) => {
 });
 
 router.get('/search/:key', async (req, res, next) => {
-  let result = await controller.search(req.params.key);
+  let result = await controller.search(req.user._id, req.params.key);
   returnResult(result, res, next);
 });
 

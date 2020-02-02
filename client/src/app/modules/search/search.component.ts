@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit {
     searchUsers() {
         this.userService.search(this.searchKey).subscribe(data => {
             this.users = data.data;
+            console.log(this.users);
         }, error => {
         });
     }
@@ -49,6 +50,7 @@ export class SearchComponent implements OnInit {
     }
 
     followUser(userId) {
+      console.log(userId);
         this.followService.follow(userId).subscribe(data => {
             console.log('followed ... ');
         });
