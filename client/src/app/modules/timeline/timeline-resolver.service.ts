@@ -15,6 +15,8 @@ export class TimelineResolver implements Resolve<User> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<User> | Promise<User> | User {
         const userId = route.params['id'];
-        return this.userService.getUserById(userId).pipe(map(data => data));
+        return this.userService.getUserById(userId).pipe(map(result => {
+          return result.data
+        }));
     }
 }

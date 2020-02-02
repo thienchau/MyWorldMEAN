@@ -26,12 +26,11 @@ export class TimelineHeaderComponent implements OnInit {
     ngOnInit(): void {
         this.authService.currentUser.subscribe(user => {
             this.currentUser = user;
-            console.dir(user);
         });
     }
 
     isMyProfile() {
-        return this.currentUser.id === this.user.id;
+        return this.currentUser._id === this.user._id;
     }
 
     onFileChange(event) {
