@@ -5,7 +5,14 @@ const { errors, jsonError, jsonSuccess } = require("../utils/system");
 const getNewNotifications = async (userId) => {
     try {
         const notifications = await User.findById(userId)
-        .populate('notification')
+        .populate({
+            path: 'notification',
+            match: { isRead: false },
+            populate: {
+                path: 'senderId',
+                select: 'avatar firstName lastName'
+            }
+        })
         .select('notification -_id')
         return jsonSuccess(notifications)
     } catch (e) {
