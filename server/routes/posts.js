@@ -57,7 +57,7 @@ router.get('/newfeed', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    let post = await controller.findById(req.params.id);
+    let post = await controller.findById(req);
     if (post) {
         return res.status(200).json(post);
     } else {
@@ -75,12 +75,12 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
-router.post('/like', async (req, res, next) => {
+router.post('/like/:postId', async (req, res, next) => {
     let result = await controller.likePost(req, true);
     returnResult(result, res, next)
 });
 
-router.post('/unlike', async (req, res, next) => {
+router.post('/unlike/:postId', async (req, res, next) => {
     let result = await controller.likePost(req, false);
     returnResult(result, res, next)
 });

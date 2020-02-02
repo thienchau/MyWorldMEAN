@@ -124,6 +124,7 @@ const getFollower = async (userId) => {
 const getUserById = async (userId) => {
     try {
         const user = await User.findById(userId).lean();
+        user.follower = await Follow.find( { following: user._id} ).lean();
         return jsonSuccess(user);
     } catch (e) {
         console.log(e);
@@ -131,40 +132,40 @@ const getUserById = async (userId) => {
     }
 };
 
-const getNewNotifications = async (req) => {
-    try {
-        const notifications = await User.find({_id: req.user._id, 'notification.isRead': false})
-        .populate('notification.senderId')
-        .select('notification')
-        return jsonSuccess(notifications)
-    } catch (e) {
-        return jsonError(e);
-    }
-}
+// const getNewNotifications = async (req) => {
+//     try {
+//         const notifications = await User.find({_id: req.user._id, 'notification.isRead': false})
+//         .populate('notification.senderId')
+//         .select('notification')
+//         return jsonSuccess(notifications)
+//     } catch (e) {
+//         return jsonError(e);
+//     }
+// }
 
-const markAsRead = async (notificationId, userId) => {
-    try {
-        // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
-        await User.updateOne(
-            { 'notification._id': notificationId, '_id': userId },
-            { $set: { 'notification.$.isRead': true } })
-        return jsonSuccess('', 'Marked as read')
-    } catch (e) {
-        return jsonError(e)
-    }
-}
+// const markAsRead = async (notificationId, userId) => {
+//     try {
+//         // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
+//         await User.updateOne(
+//             { 'notification._id': notificationId, '_id': userId },
+//             { $set: { 'notification.$.isRead': true } })
+//         return jsonSuccess('', 'Marked as read')
+//     } catch (e) {
+//         return jsonError(e)
+//     }
+// }
 
-const markAllAsRead = async (userId) => {
-    try {
-        // console.log(await User.find({'_id': userId, 'notification._id': ''}))
-        await User.updateMany(
-            { '_id': userId, 'notification.isRead': false },
-            { $set: { 'notification.$[].isRead': true } })
-        return jsonSuccess('', 'Marked as read')
-    } catch (e) {
-        return jsonError(e)
-    }
-}
+// const markAllAsRead = async (userId) => {
+//     try {
+//         // console.log(await User.find({'_id': userId, 'notification._id': ''}))
+//         await User.updateMany(
+//             { '_id': userId, 'notification.isRead': false },
+//             { $set: { 'notification.$[].isRead': true } })
+//         return jsonSuccess('', 'Marked as read')
+//     } catch (e) {
+//         return jsonError(e)
+//     }
+// }
 
 const search = async function (currentUserId, key) {
     try {
@@ -195,8 +196,8 @@ module.exports = {
     getFollower,
     unfollowUser,
     getUserById,
-    getNewNotifications,
-    markAsRead,
-    markAllAsRead,
+    // getNewNotifications,
+    // markAsRead,
+    // markAllAsRead,
     search
 };

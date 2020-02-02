@@ -4,7 +4,7 @@ import {Media} from './media.model';
 
 
 export interface Post {
-    id: string;
+    _id: string;
     content: string;
     user: User;
     createDate: string;

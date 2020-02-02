@@ -26,7 +26,6 @@ export class TimelineHeaderComponent implements OnInit {
     ngOnInit(): void {
         this.authService.currentUser.subscribe(user => {
             this.currentUser = user;
-            console.dir(user);
         });
     }
 

@@ -1,3 +1,5 @@
+const {jsonSuccess} = require("../utils/system");
+
 const express = require('express');
 const controller = require('../controllers/user');
 const router = express.Router();
@@ -14,20 +16,20 @@ router.post('/login', async (req, res, next) => {
   returnResult(result, res, next);
 });
 
-router.get('/notifications', async (req, res, next) => {
-  const result = await controller.getNewNotifications(req);
-  returnResult(result, res, next);
-});
+// router.get('/notifications', async (req, res, next) => {
+//   const result = await controller.getNewNotifications(req);
+//   returnResult(result, res, next);
+// });
 
-router.get('/markAsRead/:notificationId', async (req, res, next) => {
-  const result = await controller.markAsRead(req.params.notificationId, req.user._id);
-  returnResult(result, res, next);
-});
+// router.get('/markAsRead/:notificationId', async (req, res, next) => {
+//   const result = await controller.markAsRead(req.params.notificationId, req.user._id);
+//   returnResult(result, res, next);
+// });
 
-router.get('/markAllAsRead', async (req, res, next) => {
-  const result = await controller.markAllAsRead(req.user._id);
-  returnResult(result, res, next);
-});
+// router.get('/markAllAsRead', async (req, res, next) => {
+//   const result = await controller.markAllAsRead(req.user._id);
+//   returnResult(result, res, next);
+// });
 
 router.get('/info', async (req, res, next) => {
   res.json(req.user);
@@ -61,9 +63,14 @@ router.get('/follower', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   if (req.params.id === req.user.id) {
-    res.json(req.user);
+    res.json(jsonSuccess(req.user));
   } else {
     const result = await controller.getUserById(req.params.id);
+    const index = result.data.follower.findIndex(f => f.follower.equals(req.user.id));
+    console.log(index);
+    result.data.followed = index!==-1;
+    result.data.numFollower = result.data.follower.length;
+    delete result.data.follower;
     returnResult(result, res, next);
   }
 });

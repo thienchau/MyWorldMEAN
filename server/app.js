@@ -10,6 +10,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let postRouter = require('./routes/posts');
+let notificationRouter = require('./routes/notification')
 const checkAuth = require('./middlewares/check-auth');
 
 var advertisementRouter = require('./routes/advertisement');
@@ -37,6 +38,8 @@ app.use('/', indexRouter);
 app.use('/api/v1/user', checkAuth, usersRouter);
 app.use('/api/v1/advertisements', checkAuth, advertisementRouter);
 app.use('/api/v1/post', checkAuth, postRouter);
+app.use('/api/v1/notifications', checkAuth, notificationRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
