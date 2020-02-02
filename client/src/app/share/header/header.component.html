@@ -113,6 +113,9 @@
       <!-- <a (click)="logout()" title=""
         ><i class="ti-power-off"></i>{{ "pheader.logout" | translate }}</a
       > -->
+
+      <a title="">{{ currentUser.firstName }}</a>
+
       <img
         *ngIf="currentUser.avatar"
         [src]="currentUser.avatar"
