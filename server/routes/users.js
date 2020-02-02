@@ -79,13 +79,12 @@ router.post('/update', async (req, res, next) => {
 });
 
 router.post('/lang/:lang', async (req, res, next) => {
-  req.user.lang = req.params.lang;
-  await req.user.save();
+  await User.findByIdAndUpdate(req.user._id, { lang: req.params.lang })
   res.json(req.user);
 });
 
 router.get('/search/:key', async (req, res, next) => {
-  let result = await controller.search(req.params.key);
+  let result = await controller.search(req.user._id, req.params.key);
   returnResult(result, res, next);
 });
 

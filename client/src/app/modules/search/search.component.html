@@ -34,18 +34,18 @@
                                                                              alt=""></a>
                                                         </figure>
                                                         <div class="pepl-info">
-                                                            <h4><a href="timeline/{{user.id}}"
+                                                            <h4><a href="timeline/{{user._id}}/timeline"
                                                                    title="">{{user.firstName + ' ' + user.lastName}}</a>
                                                             </h4>
                                                             <span>{{user.email}}</span>
                                                             <p *ngIf="!user.followed"><a style="color: white"
-                                                                                         (click)="user.followed = true; followUser(user.id);"
+                                                                                         (click)="user.followed = true; followUser(user._id);"
                                                                                          title=""
                                                                                          class="add-butn"
                                                                                          data-ripple="">{{'search.follow' | translate}}</a>
                                                             </p>
                                                             <p *ngIf="user.followed"><a style="color: white"
-                                                                                        (click)="user.followed = false; unFollowUser(user.id);"
+                                                                                        (click)="user.followed = false; unFollowUser(user._id);"
                                                                                         title=""
                                                                                         class="add-butn"
                                                                                         data-ripple="">{{'search.un-follow' | translate}}</a>

@@ -166,14 +166,21 @@ const markAllAsRead = async (userId) => {
     }
 }
 
-const search = async function (key) {
+const search = async function (currentUserId, key) {
     try {
         let users = await User.find({
             $or: [
                 { "firstName": { "$regex": key, "$options": "i" } },
                 { "lastName": { "$regex": key, "$options": "i" } }
             ]
-        }).populate('user').limit(10);
+        }).populate('user').limit(10).lean();
+        const follow = await Follow.find({ follower: currentUserId }).lean();
+        users.map(user => {
+            let index = follow.findIndex(f => {
+                return f.following.equals(user._id);
+            });
+            user.followed = index !== -1;
+        });
         return jsonSuccess(users);
     } catch (e) {
         return jsonError(e);

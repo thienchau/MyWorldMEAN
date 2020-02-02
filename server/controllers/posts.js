@@ -29,9 +29,9 @@ const create = async function (req) {
             },
             user: req.user._id
         }).save();
-        let data = await Post.findById(result._id).populate('user');
-        await createNotification(req.user._id, data);
-        return jsonSuccess(data);
+        result.user = req.user;
+        await createNotification(req.user._id, result);
+        return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
     }
