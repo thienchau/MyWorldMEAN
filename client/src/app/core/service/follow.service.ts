@@ -8,11 +8,11 @@ export class FollowService {
     constructor(private apiService: ApiService) {
     }
 
-    getFollowers(): Observable<any[]> {
+    getFollowers(): Observable<any> {
         return this.apiService.get('/user/follower');
     }
 
-    getFollowing(): Observable<any[]> {
+    getFollowing(): Observable<any> {
         return this.apiService.get('/user/following');
     }
 

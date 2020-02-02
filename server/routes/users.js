@@ -1,52 +1,32 @@
 const express = require('express');
-const userController = require('../controllers/user');
+const controller = require('../controllers/user');
 const router = express.Router();
 const User = require('../models/user');
 
 router.post("/register", async (req, res, next) => {
-  const result = await userController.register(req)
-  if (result.success) {
-    res.json(result);
-  } else {
-    next(result);
-  }
+  const result = await controller.register(req)
+  returnResult(result, res, next);
 });
 
 router.post('/login', async (req, res, next) => {
   const body = req.body;
-  const result = await userController.login(body)
-  if (result.success) {
-    return res.json(result);
-  } else {
-    next(result);
-  }
+  const result = await controller.login(body)
+  returnResult(result, res, next);
 });
 
 router.get('/notifications', async (req, res, next) => {
-  const result = await userController.getNewNotifications(req);
-  if(result.success) {
-    res.json(result);
-  } else {
-    next(result);
-  }
+  const result = await controller.getNewNotifications(req);
+  returnResult(result, res, next);
 });
 
 router.get('/markAsRead/:notificationId', async (req, res, next) => {
-  const result = await userController.markAsRead(req.params.notificationId, req.user._id);
-  if(result.success) {
-    res.json(result);
-  } else {
-    next(result);
-  }
+  const result = await controller.markAsRead(req.params.notificationId, req.user._id);
+  returnResult(result, res, next);
 });
 
 router.get('/markAllAsRead', async (req, res, next) => {
-  const result = await userController.markAllAsRead(req.user._id);
-  if(result.success) {
-    res.json(result);
-  } else {
-    next(result);
-  }
+  const result = await controller.markAllAsRead(req.user._id);
+  returnResult(result, res, next);
 });
 
 router.get('/info', async (req, res, next) => {
@@ -59,52 +39,32 @@ router.get('', (req, res) => {
 
 router.post('/follow/:id', async function (req, res, next) {
   const { id } = req.params;
-  const result = await userController.followUser(req.user._id, id);
-  if (result.success) {
-    res.json(result);
-  } else {
-    next(result)
-  }
+  const result = await controller.followUser(req.user._id, id);
+  returnResult(result, res, next);
 });
 
 router.post('/unfollow/:id', async function (req, res, next) {
   const { id } = req.params;
-  const result = await userController.unfollowUser(req.user._id, id);
-  if (result.success) {
-    res.json(result);
-  } else {
-    next(result)
-  }
+  const result = await controller.unfollowUser(req.user._id, id);
+  returnResult(result, res, next);
 });
 
 router.get('/following', async (req, res, next) => {
-  const followings = await userController.getFollowing(req.user._id);
-  if (followings.success) {
-    res.json(followings);
-  } else {
-    next(followings)
-  }
+  const result = await controller.getFollowing(req.user._id);
+  returnResult(result, res, next);
 });
 
 router.get('/follower', async (req, res, next) => {
-  const followers = await userController.getFollower(req.user._id);
-  if (followers.success) {
-    res.json(followers);
-  } else {
-    next(followers)
-  }
+  const result = await controller.getFollower(req.user._id);
+  returnResult(result, res, next);
 });
 
 router.get('/:id', async (req, res, next) => {
   if (req.params.id === req.user.id) {
     res.json(req.user);
   } else {
-    const user = await userController.getUserById(req.params.id);
-    if (user.success) {
-      res.json(user);
-    } else {
-      next(user);
-    }
+    const result = await controller.getUserById(req.params.id);
+    returnResult(result, res, next);
   }
 });
 
@@ -123,5 +83,18 @@ router.post('/lang/:lang', async (req, res, next) => {
   await req.user.save();
   res.json(req.user);
 });
+
+router.get('/search/:key', async (req, res, next) => {
+  let result = await controller.search(req.params.key);
+  returnResult(result, res, next);
+});
+
+function returnResult(result, res, next) {
+  if (result.success) {
+    res.json(result);
+  } else {
+    next(result)
+  }
+}
 
 module.exports = router;

@@ -4,7 +4,8 @@
 GET {{postURL}}
 ###
 
-GET {{postURL}}/2
+GET {{postURL}}/search/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTM1YmZmOWRkZGIxZjRlNDRhMzdkN2QiLCJpYXQiOjE1ODA2MTkzMTEsImV4cCI6MTU4MDYyMjkxMX0.bEcamveVInxVN5cflB5NS8wphdyaciY6n1LLVlwOH3E
 ###
 
 POST {{postURL}}

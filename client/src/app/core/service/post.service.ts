@@ -9,20 +9,20 @@ export class PostService {
     constructor(private apiService: ApiService) {
     }
 
-    newPost(text: string, notify: boolean): Observable<Post> {
-        return this.apiService.post('/post', {content: text, notify});
+    newPost(payload): Observable<Post> {
+        return this.apiService.uploadFile('/post', payload);
     }
 
     getNewFeed(page: number): Observable<Post[]> {
         return this.apiService.get('/post/newfeed?page=' + page);
     }
 
-    getTimeline(userId: string, page: number): Observable<Post[]> {
+    getTimeline(userId: string, page: number): Observable<any> {
         return this.apiService.get('/post/timeline/' + userId + '?page=' + page);
     }
 
-    searchPosts(key: string): Observable<Post[]> {
-        return this.apiService.get('/post/searchPosts?key=' + key);
+    searchPosts(key: string): Observable<any> {
+        return this.apiService.get('/post/search/' + key);
     }
 
     comment(comment): Observable<any> {

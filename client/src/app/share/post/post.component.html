@@ -12,18 +12,16 @@
             </div>
             <div class="post-meta">
                 <div class="photos">
-                    <div *ngFor="let media of post.medias">
-                        <a class="strip" *ngIf="media.mediaType === 'IMAGE'"
-                           [href]="media.url"
-                           data-strip-group-options="side: 'top'">
-                            <img [src]="media.url"/>
-                        </a>
-                        <video *ngIf="media.mediaType === 'VIDEO'" width="100%" height controls>
-                            <source [src]="media.url"
-                                    type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                  <a class="strip" *ngIf="post.media.mediaType === 'IMAGE'"
+                     [href]="post.media.url"
+                     data-strip-group-options="side: 'top'">
+                    <img [src]="post.media.url"/>
+                  </a>
+                  <video *ngIf="post.media.mediaType === 'VIDEO'" width="100%" height controls>
+                    <source [src]="post.media.url"
+                            type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
                 <div class="we-video-info">
                     <ul>
