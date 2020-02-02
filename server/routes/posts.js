@@ -55,7 +55,7 @@ router.get('/newfeed', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    let post = await controller.findById(req.params.id);
+    let post = await controller.findById(req);
     if (post) {
         return res.status(200).json(post);
     } else {

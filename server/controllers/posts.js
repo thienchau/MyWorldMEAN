@@ -39,7 +39,7 @@ const create = async function (req) {
 };
 
 const createNotification = async function (post) {
-    let followers = await Follow.find({ following: post.user._id }).select('follower -_id')
+    let followers = await Follow.find({following: post.user._id}).select('follower -_id')
     followers = followers.map(follower => follower.follower)
     console.log(post);
     const notification = await Notification({
@@ -51,13 +51,15 @@ const createNotification = async function (post) {
         additionalContent: 'additional content',
     }).save()
     await User.updateMany(
-        { "_id": { "$in": followers } },
-        { "$push": { "notification": notification._id } }
+        {"_id": {"$in": followers}},
+        {"$push": {"notification": notification._id}}
     )
 };
 
-const findById = async function (postId) {
-    return Post.findById(postId);
+const findById = async function (req) {
+    let post = await Post.findById(req.params.id).lean();
+    setupLikePost(post, req.user._id);
+    return post;
 };
 
 
@@ -80,10 +82,7 @@ const getAll = async function (req) {
         return Post.count();
     }).then(count => {
         fetchedPosts.map((post) => {
-            post.likeNum = post.likes.length;
-            post.likes.findIndex((f) => {
-                post.liked = f.equals(req.user._id)
-            });
+            setupLikePost(post, req.user._id);
         });
         return fetchedPosts;
     });
@@ -152,4 +151,17 @@ const search = async function (key) {
     }
 };
 
+const setupLikePost = function (post, userId) {
+    if (post) {
+        post.liked = false;
+        let num = 0;
+        if (post.likes) {
+            num = post.likes.length;
+            post.likes.findIndex((f) => {
+                post.liked = f.equals(userId)
+            });
+        }
+        post.likeNum = num;
+    }
+};
 module.exports = {create, findById, getAll, likePost, comment, search, getPostByUserId};
