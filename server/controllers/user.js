@@ -110,6 +110,16 @@ const getFollowing = async (userId) => {
     }
 };
 
+const getFollowingId = async (userId) => {
+    try {
+        let following = await Follow.find({ follower: userId }).lean();
+        following = following.map(user => user.following);
+        return following;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+};
 const getFollower = async (userId) => {
     try {
         let follower = await Follow.find({ following: userId }).populate({ path: 'follower', select: 'avatar firstName lastName email' }).select('-following').lean();
@@ -199,5 +209,6 @@ module.exports = {
     // getNewNotifications,
     // markAsRead,
     // markAllAsRead,
-    search
+    search,
+    getFollowingId
 };
