@@ -23,10 +23,6 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.get('/info', async (req, res, next) => {
-  console.log('info');
-
-  console.log(req.user);
-
   res.json(req.user);
 });
 
@@ -92,6 +88,12 @@ router.post('/update', async (req, res, next) => {
   });
   await req.user.save();
   res.json();
+});
+
+router.post('/lang/:lang', async (req, res, next) => {
+  req.user.lang = req.params.lang;
+  await req.user.save();
+  res.json(req.user);
 });
 
 module.exports = router;
