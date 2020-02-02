@@ -97,7 +97,7 @@ router.get('/timeline/:id', async (req, res, next) => {
 });
 
 router.get('/search/:key', async (req, res, next) => {
-    let result = await controller.search(req.params.key);
+    let result = await controller.search(req);
     returnResult(result, res, next);
 });
 
