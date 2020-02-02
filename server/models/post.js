@@ -3,7 +3,7 @@ const postSchema = mongoose.Schema({
     id: {type: mongoose.ObjectId},
     create_date: {type: Date},
     title: {type: String},
-    content: {type: String, require: true},
+    content: {type: String},
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'Users'
@@ -12,6 +12,7 @@ const postSchema = mongoose.Schema({
         mime: String,
         url: String,
         type: Object,
+        mediaType: String,
     },
     comments: [{
         content: String,
@@ -19,14 +20,16 @@ const postSchema = mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'Users',
         },
-        default: []
     }],
     likes: [
         {
             type: mongoose.Types.ObjectId,
             ref: 'Users',
-            default: []
         }
-    ]
+    ],
+    createDate: {
+        type: Date,
+        default: Date.now
+    },
 });
 module.exports = mongoose.model('posts', postSchema);

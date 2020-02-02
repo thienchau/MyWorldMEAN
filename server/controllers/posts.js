@@ -10,20 +10,28 @@ const create = async function (req) {
     try {
         const url = req.protocol + '://' + req.get('host');
         let media = '';
+        let m = '';
+        let type = '';
         if (req.hasOwnProperty('file') && req.file.hasOwnProperty('filename')) {
-            media = url + '/images/' + req.file.filename;
+            media = url + '/media/' + req.file.filename;
+            m = mime.MIME_TYPE_MAP[req.file.mimetype];
+            type = mime.TYPE[req.file.mimetype];
+        }
+        if (!req.body.content || !media) {
+            return jsonError('Null body');
         }
         let result = await Post({
-            title: req.body.title,
             content: req.body.content,
             media: {
                 url: media,
-                mime: mime.MIME_TYPE_MAP[req.file.mimetype]
+                mime: m,
+                mediaType: type
             },
             user: req.user._id
         }).save();
-        createNotification(req.user._id, result);
-        return jsonSuccess();
+        let data = await Post.findById(result._id).populate('user');
+        await createNotification(req.user._id, data);
+        return jsonSuccess(data);
     } catch (e) {
         return jsonError(e);
     }

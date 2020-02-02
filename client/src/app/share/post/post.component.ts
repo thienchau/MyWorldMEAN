@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Post} from '../../core/model/post.model';
 import * as moment from 'moment';
 import {PostService} from '../../core/service/post.service';
@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
     selector: 'app-post',
     templateUrl: './post.component.html',
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnChanges {
 
     newComment: string;
     @Input()
@@ -24,6 +24,7 @@ export class PostComponent implements OnInit {
         public translate: TranslateService
     ) {
     }
+
 
     ngOnInit(): void {
         this.authService.currentUser.subscribe(user => {
@@ -59,5 +60,10 @@ export class PostComponent implements OnInit {
             console.log('Unlike success');
         });
     }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    console.log('POST CHANGE' + JSON.stringify(this.post));
+  }
 
 }
