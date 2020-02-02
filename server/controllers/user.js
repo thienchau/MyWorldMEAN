@@ -103,9 +103,9 @@ const unfollowUser = async (follower, following) => {
 
 const getFollowing = async (userId) => {
     try {
-        const following = await Follow.find({ follower: userId }).select('-follower').lean();
-        const totalFollowing = following.length;
-        return jsonSuccess({ following, totalFollowing });
+        let following = await Follow.find({ follower: userId }).populate({ path: 'following', select: 'avatar firstName lastName email' }).select('-follower').lean();
+        following = following.map(user => user.following);
+        return jsonSuccess(following);
     } catch (e) {
         console.log(e);
         return jsonError();
@@ -114,9 +114,9 @@ const getFollowing = async (userId) => {
 
 const getFollower = async (userId) => {
     try {
-        const follower = await Follow.find({ following: userId }).select('-following').lean();
-        const totalFollower = follower.length;
-        return jsonSuccess({ follower, totalFollower });
+        let follower = await Follow.find({ following: userId }).populate({ path: 'follower', select: 'avatar firstName lastName email' }).select('-following').lean();
+        follower = follower.map(user => user.follower);
+        return jsonSuccess(follower);
     } catch (e) {
         console.log(e);
         return jsonError();

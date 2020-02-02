@@ -37,7 +37,7 @@
       "write-something": "write something"
     },
     "postdetail":{
-      
+
     },
     "search":{
       "people": "People",
@@ -46,7 +46,7 @@
     },
     "timeline": {
       "follow": {
-      	"following": "following",
+      	"following": "Following",
       	"followers": "Followers",
 		"un-follow": "Unfollow",
 		"follow": "Follow"
@@ -95,7 +95,7 @@
 
       },
       "layout": {
-      	
+
       }
     },
     "adv":{
