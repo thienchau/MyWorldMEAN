@@ -7,15 +7,15 @@
         </li>
         <li>
             <i class="ti-files"></i>
-            <a [routerLink]="['/timeline/' , user.id, 'timeline']">{{'shortcuts.my-page' | translate}}</a>
+            <a [routerLink]="['/timeline/' , user._id, 'timeline']">{{'shortcuts.my-page' | translate}}</a>
         </li>
         <li>
             <i class="ti-user"></i>
-            <a [routerLink]="['/timeline/' , user.id, 'profile']" title="">{{'shortcuts.my-profile' | translate}}</a>
+            <a [routerLink]="['/timeline/' , user._id, 'profile']" title="">{{'shortcuts.my-profile' | translate}}</a>
         </li>
         <li>
             <i class="ti-comments-smiley"></i>
-            <a [routerLink]="['/timeline/' , user.id, 'follow']" title="">{{'shortcuts.friend' | translate}}</a>
+            <a [routerLink]="['/timeline/' , user._id, 'follow']" title="">{{'shortcuts.friend' | translate}}</a>
         </li>
         <li>
             <i class="ti-power-off"></i>

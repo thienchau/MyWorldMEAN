@@ -1,0 +1,71 @@
+<div class="central-meta">
+    <div class="frnds">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="active show" href="#following"
+                                    data-toggle="tab">{{'timeline.follow.following'
+                | translate}}</a>
+                <span>{{following.length}}</span></li>
+            <li class="nav-item"><a class="" href="#followers"
+                                    data-toggle="tab">{{'timeline.follow.followers' | translate}}</a><span>{{followers.length}}</span>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade active show" id="following">
+
+                <ul class="nearby-contct">
+                    <li *ngFor="let follow of following">
+                        <div class="nearly-pepls">
+                            <figure>
+                                <a [routerLink]="['/timeline/' , follow._id, 'timeline']" title=""><img
+                                        src="{{follow.avatar}}" alt=""></a>
+                            </figure>
+                            <div class="pepl-info">
+                                <h4><a [routerLink]="['/timeline/' , follow._id, 'timeline']"
+                                       title="">{{follow.firstName + ' ' + follow.lastName}}</a>
+                                </h4>
+                                <span>{{follow.email}}</span>
+                                <a style="color: white; cursor: pointer; background-color: orangered"
+                                   (click)="unFollowUser(follow._id);"
+                                   title=""
+                                   class="add-butn" data-ripple="">{{'timeline.follow.un-follow' | translate}}</a>
+
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="tab-pane fade" id="followers">
+
+                <ul class="nearby-contct">
+                    <li *ngFor="let follow of followers">
+                        <div class="nearly-pepls">
+                            <figure>
+                                <a [routerLink]="['/timeline/',follow._id, 'timeline']">
+                                    <img src="{{follow.avatar}}"></a>
+                            </figure>
+                            <div class="pepl-info">
+                                <h4><a [routerLink]="['/timeline/',follow._id, 'timeline']"
+                                       title="">{{follow.firstName + ' ' + follow.lastName}}</a>
+                                </h4>
+                                <span>{{follow.email}}</span>
+
+                                <p><a *ngIf="checkFollowed(follow)"
+                                      style="color: white; cursor: pointer; background-color: orangered"
+                                      (click)="unFollowUser(follow._id);"
+                                      title="" class="add-butn">{{'timeline.follow.un-follow' | translate}}</a></p>
+                                <p><a *ngIf="!checkFollowed(follow)" style="color: white; cursor: pointer"
+                                      (click)="followUser(follow._id);"
+                                      title="" class="add-butn">{{'timeline.follow.follow' | translate}}</a></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
