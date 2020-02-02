@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   gotoTimeline() {
-    this.router.navigateByUrl('/timeline/' + this.currentUser.id);
+    this.router.navigateByUrl('/timeline/' + this.currentUser._id);
   }
 
   loadNotifications() {

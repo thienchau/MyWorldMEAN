@@ -3,9 +3,9 @@
         <figure><img src="{{user.cover}}" alt=""></figure>
         <div *ngIf="!isMyProfile()" class="add-btn">
             <span>{{user.numFollower}} {{'timeline.header.followers' | translate}}</span>
-            <a *ngIf="user.followed" (click)="unFollow(user.id)" title="" data-ripple=""
+            <a *ngIf="user.followed" (click)="unFollow(user._id)" title="" data-ripple=""
                style="color: white; cursor: pointer; background-color: orangered">{{'timeline.header.un-follow' | translate}}</a>
-            <a *ngIf="!user.followed" (click)="follow(user.id)" title="" data-ripple=""
+            <a *ngIf="!user.followed" (click)="follow(user._id)" title="" data-ripple=""
                style="color: white; cursor: pointer">{{'timeline.header.follow' | translate}}</a>
         </div>
         <div class="container-fluid">
