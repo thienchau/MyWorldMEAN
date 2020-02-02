@@ -129,7 +129,8 @@ const comment = async function (req) {
         }
         post.comments.push(c);
         await post.save();
-        return jsonSuccess(post);
+        c.createDate = new Date().toISOString();
+        return jsonSuccess(c);
     } catch (e) {
         return jsonError(e);
     }
@@ -149,7 +150,12 @@ const getPostByUserId = async (userId, page) => {
 
 const search = async function (req) {
     try {
-        let posts = await Post.find({"content": {"$regex": req.params.key, "$options": "i"}}).populate('user').limit(10);
+        let posts = await Post.find({
+            "content": {
+                "$regex": req.params.key,
+                "$options": "i"
+            }
+        }).populate('user').limit(10).sort({createdDate: -1});
         setupLikePosts(posts, req.user._id);
         return jsonSuccess(posts);
     } catch (e) {
@@ -164,14 +170,13 @@ const setupLikePosts = function (posts, userId) {
 const setupLikePost = function (post, userId) {
     if (post) {
         post.liked = false;
-        let num = 0;
         if (post.likes) {
-            num = post.likes.length;
             post.likes.findIndex((f) => {
                 post.liked = f.equals(userId)
             });
         }
-        post.likeNum = num;
+        post.likeNum = post.likes ? post.likes.length : 0;
+        post.commentNum = post.comments ? post.comments.length : 0;
     }
 };
 module.exports = {create, findById, getNewFeed, likePost, comment, search, getPostByUserId};

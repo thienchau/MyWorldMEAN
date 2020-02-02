@@ -65,7 +65,7 @@ export class NewFeedComponent implements OnInit {
     });
   }
 
-  comment(pid: string) {  /// HERE
+  comment(pid: string) {
     const payload = {
       postId: pid,
       comment: this.newComment
