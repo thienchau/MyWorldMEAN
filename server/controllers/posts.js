@@ -7,6 +7,7 @@ const Follow = require('../models/follow');
 const User = require('../models/user');
 const Notification = require('../models/notification');
 const FollowController = require('../controllers/user');
+const populateComment = 'comments.user';
 const create = async function (req) {
     try {
         const url = req.protocol + '://' + req.get('host');
@@ -31,7 +32,7 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
-        if(req.body.notify){
+        if (req.body.notify) {
             await createNotification(result);
         }
         return jsonSuccess(result);
@@ -59,7 +60,7 @@ const createNotification = async function (post) {
 };
 
 const findById = async function (req) {
-    let post = await Post.findById(req.params.id).lean();
+    let post = await Post.findById(req.params.id).populate(populateComment).lean();
     setupLikePost(post, req.user._id);
     return post;
 };
@@ -74,7 +75,10 @@ const getNewFeed = async function (req) {
     let followings = await FollowController.getFollowingId(req.user._id);
     const postQuery = Post
         .find({$or: [{user: req.user._id}, {user: {$in: followings}}]})
-        .sort({createDate: -1}).populate('user');
+        .sort({createDate: -1})
+        .populate(populateComment)
+        .populate('user')
+    ;
     let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
@@ -116,12 +120,12 @@ const likePost = async function (req, toLike) {
 
 const comment = async function (req) {
     try {
-        let post = await Post.findById(req.body.postId).populate('comments');
+        let post = await Post.findById(req.body.postId).populate();
         let id = mongoose.Types.ObjectId(req.user._id);
         let date = Date.now();
         let c = {
             contain: req.body.comment,
-            user: id,
+            user: req.user,
             createDate: date
         };
         if (!post.comments) {
@@ -139,7 +143,7 @@ const comment = async function (req) {
 const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
-        let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate('user').sort({createdDate: -1}).limit(10).lean();
+        let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate(populateComment).populate('user').sort({createdDate: -1}).limit(10).lean();
         setupLikePosts(posts, userId);
         return jsonSuccess(posts);
     } catch (e) {
@@ -155,7 +159,11 @@ const search = async function (req) {
                 "$regex": req.params.key,
                 "$options": "i"
             }
-        }).populate('user').limit(10).sort({createdDate: -1});
+        })
+            .populate('user')
+            .populate(populateComment)
+            .limit(10)
+            .sort({createdDate: -1});
         setupLikePosts(posts, req.user._id);
         return jsonSuccess(posts);
     } catch (e) {

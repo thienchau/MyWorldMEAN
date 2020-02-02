@@ -58,9 +58,9 @@
             <ul class="we-comet">
                 <li *ngFor="let comment of post.comments">
                     <div class="comet-avatar">
-                        <img *ngIf="comment.commentUserAvatar== null" src="assets/images/resources/comet-1.jpg"
+                        <img *ngIf="comment.user.avatar== null" src="assets/images/resources/comet-1.jpg"
                              class="profile_37">
-                        <img *ngIf="comment.commentUserAvatar" [src]="comment.commentUserAvatar" class="profile_37">
+                        <img *ngIf="comment.user.avatar" [src]="comment.user.avatar" class="profile_37">
                     </div>
                     <div class="we-comment">
                         <div class="coment-head">
