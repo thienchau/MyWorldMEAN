@@ -1,6 +1,6 @@
 export interface PostNotification {
   isRead: boolean;
-  id: number;
+  _id: string;
   senderId: string;
   url: string;
   content: string;

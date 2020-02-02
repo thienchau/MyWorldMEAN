@@ -32,7 +32,7 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
-        if (req.body.notify) {
+        if(req.body.notify == 'true'){
             await createNotification(result);
         }
         return jsonSuccess(result);

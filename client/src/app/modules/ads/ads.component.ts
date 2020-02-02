@@ -21,7 +21,6 @@ export class AdsComponent implements OnInit {
     this.adsService.getAdvertisements().subscribe(
         data => {
             this.advertisements = data;
-            console.log(this.advertisements);
         }, error => {
             // show error
         });
