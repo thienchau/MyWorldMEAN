@@ -21,8 +21,8 @@ export class PostService {
         return this.apiService.get('/post/timeline/' + userId + '?page=' + page);
     }
 
-    searchPosts(key: string): Observable<Post[]> {
-        return this.apiService.get('/post/searchPosts?key=' + key);
+    searchPosts(key: string): Observable<any> {
+        return this.apiService.get('/post/search/' + key);
     }
 
     comment(comment): Observable<any> {
