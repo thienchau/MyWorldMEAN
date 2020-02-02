@@ -79,8 +79,7 @@ router.post('/update', async (req, res, next) => {
 });
 
 router.post('/lang/:lang', async (req, res, next) => {
-  req.user.lang = req.params.lang;
-  await req.user.save();
+  await User.findByIdAndUpdate(req.user._id, { lang: req.params.lang })
   res.json(req.user);
 });
 

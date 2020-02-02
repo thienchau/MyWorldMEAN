@@ -17,7 +17,7 @@ const create = async function (req) {
             m = mime.MIME_TYPE_MAP[req.file.mimetype];
             type = mime.TYPE[req.file.mimetype];
         }
-        if (!req.body.content || !media) {
+        if (!req.body.content && !media) {
             return jsonError('Null body');
         }
         let result = await Post({
@@ -29,9 +29,9 @@ const create = async function (req) {
             },
             user: req.user._id
         }).save();
-        let data = await Post.findById(result._id).populate('user');
-        await createNotification(req.user._id, data);
-        return jsonSuccess(data);
+        result.user = req.user;
+        await createNotification(req.user._id, result);
+        return jsonSuccess(result);
     } catch (e) {
         return jsonError(e);
     }
@@ -84,7 +84,7 @@ const getAll = async function (req) {
 };
 
 
-const likePost = async function (req,toLike) {
+const likePost = async function (req, toLike) {
     let post = await Post.findById(req.body.postId).populate('likes');
     let likes = post.likes;
     if (toLike) {
@@ -124,7 +124,7 @@ const comment = async function (req) {
 const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
-        let posts = await Post.find({ user: userId }).skip(10*(pageQuery - 1)).populate('user').limit(10).lean();
+        let posts = await Post.find({ user: userId }).skip(10 * (pageQuery - 1)).populate('user').limit(10).lean();
         return jsonSuccess(posts);
     } catch (e) {
         console.log(e);
