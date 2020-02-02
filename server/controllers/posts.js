@@ -6,7 +6,7 @@ const Post = require('../models/post');
 const Follow = require('../models/follow');
 const User = require('../models/user');
 const Notification = require('../models/notification');
-
+const FollowController = require('../controllers/user');
 const create = async function (req) {
     try {
         const url = req.protocol + '://' + req.get('host');
@@ -69,8 +69,9 @@ const getNewFeed = async function (req) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
+    let followings = await FollowController.getFollowingId(req.user._id);
     const postQuery = Post
-        .find ({$or: [{user:req.user._id}, {user: {$in:req.user.following}}] })
+        .find ({$or: [{user:req.user._id}, {user: {$in:followings}}] })
         .sort({createDate: -1}).populate('user');
     let fetchedPosts;
     if (pageSize && currentPage) {
