@@ -6,7 +6,7 @@
                 <img *ngIf="post.user != null && post.user.avatar" [src]="post.user.avatar" alt="" class="profile_42">
             </figure>
             <div class="friend-name">
-                <ins><a [routerLink]="['/timeline/' , post.user.id, 'timeline']"
+                <ins><a [routerLink]="['/timeline/' , post.user._id, 'timeline']"
                         title="">{{post.user.firstName}} {{post.user.lastName}}</a></ins>
                 <span>{{'post.published' | translate}}: {{countTime(post.createDate)}}</span>
             </div>
