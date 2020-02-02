@@ -6,7 +6,8 @@ const notificationSchema = mongoose.Schema({
     type: {type: String, required: true},
     additionalContent: {type: String, required: true},
     url: {type: String},
-    content: {type: String, required: true}
+    content: {type: String, required: true},
+    createDate: {type: Date, required: true}
 });
 
 module.exports = mongoose.model('Notifications', notificationSchema);
