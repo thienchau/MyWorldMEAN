@@ -133,9 +133,12 @@ const getUserById = async (userId) => {
     }
 };
 
-const getAllNotifications = async (req) => {
+const getNewNotifications = async (req) => {
     try {
-        return jsonSuccess(req.user.notification)
+        const notifications = await User.find({_id: req.user._id, 'notification.isRead': false})
+        .populate('notification.senderId')
+        .select('notification')
+        return jsonSuccess(notifications)
     } catch (e) {
         return jsonError(e);
     }
@@ -172,7 +175,7 @@ module.exports = {
     getFollower,
     unfollowUser,
     getUserById,
-    getAllNotifications,
+    getNewNotifications,
     markAsRead,
     markAllAsRead
 };

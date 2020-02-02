@@ -23,7 +23,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.get('/notifications', async (req, res, next) => {
-  const result = await userController.getAllNotifications(req);
+  const result = await userController.getNewNotifications(req);
   if(result.success) {
     res.json(result);
   } else {
