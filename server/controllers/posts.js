@@ -39,8 +39,8 @@ const create = async function (req) {
 };
 
 const createNotification = async function (post) {
-    let followers = await Follow.find({following: post.user._id}).select('follower -_id')
-    followers = followers.map(follower => follower.follower)
+    let followers = await Follow.find({following: post.user._id}).select('follower -_id');
+    followers = followers.map(follower => follower.follower);
     console.log(post);
     const notification = await Notification({
         senderId: post.user._id,
@@ -63,14 +63,15 @@ const findById = async function (req) {
 };
 
 
-const getAll = async function (req) {
+const getNewFeed = async function (req) {
     let pageSize = +req.query.pagesize;
     if (pageSize) {
         pageSize = 100;
     }
     const currentPage = +req.query.page;
-    const postQuery = Post.find().sort({createDate: -1}).populate('user');
-
+    const postQuery = Post
+        .find ({$or: [{user:req.user._id}, {user: {$in:req.user.following}}] })
+        .sort({createDate: -1}).populate('user');
     let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
@@ -134,7 +135,7 @@ const comment = async function (req) {
 const getPostByUserId = async (userId, page) => {
     try {
         let pageQuery = +page || 1;
-        let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate('user').limit(10).lean();
+        let posts = await Post.find({user: userId}).skip(10 * (pageQuery - 1)).populate('user').sort({createdDate: -1}).limit(10).lean();
         return jsonSuccess(posts);
     } catch (e) {
         console.log(e);
@@ -164,4 +165,4 @@ const setupLikePost = function (post, userId) {
         post.likeNum = num;
     }
 };
-module.exports = {create, findById, getAll, likePost, comment, search, getPostByUserId};
+module.exports = {create, findById, getNewFeed, likePost, comment, search, getPostByUserId};

@@ -51,7 +51,7 @@ router.post('', multer({ storage: storage }).single("media"), async (req, res, n
 // });
 
 router.get('/newfeed', async (req, res, next) => {
-    let posts = await controller.getAll(req, res);
+    let posts = await controller.getNewFeed(req, res);
     posts.message = 'successfully!';
     res.status(200).json(posts);
 });
