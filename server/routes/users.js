@@ -16,20 +16,20 @@ router.post('/login', async (req, res, next) => {
   returnResult(result, res, next);
 });
 
-router.get('/notifications', async (req, res, next) => {
-  const result = await controller.getNewNotifications(req);
-  returnResult(result, res, next);
-});
+// router.get('/notifications', async (req, res, next) => {
+//   const result = await controller.getNewNotifications(req);
+//   returnResult(result, res, next);
+// });
 
-router.get('/markAsRead/:notificationId', async (req, res, next) => {
-  const result = await controller.markAsRead(req.params.notificationId, req.user._id);
-  returnResult(result, res, next);
-});
+// router.get('/markAsRead/:notificationId', async (req, res, next) => {
+//   const result = await controller.markAsRead(req.params.notificationId, req.user._id);
+//   returnResult(result, res, next);
+// });
 
-router.get('/markAllAsRead', async (req, res, next) => {
-  const result = await controller.markAllAsRead(req.user._id);
-  returnResult(result, res, next);
-});
+// router.get('/markAllAsRead', async (req, res, next) => {
+//   const result = await controller.markAllAsRead(req.user._id);
+//   returnResult(result, res, next);
+// });
 
 router.get('/info', async (req, res, next) => {
   res.json(req.user);

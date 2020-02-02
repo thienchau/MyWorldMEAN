@@ -50,13 +50,13 @@ export class PostComponent implements OnInit, OnChanges {
     }
 
     like(postId: string) {
-        this.postService.like(postId).subscribe(data => {
+        this.postService.like(this.post._id).subscribe(data => {
             console.log('like success');
         });
     }
 
     unlike(postId: string) {
-        this.postService.unlike(postId).subscribe(data => {
+        this.postService.unlike(this.post._id).subscribe(data => {
             console.log('Unlike success');
         });
     }

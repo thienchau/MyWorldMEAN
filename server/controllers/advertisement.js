@@ -18,7 +18,7 @@ const getAdvertisement = async (req, res) => {
             {'target.zipCode': 'all'},
             {'target.zipCode': user.zipCode}
         ]}
-    ]}).limit(3)
+    ]})
     res.status(200).json(advertisements)
 }
 
