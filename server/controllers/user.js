@@ -38,7 +38,7 @@ const register = async (req) => {
         user.cover = cover;
         user.avatar = avatar;
         console.log(cover);
-        
+
         const result = await user.save();
         result.password = '';
         return jsonSuccess(result);
@@ -53,8 +53,6 @@ const login = async (body) => {
         if (!user) {
             return jsonError('', 'Auth failed! Not found user', '003');
         }
-        console.log(user);
-        console.log(body.password);
         const compare = await bcrypt.compare(body.password, user.password);
         if (!compare) {
             return jsonError('', 'Auth failed! Wrong password', '003');
@@ -62,7 +60,7 @@ const login = async (body) => {
         const token = jwt.sign({ email: user.email, userId: user._id },
             process.env.SECRETE_KEY,
             { expiresIn: '1h' });
-        //user.password = '';
+        user.password = '';
         return jsonSuccess({
             user,
             access_token: token
@@ -103,9 +101,9 @@ const unfollowUser = async (follower, following) => {
 
 const getFollowing = async (userId) => {
     try {
-        const following = await Follow.find({ follower: userId }).select('-follower').lean();
-        const totalFollowing = following.length;
-        return jsonSuccess({ following, totalFollowing });
+        let following = await Follow.find({ follower: userId }).populate({ path: 'following', select: 'avatar firstName lastName email' }).select('-follower').lean();
+        following = following.map(user => user.following);
+        return jsonSuccess(following);
     } catch (e) {
         console.log(e);
         return jsonError();
@@ -114,9 +112,9 @@ const getFollowing = async (userId) => {
 
 const getFollower = async (userId) => {
     try {
-        const follower = await Follow.find({ following: userId }).select('-following').lean();
-        const totalFollower = follower.length;
-        return jsonSuccess({ follower, totalFollower });
+        let follower = await Follow.find({ following: userId }).populate({ path: 'follower', select: 'avatar firstName lastName email' }).select('-following').lean();
+        follower = follower.map(user => user.follower);
+        return jsonSuccess(follower);
     } catch (e) {
         console.log(e);
         return jsonError();
@@ -145,8 +143,8 @@ const markAsRead = async (notificationId, userId) => {
     try {
         // console.log(await User.find({'notification._id': notificationId, '_id': userId}))
         await User.updateOne(
-            {'notification._id': notificationId, '_id': userId},
-            {$set: {'notification.$.isRead': true}})
+            { 'notification._id': notificationId, '_id': userId },
+            { $set: { 'notification.$.isRead': true } })
         return jsonSuccess('', 'Marked as read')
     } catch (e) {
         return jsonError(e)
@@ -157,13 +155,28 @@ const markAllAsRead = async (userId) => {
     try {
         // console.log(await User.find({'_id': userId, 'notification._id': ''}))
         await User.updateMany(
-            {'_id': userId, 'notification.isRead': false},
-            {$set: {'notification.$[].isRead': true}})
+            { '_id': userId, 'notification.isRead': false },
+            { $set: { 'notification.$[].isRead': true } })
         return jsonSuccess('', 'Marked as read')
     } catch (e) {
         return jsonError(e)
     }
 }
+
+const search = async function (key) {
+    try {
+        let users = await User.find({
+            $or: [
+                { "firstName": { "$regex": key, "$options": "i" } },
+                { "lastName": { "$regex": key, "$options": "i" } }
+            ]
+        }).populate('user').limit(10);
+        return jsonSuccess(users);
+    } catch (e) {
+        return jsonError(e);
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -174,5 +187,6 @@ module.exports = {
     getUserById,
     getAllNotifications,
     markAsRead,
-    markAllAsRead
+    markAllAsRead,
+    search
 };

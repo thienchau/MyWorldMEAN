@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     }
 });
 //Create Post with params
-router.post('', multer({storage: storage}).single("media"), async (req, res, next) => {
+router.post('', multer({ storage: storage }).single("media"), async (req, res, next) => {
     console.log('Create Post');
     const result = await controller.create(req);
     returnResult(result, res, next);
@@ -49,9 +49,8 @@ router.post('', multer({storage: storage}).single("media"), async (req, res, nex
 // });
 
 router.get('/newfeed', async (req, res, next) => {
-    let posts = await controller.getAll(req,res);
+    let posts = await controller.getAll(req, res);
     posts.message = 'successfully!';
-    console.log(posts);
     res.status(200).json(posts);
 });
 
@@ -67,8 +66,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-    Post.deleteOne({_id: req.params.id}).then(result => {
-        console.log(result);
+    Post.deleteOne({ _id: req.params.id }).then(result => {
         res.status(200).json({
             message: "Post deleted!"
         });
@@ -81,12 +79,23 @@ router.post('/like', async (req, res, next) => {
 });
 
 router.post('/unlike', async (req, res, next) => {
-   let result = await controller.likePost(req.body.pid, req.body.uid, false);
+    let result = await controller.likePost(req.body.pid, req.body.uid, false);
     returnResult(result, res, next)
 });
 
 router.post('/comment', async (req, res, next) => {
     let result = await controller.comment(req.body.pid, req.body.content, req.body.uid);
+    returnResult(result, res, next);
+});
+
+router.get('/timeline/:id', async (req, res, next) => {
+    const {page} = req.query.page;
+    let result = await controller.getPostByUserId(req.params.id, page);
+    returnResult(result, res, next);
+});
+
+router.get('/search/:key', async (req, res, next) => {
+    let result = await controller.search(req.params.key);
     returnResult(result, res, next);
 });
 
@@ -97,4 +106,5 @@ function returnResult(result, res, next) {
         next(result)
     }
 }
+
 module.exports = router;

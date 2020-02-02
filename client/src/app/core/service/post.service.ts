@@ -17,12 +17,12 @@ export class PostService {
         return this.apiService.get('/post/newfeed?page=' + page);
     }
 
-    getTimeline(userId: string, page: number): Observable<Post[]> {
+    getTimeline(userId: string, page: number): Observable<any> {
         return this.apiService.get('/post/timeline/' + userId + '?page=' + page);
     }
 
-    searchPosts(key: string): Observable<Post[]> {
-        return this.apiService.get('/post/searchPosts?key=' + key);
+    searchPosts(key: string): Observable<any> {
+        return this.apiService.get('/post/search/' + key);
     }
 
     comment(comment): Observable<any> {

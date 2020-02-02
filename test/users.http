@@ -2,19 +2,19 @@
 @userURL = {{baseURL}}/user
 
 GET {{userURL}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoaWVuMTJAZ21haWwuY29tIiwidXNlcklkIjoiNWUzNGE0Y2MwZGVkNTY0ZjIxMjQ4OGIxIiwiaWF0IjoxNTgwNTEyNDg2LCJleHAiOjE1ODA1MTYwODZ9.ZeEyHQj_GrNNtEqkfTsORZeAvfXE0EXGsxcKfd40R_Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTM1YmZmOWRkZGIxZjRlNDRhMzdkN2QiLCJpYXQiOjE1ODA2MTU0ODIsImV4cCI6MTU4MDYxOTA4Mn0.krC3bCE7bC13F02CBZXudjxOLOg8JJF0SoClotOUxFA
 ###
 
 
 GET {{userURL}}/info
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoaWVuMTJAZ21haWwuY29tIiwidXNlcklkIjoiNWUzNGE0Y2MwZGVkNTY0ZjIxMjQ4OGIxIiwiaWF0IjoxNTgwNTEyNDg2LCJleHAiOjE1ODA1MTYwODZ9.ZeEyHQj_GrNNtEqkfTsORZeAvfXE0EXGsxcKfd40R_Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTM1YmZmOWRkZGIxZjRlNDRhMzdkN2QiLCJpYXQiOjE1ODA2MTU0ODIsImV4cCI6MTU4MDYxOTA4Mn0.krC3bCE7bC13F02CBZXudjxOLOg8JJF0SoClotOUxFA
 ###
 
 POST {{userURL}}/login
 Content-Type: application/json
 
 {
-    "username": "dat@gmail.com",
+    "username": "user1@gmail.com",
     "password": "123"
 }
 
@@ -24,16 +24,20 @@ POST {{userURL}}/register
 Content-Type: application/json
 
 {
-	"firstName": "thi",
-	"lastName": "thi",
-	"email": "thie@gmail.com",
-	"password": "123",
 	"dob": "1996-07-08",
-	"gender": "male",
-	"phone": "1234",
-	"city": "Fairfield",
-	"street": "5th",
-	"zipCode": "52556"
+	"gender": "female",
+    "phone": "123456789",
+    "city": "Fairfield",
+    "street": "Burlington",
+    "lang": "en",
+    "firstName": "Rochelle",
+    "lastName": "Maxwell",
+    "email": "user11@gmail.com",
+    "password": "123",
+    "zipCode": "52556"
 }
 ###
+
+GET {{userURL}}/search/a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTM1YmZmOWRkZGIxZjRlNDRhMzdkN2QiLCJpYXQiOjE1ODA2MTkzMTEsImV4cCI6MTU4MDYyMjkxMX0.bEcamveVInxVN5cflB5NS8wphdyaciY6n1LLVlwOH3E
 
