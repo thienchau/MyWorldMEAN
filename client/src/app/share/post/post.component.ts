@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
     selector: 'app-post',
     templateUrl: './post.component.html',
 })
-export class PostComponent implements OnInit, OnChanges {
+export class PostComponent implements OnInit{
 
     newComment: string;
     @Input()
@@ -45,7 +45,7 @@ export class PostComponent implements OnInit, OnChanges {
         };
         this.postService.comment(payload).subscribe(data => {
             this.newComment = '';
-            this.post.comments.push(data);
+            this.post.comments.push(data.data);
         });
     }
 
@@ -61,9 +61,5 @@ export class PostComponent implements OnInit, OnChanges {
         });
     }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    console.log('POST CHANGE' + JSON.stringify(this.post));
-  }
 
 }

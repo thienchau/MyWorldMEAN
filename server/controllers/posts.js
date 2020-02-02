@@ -129,7 +129,8 @@ const comment = async function (req) {
         }
         post.comments.push(c);
         await post.save();
-        return jsonSuccess(post);
+        c.createDate = new Date().toISOString();
+        return jsonSuccess(c);
     } catch (e) {
         return jsonError(e);
     }
