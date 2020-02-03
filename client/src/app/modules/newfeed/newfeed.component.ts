@@ -18,7 +18,7 @@ export class NewFeedComponent implements OnInit {
   notify: boolean;
   newComment: string;
   currentUser: User;
-  page = 0;
+  page = 1;
 
   constructor(
     private router: Router,
