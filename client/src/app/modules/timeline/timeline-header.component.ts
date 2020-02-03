@@ -45,6 +45,7 @@ export class TimelineHeaderComponent implements OnInit {
         formData.append('avatar', file, file.name);
         this.userService.uploadAvatar(formData).subscribe(result => {
             $('#avatar').attr('src', result.data);
+            $('#avatar_header').attr('src', result.data);
         });
 
     }
