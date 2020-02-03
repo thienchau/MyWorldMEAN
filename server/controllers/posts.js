@@ -32,6 +32,7 @@ const create = async function (req) {
             user: req.user._id
         }).save();
         result.user = req.user;
+        setupLikePost(result, req.user._id);
         if(req.body.notify == 'true'){
             await createNotification(result);
         }
