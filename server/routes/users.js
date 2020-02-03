@@ -5,6 +5,26 @@ const controller = require('../controllers/user');
 const router = express.Router();
 const User = require('../models/user');
 
+const multer = require('multer');
+const mime = require('../utils/Mime');
+
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    console.log(file.mimetype);
+    const isValid = mime.MIME_TYPE_MAP[file.mimetype];
+    let error = new Error("Invalid mime type");
+    if (isValid) {
+      error = null;
+    }
+    cb(error, "public/avatars");
+  },
+  filename: (req, file, cb) => {
+    const ext = mime.MIME_TYPE_MAP[file.mimetype];
+    cb(null, Date.now() + '.' + ext);
+  }
+});
+
 router.post("/register", async (req, res, next) => {
   const result = await controller.register(req)
   returnResult(result, res, next);
@@ -93,6 +113,17 @@ router.post('/lang/:lang', async (req, res, next) => {
 router.get('/search/:key', async (req, res, next) => {
   let result = await controller.search(req.user._id, req.params.key);
   returnResult(result, res, next);
+});
+
+router.post('/uploadAvatar', multer({ storage: storage }).single("avatar"), async (req, res, next) => {
+  let url = req.protocol + '://' + req.get('host');
+  if (req.file) {
+    url = `${url}/avatars/${req.file.filename}`;
+    await User.findByIdAndUpdate(req.user._id, { avatar: url });
+    res.json(jsonSuccess(url));
+  } else {
+    next('Cannot update avatar');
+  }
 });
 
 function returnResult(result, res, next) {
