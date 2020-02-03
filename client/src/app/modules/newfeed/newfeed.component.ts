@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { PostService } from '../../core/service/post.service';
-import { Post } from '../../core/model/post.model';
-import { Router } from '@angular/router';
-import { User } from '../../core/model/user.model';
-import { AuthService } from '../../core/service/auth.service';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {PostService} from '../../core/service/post.service';
+import {Post} from '../../core/model/post.model';
+import {Router} from '@angular/router';
+import {User} from '../../core/model/user.model';
+import {AuthService} from '../../core/service/auth.service';
+import {TranslateService} from '@ngx-translate/core';
 
 declare var $: any;
 
@@ -46,6 +46,9 @@ export class NewFeedComponent implements OnInit {
       for (const file of event.target.files) {
         formData.append('media', file);
       }
+    }
+    if (!this.newPostText) {
+      this.newPostText = '';
     }
     formData.append('content', this.newPostText);
     formData.append('notify', String(this.notify));
