@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Follow} from '../../core/model/follow.model';
-import {FollowService} from '../../core/service/follow.service';
+import { Follow } from '../../core/model/follow.model';
+import { FollowService } from '../../core/service/follow.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-following',
@@ -11,7 +12,7 @@ export class FollowingComponent implements OnInit {
 
   followers: Array<Follow> = [];
 
-  constructor(private followService: FollowService) { }
+  constructor(private followService: FollowService, private translate: TranslateService) { }
 
   ngOnInit() {
     this.loadFollowers();
@@ -19,10 +20,10 @@ export class FollowingComponent implements OnInit {
 
   loadFollowers() {
     this.followService.getFollowers().subscribe(
-        result => {
-            this.followers = result.data;
-        }, error => {
-        });
-}
+      result => {
+        this.followers = result.data;
+      }, error => {
+      });
+  }
 
 }
