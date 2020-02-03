@@ -68,8 +68,8 @@ const findById = async function (req) {
 
 const getNewFeed = async function (req) {
     let pageSize = +req.query.pagesize;
-    if (pageSize) {
-        pageSize = 100;
+    if (!pageSize) {
+        pageSize = 20;
     }
     const currentPage = +req.query.page;
     let followings = await FollowController.getFollowingId(req.user._id);
