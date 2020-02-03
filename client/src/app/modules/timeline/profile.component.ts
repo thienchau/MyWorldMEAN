@@ -60,20 +60,18 @@ export class ProfileComponent implements OnInit {
                 .subscribe(
                     data => {
                         this.translate.get('timeline.profile.update-success').subscribe((res: string) => {
-                            alert(res);
+                          alert(res)
                         });
                     },
                     err => {
                         this.translate.get('timeline.profile.system-error').subscribe((res: string) => {
-                            alert(res);
                         });
                     }
                 );
         } else {
             this.validateAllFormFields(this.editForm);
-            this.translate.get('timeline.profile.please-check').subscribe((res: string) => {
-                alert(res);
-            });
+            // this.translate.get('timeline.profile.please-check').subscribe((res: string) => {
+            // });
         }
     }
 }
