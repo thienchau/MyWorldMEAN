@@ -5,11 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AdsComponent } from '../modules/ads/ads.component';
 import { TranslateModule } from '@ngx-translate/core';
-import {FooterComponent} from './footer/footer.component';
-import {HeaderComponent} from './header/header.component';
-import {LayoutComponent} from './layout/layout.component';
-import {PostComponent} from './post/post.component';
-import {ShortcutComponent} from './shortcut/shortcut.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { LayoutComponent } from './layout/layout.component';
+import { PostComponent } from './post/post.component';
+import { ShortcutComponent } from './shortcut/shortcut.component';
+import { FollowingComponent } from './following/following.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {ShortcutComponent} from './shortcut/shortcut.component';
     AdsComponent,
     AdsComponent,
     PostComponent,
-    ShortcutComponent
+    ShortcutComponent,
+    FollowingComponent
   ],
   exports: [
     CommonModule,
@@ -42,7 +44,8 @@ import {ShortcutComponent} from './shortcut/shortcut.component';
     LayoutComponent,
     AdsComponent,
     PostComponent,
-    ShortcutComponent
+    ShortcutComponent,
+    FollowingComponent
   ]
 })
 export class SharedModule {
