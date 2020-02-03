@@ -37,6 +37,7 @@ const postSchema = mongoose.Schema({
     },
     liked: Boolean,
     likeNum: Number,
+    commentNum: Number
 });
 
 module.exports = mongoose.model('posts', postSchema);

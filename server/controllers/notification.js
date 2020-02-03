@@ -11,7 +11,8 @@ const getNewNotifications = async (userId) => {
             populate: {
                 path: 'senderId',
                 select: 'avatar firstName lastName'
-            }
+            },
+            options: { sort: { 'createDate': -1 } }
         })
         .select('notification -_id')
         return jsonSuccess(notifications)

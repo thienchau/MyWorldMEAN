@@ -58,9 +58,9 @@
             <ul class="we-comet">
                 <li *ngFor="let comment of post.comments">
                     <div class="comet-avatar">
-                        <img *ngIf="comment.commentUserAvatar== null" src="assets/images/resources/comet-1.jpg"
+                        <img *ngIf="comment.user.avatar== null" src="assets/images/resources/comet-1.jpg"
                              class="profile_37">
-                        <img *ngIf="comment.commentUserAvatar" [src]="comment.commentUserAvatar" class="profile_37">
+                        <img *ngIf="comment.user.avatar" [src]="comment.user.avatar" class="profile_37">
                     </div>
                     <div class="we-comment">
                         <div class="coment-head">
@@ -77,7 +77,7 @@
                         <img *ngIf="currentUser.avatar" [src]="currentUser.avatar" alt="" class="profile_37">
                     </div>
                     <div class="post-comt-box">
-                        <form method="post" (ngSubmit)="comment(post.id); post.commentNum = post.commentNum + 1;">
+                        <form method="post" (ngSubmit)="comment(post._id); post.commentNum = post.commentNum + 1;">
                             <input placeholder="{{'post.post-comment' | translate}}" [(ngModel)]="newComment"
                                    [ngModelOptions]="{standalone: true}"/>
                         </form>

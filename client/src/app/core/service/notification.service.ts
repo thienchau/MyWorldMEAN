@@ -17,10 +17,10 @@ export class NotificationService {
     }
 
     markAllRead(): Observable<any> {
-        return this.apiService.post('/notifications/markAllAsRead');
+        return this.apiService.get('/notifications/markAllAsRead');
     }
 
     mark1Read(id): Observable<any> {
-        return this.apiService.post('/notifications/markAsRead/' + id);
+        return this.apiService.get('/notifications/markAsRead/' + id);
     }
 }
