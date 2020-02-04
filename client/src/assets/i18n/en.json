@@ -1,0 +1,135 @@
+{
+    "login": {
+        "username": "Username",
+        "password": "Password",
+        "login": "Login",
+        "register": "Register",
+        "app-name": "MyWorld Social Network",
+        "app-caption": "MyWorld helps you connect and share with the people in your life.",
+        "user-namerequired": "Username is required",
+        "pass-required": "Password is required",
+        "invalid-login": "Invalid user name or password",
+        "fname": "First Name",
+        "fname-required": "First Name is requried",
+        "lname": "Last Name",
+        "lname-required": "Last Name is requried",
+        "email": "Email",
+        "email-required": "Email is requried",
+        "password-required": "Password is requried",
+        "male": "Male",
+        "female": "Female",
+        "dob": "Date of birth",
+        "dob-required": "Date of birth is requried",
+        "zip": "ZipCode",
+        "zip-required": "Zip code is required",
+        "accept": "Accept Terms & Conditions ?",
+        "have-account": "Already have an account"
+    },
+    "pheader": {
+        "mark-as-read": "Mark all as read",
+        "new-notify": "New Notifications",
+        "logout": "Logout",
+        "search": "Search People and Posts"
+    },
+    "newfeed": {
+        "noti-follower": "Notify Followers",
+        "post": "post",
+        "write-something": "write something"
+    },
+    "postdetail": {
+
+    },
+    "search": {
+        "people": "People",
+        "follow": "Follow",
+        "un-follow": "Unfollow"
+    },
+    "timeline": {
+        "follow": {
+            "following": "Following",
+            "followers": "Followers",
+            "un-follow": "Unfollow",
+            "follow": "Follow"
+        },
+        "profile": {
+            "dob": "Date of birth",
+            "info": "Edit Basic Information",
+            "fname": "First Name",
+            "lname": "Last Name",
+            "phone": "Phone No.",
+            "male": "Male",
+            "female": "Female",
+            "day": "Day",
+            "month": "Month",
+            "jan": "Jan",
+            "feb": "Feb",
+            "mar": "Mar",
+            "apr": "Apr",
+            "may": "May",
+            "jun": "Jun",
+            "jul": "Jul",
+            "aug": "Aug",
+            "sep": "Sep",
+            "oct": "Oct",
+            "nov": "Nov",
+            "dec": "Dec",
+            "year": "Year",
+            "street": "Street",
+            "zip": "ZipCode",
+            "city": "City",
+            "update": "Update",
+            "update-success": "Update Success",
+            "system-error": "System Error",
+            "please-check": "Please check your information"
+        },
+        "header": {
+            "followers": "followers",
+            "follow": "Follow",
+            "un-follow": "Unfollow",
+            "edit-var": "Edit Avatar",
+            "timeline": "Timeline",
+            "profile": "Profile",
+            "friend": "Friends"
+        },
+        "component": {
+
+        },
+        "layout": {
+
+        }
+    },
+    "adv": {
+        "seemore": "See more!"
+    },
+    "footer": {
+        "follow": "Follow",
+        "navigate": "Navigate",
+        "about": "about us",
+        "contact": "contact us",
+        "term": "terms & Conditions",
+        "useful": "useful links",
+        "leasing": "leasing",
+        "submit-route": "submit route",
+        "how": "how does it work?",
+        "listings": "agent listings",
+        "view-all": "view All",
+        "download": "download apps",
+        "copy": "© My World 2019. All rights reserved."
+    },
+    "shortcuts": {
+        "shortcuts": "Shortcuts",
+        "newfeed": "News feed",
+        "my-page": "My page",
+        "my-profile": "My Profile",
+        "friend": "Friends",
+        "logout": "Logout"
+    },
+    "post": {
+        "post-comment": "Post your comment",
+        "published": "Published"
+    },
+    "following": {
+      "title": "Who's following you"
+    }
+
+}

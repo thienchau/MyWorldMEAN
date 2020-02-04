@@ -1,0 +1,72 @@
+<section>
+    <div class="gap gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row merged20" id="page-contents">
+                        <div class="col-lg-3">
+                            <aside class="sidebar static">
+                                <app-shortcut></app-shortcut>
+
+                                <app-following></app-following>
+                            </aside>
+                        </div><!-- sidebar -->
+                        <div class="col-lg-6">
+                            <div class="central-meta new-pst">
+                                <div class="new-postbox">
+                                    <figure>
+                                        <img [src]="currentUser.avatar != null ? currentUser.avatar : 'assets/images/resources/no_avatar.png'"
+                                             alt="" class="profile_55">
+                                    </figure>
+                                    <div class="newpst-input">
+                                        <form method="post">
+                                            <textarea [(ngModel)]="newPostText" [ngModelOptions]="{standalone: true}"
+                                                      rows="2" placeholder="{{'newfeed.write-something' | translate}}"></textarea>
+                                            <div class="attachments">
+                                                <ul>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" [(ngModel)]="notify"
+                                                                   [ngModelOptions]="{standalone: true}">
+                                                                   {{'newfeed.noti-follower' | translate}}
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <i class="fa fa-image"></i>
+                                                        <label class="fileContainer">
+                                                            <input type="file" (change)="createPost($event)" multiple
+                                                                   accept="image/*">
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <i class="fa fa-video-camera"></i>
+                                                        <label class="fileContainer">
+                                                            <input type="file" (change)="createPost($event)" multiple
+                                                                   accept="video/mp4,video/x-m4v,video/*">
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <button (click)="createPost($event)">{{'newfeed.post' | translate}}</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div><!-- add post new box -->
+                            <div class="loadMore">
+                                <app-post *ngFor="let post of posts" [post]="post"></app-post>
+                            </div>
+                            <button class="btn-view btn-load-more" (click)="loadMore()">Load More</button>
+                        </div><!-- centerl meta -->
+                        <div class="col-lg-3">
+                            <aside class="sidebar static">
+                                <app-ads></app-ads>
+                            </aside>
+                        </div><!-- sidebar -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

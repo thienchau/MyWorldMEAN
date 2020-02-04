@@ -1,0 +1,23 @@
+<div class="widget stick-widget" style="margin-top: 15px">
+  <h4 class="widget-title">{{ "following.title" | translate }}</h4>
+  <ul
+    class="followers ps-container ps-theme-default ps-active-y"
+    data-ps-id="833f965a-db11-462c-150c-0a0542c16414"
+  >
+    <li *ngFor="let follow of followers">
+      <figure>
+        <a [routerLink]="['/timeline/', follow._id, 'timeline']">
+          <img src="{{ follow.avatar }}"
+        /></a>
+      </figure>
+      <div class="friend-meta">
+        <h4>
+          <a title="" [routerLink]="['/timeline/', follow._id, 'timeline']">{{
+            follow.firstName + " " + follow.lastName
+          }}</a>
+        </h4>
+        <i>{{ follow.email }}</i>
+      </div>
+    </li>
+  </ul>
+</div>

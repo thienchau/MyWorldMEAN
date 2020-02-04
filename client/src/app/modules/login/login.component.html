@@ -1,0 +1,242 @@
+<div class="theme-layout">
+  <div class="container-fluid pdng0">
+    <div class="row merged">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="land-featurearea">
+          <div class="land-meta">
+            <!-- <div translate="HOME.TITLE"></div> -->
+            <h1>{{ "login.app-name" | translate }}</h1>
+            <p>
+              {{ "login.app-caption" | translate }}
+            </p>
+            <div class="friend-logo">
+              <span><img src="assets/images/wink.png" alt=""/></span>
+            </div>
+            <!--                        <a href="#" title="" class="folow-me">Follow Us on</a>-->
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="login-reg-bg">
+          <div class="log-reg-area sign">
+            <h2 class="log-title">{{ "login.login" | translate }}</h2>
+            <!--                        <p>-->
+            <!--                            Don’t use Winku Yet? <a href="#" title="">Take the tour</a> or <a href="#" title="">Join-->
+            <!--                            now</a>-->
+            <!--                        </p>-->
+            <form
+              method="post"
+              id="login"
+              [formGroup]="authForm"
+              (ngSubmit)="login()"
+            >
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValid('username') }"
+              >
+                <input
+                  formControlName="username"
+                  type="text"
+                  id="username"
+                  required="required"
+                />
+                <label class="control-label" for="username">{{
+                  "login.username" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">
+                  {{ "login.user-namerequired" | translate }}
+                </p>
+              </div>
+
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValid('password') }"
+              >
+                <input
+                  formControlName="password"
+                  type="password"
+                  id="password"
+                  required="required"
+                />
+                <label class="control-label" for="password">{{
+                  "login.password" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.pass-required" | translate }}</p>
+              </div>
+              <!--                            <div class="checkbox">-->
+              <!--                                <label>-->
+              <!--                                    <input type="checkbox" checked="checked"/><i class="check-box"></i>Always Remember-->
+              <!--                                    Me.-->
+              <!--                                </label>-->
+              <!--                            </div>-->
+              <!--                            <a href="#" title="" class="forgot-pwd">Forgot Password?</a>-->
+              <div class="submit-btns">
+                <button
+                  class="mtr-btn signin"
+                  type="submit"
+                  [disabled]="authForm.invalid"
+                >
+                  <span>{{ "login.login" | translate }}</span>
+                </button>
+                <p class="divider_space"></p>
+                <button class="mtr-btn signup" type="button">
+                  <span>{{ "login.register" | translate }}</span>
+                </button>
+              </div>
+              <div [ngClass]="{ 'in-error': loginFail }">
+                <p class="error-msg">{{ "login.invalid-login" | translate }}</p>
+              </div>
+            </form>
+          </div>
+          <div class="log-reg-area reg">
+            <h2 class="log-title">{{ "login.register" | translate }}</h2>
+            <div *ngIf="errorMessage != ''" class="in-error">
+              <p class="error-msg">{{ errorMessage }}</p>
+            </div>
+            <form
+              method="post"
+              (ngSubmit)="register()"
+              [formGroup]="registerForm"
+              id="register"
+            >
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('firstName') }"
+              >
+                <input
+                  type="text"
+                  required="required"
+                  formControlName="firstName"
+                />
+                <label class="control-label">{{
+                  "login.fname" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">
+                  {{ "login.fname-required" | translate }}
+                </p>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('lastName') }"
+              >
+                <input
+                  type="text"
+                  required="required"
+                  formControlName="lastName"
+                />
+                <label class="control-label">{{
+                  "login.lname" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">
+                  {{ "login.lname-required" | translate }}
+                </p>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('email') }"
+              >
+                <input
+                  type="text"
+                  required="required"
+                  formControlName="email"
+                />
+                <label class="control-label">{{
+                  "login.email" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">
+                  {{ "login.email-required" | translate }}
+                </p>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('password') }"
+              >
+                <input
+                  type="password"
+                  required="required"
+                  formControlName="password"
+                />
+                <label class="control-label">{{
+                  "login.password" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">
+                  {{ "login.password-required" | translate }}
+                </p>
+              </div>
+              <div class="form-radio">
+                <div class="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      checked="checked"
+                      value="male"
+                      formControlName="gender"
+                    />
+                    <i class="check-box"></i>{{ "login.male" | translate }}
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="female"
+                      formControlName="gender"
+                    />
+                    <i class="check-box"></i>{{ "login.female" | translate }}
+                  </label>
+                </div>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('dob') }"
+              >
+                <input type="date" required="required" formControlName="dob" />
+                <label class="control-label"
+                  >{{ "login.dob" | translate }} (YYYY-MM-DD)</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.dob-required" | translate }}</p>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{ 'in-error': isFieldInValidRegister('zipCode') }"
+              >
+                <input
+                  type="text"
+                  required="required"
+                  formControlName="zipCode"
+                />
+                <label class="control-label">{{
+                  "login.zip" | translate
+                }}</label
+                ><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.zip-required" | translate }}</p>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" checked="checked" /><i
+                    class="check-box"
+                  ></i
+                  >{{ "login.accept" | translate }}
+                </label>
+              </div>
+              <a href="#" title="" class="already-have">{{
+                "login.have-account" | translate
+              }}</a>
+              <div class="submit-btns">
+                <button class="mtr-btn" type="submit" [disabled]="registerForm.invalid">
+                  <span>{{ "login.register" | translate }}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

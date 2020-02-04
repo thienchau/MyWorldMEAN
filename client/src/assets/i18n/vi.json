@@ -1,0 +1,135 @@
+{
+    "login": {
+        "username": "Tên người dùng",
+        "password": "Mật khẩu",
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "app-name": "Mạng xã hội MyWorld",
+        "app-caption": "MyWorld giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống của bạn.",
+        "user-namerequired": "Tên người dùng là bắt buộc",
+        "pass-required": "Mật khẩu là bắt buộc",
+        "invalid-login": "Sai Tên người dùng hoặc Mật khẩu",
+        "fname": "Tên",
+        "fname-required": "Tên là bắt buộc",
+        "lname": "Họ",
+        "lname-required": "Họ là bắt buộc",
+        "email": "Email",
+        "email-required": "Email là bắt buộc",
+        "password-required": "Mật khẩu là bắt buộc",
+        "male": "Nam",
+        "female": "Nữ",
+        "dob": "Ngày sinh",
+        "dob-required": "Ngày sinh là bắt buộc",
+        "zip": "Mã bưu chính",
+        "zip-required": "Mã bưu chính là bắt buộc",
+        "accept": "Chấp nhận Điều khoản?",
+        "have-account": "Đã có tài khoản"
+    },
+    "pheader": {
+        "mark-as-read": "Đánh dấu tất cả như đã đọc",
+        "new-notify": "Thông báo mới",
+        "logout": "đăng xuất",
+        "search": "Tìm kiếm người và bài viết"
+    },
+    "newfeed": {
+        "noti-follower": "Báo bạn bè",
+        "post": "Đăng",
+        "write-something": "Nhập văn bản"
+    },
+    "postdetail": {
+
+    },
+    "search": {
+        "people": "người dùng",
+        "follow": "Theo dõi",
+        "un-follow": "Hủy theo dõi"
+    },
+    "timeline": {
+        "follow": {
+            "following": "Đang theo dõi",
+            "followers": "Người hâm mộ",
+            "un-follow": "Bõ theo dõi",
+            "follow": "Theo dõi"
+        },
+        "profile": {
+            "dob": "Ngay sinh",
+            "info": "Chỉnh sửa thông tin cơ bản",
+            "fname": "Tên",
+            "lname": "Họ",
+            "phone": "Điện thoại.",
+            "male": "Nam",
+            "female": "Nữ",
+            "day": "Ngày",
+            "month": "Tháng",
+            "jan": "Tháng giêng",
+            "feb": "Tháng hai",
+            "mar": "Tháng ba",
+            "apr": "Tháng tư",
+            "may": "Tháng năm",
+            "jun": "Tháng sáu",
+            "jul": "Tháng bảy",
+            "aug": "Tháng tám",
+            "sep": "Tháng chín",
+            "oct": "Tháng mười",
+            "nov": "Tháng mười một",
+            "dec": "Tháng mười hai",
+            "year": "Năm",
+            "street": "Đường",
+            "zip": "Mã Bưu Chính",
+            "city": "Thành phố",
+            "update": "Cập nhật",
+            "update-success": "Cập nhật thành công",
+            "system-error": "Lỗi hệ thống",
+            "please-check": "Vui lòng kiểm tra thông tin"
+        },
+        "header": {
+            "followers": "Tín đồ",
+            "follow": "Theo",
+            "un-follow": "Hủy theo dõi",
+            "edit-var": "Chỉnh sửa avatar",
+            "timeline": "Mốc thời gian",
+            "profile": "Hồ sơ",
+            "friend": "Bạn bè"
+        },
+        "component": {
+
+        },
+        "layout": {
+
+        }
+    },
+    "adv": {
+        "seemore": "Xem thêm!"
+    },
+    "footer": {
+        "follow": "Theo dõi",
+        "navigate": "Đường dẫn",
+        "about": "về chúng tôi",
+        "contact": "liên hệ chúng tôi",
+        "term": "Điều khoản và điều kiện",
+        "useful": "Liên kết hữu ích",
+        "leasing": "cho thuê",
+        "submit-route": "trình tuyến đường",
+        "how": "làm thế nào nó hoạt động?",
+        "listings": "danh sách đại lý",
+        "view-all": "xem tất cả",
+        "download": "tải ứng dụng",
+        "copy": "© Thế giới của tôi 2019. Bảo lưu mọi quyền."
+    },
+    "shortcuts": {
+        "shortcuts": "Phím tắt",
+        "newfeed": "Tin tức",
+        "my-page": "Trang của tôi",
+        "my-profile": "Thông tin của tôi",
+        "friend": "Bạn bè",
+        "logout": "Đăng xuất"
+    },
+    "post": {
+        "post-comment": "Viết bình luận",
+        "published": "Ngày"
+    },
+    "following": {
+        "title": "Ai theo dõi bạn"
+    }
+
+}

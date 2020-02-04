@@ -1,0 +1,61 @@
+
+<div class="central-meta">
+    <div class="editing-info">
+        <h5 class="f-title"><i class="ti-info-alt"></i>{{'timeline.profile.info' | translate}}</h5>
+
+        <form method="post" [formGroup]="editForm" (ngSubmit)="update()" >
+            <div class="form-group">
+                <div>{{user.email}} </div>
+            </div>
+            <div class="form-group half" [ngClass]="{ 'in-error': isFieldInValidRegister('firstName') }">
+                <input type="text" id="input" formControlName="firstName" required="required">
+                <label class="control-label" >{{'timeline.profile.fname' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.fname-required" | translate }}</p>
+            </div>
+            <div class="form-group half" [ngClass]="{ 'in-error': isFieldInValidRegister('lastName') }">
+                <input type="text"  name="lastName" formControlName="lastName" required="required">
+                <label class="control-label" >{{'timeline.profile.lname' | translate}}</label><i class="mtrl-select"></i>
+              <p class="error-msg">{{ "login.lname-required" | translate }}</p>
+            </div>
+            <div class="form-group">
+                <input type="text"  formControlName="phone">
+                <label class="control-label" >{{'timeline.profile.phone' | translate}}</label><i class="mtrl-select"></i>
+            </div>
+            <div class="form-radio">
+                <div class="radio">
+                    <label>
+                        <input type="radio" [checked]="user.gender == 'male'" formControlName="gender" value="male"><i class="check-box"></i>{{'timeline.profile.male' | translate}}
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" [checked]="user.gender == 'female'" formControlName="gender" value="female"><i class="check-box"></i>{{'timeline.profile.female' | translate}}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'in-error': isFieldInValidRegister('dob') }">
+                <input type="date" formControlName="dob" required="required">
+
+                <label class="control-label">{{'timeline.profile.dob' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.dob-required" | translate }}</p>
+            </div>
+            <div class="form-group">
+                <input type="text" formControlName="street">
+
+                <label class="control-label">{{'timeline.profile.street' | translate}}</label><i class="mtrl-select"></i>
+            </div>
+            <div class="form-group" [ngClass]="{ 'in-error': isFieldInValidRegister('zipCode') }">
+                <input type="text" formControlName="zipCode" required="required">
+                <label class="control-label" >{{'timeline.profile.zip' | translate}}</label><i class="mtrl-select"></i>
+                <p class="error-msg">{{ "login.zip-required" | translate }}</p>
+            </div>
+            <div class="form-group">
+                <input type="text" formControlName="city">
+                <label class="control-label" >{{'timeline.profile.city' | translate}}</label><i class="mtrl-select"></i>
+            </div>
+            <div class="submit-btns">
+                <button type="submit" class="mtr-btn" [disabled]="editForm.pristine"><span>{{'timeline.profile.update' | translate}}</span></button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="widget" *ngFor="let ad of advertisements">
+  <div class="banner">
+      <div class="bg-image" style="overflow: hidden">
+          <img src="{{ad.imageUrl}}">
+      </div>
+      <div class="banermeta">
+          <p style="min-height: 180px">
+              {{ad.content}}
+          </p>
+          <span>{{ad.additionalContent}}</span>
+          <a data-ripple="" title="" target="_blank" href="{{ad.url}}">{{'adv.seemore' | translate}}</a>
+      </div>
+  </div>
+</div>

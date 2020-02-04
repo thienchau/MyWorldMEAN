@@ -1,0 +1,51 @@
+<section>
+    <div class="feature-photo">
+        <figure><img src="{{user.cover}}" alt=""></figure>
+        <div *ngIf="!isMyProfile()" class="add-btn">
+            <span>{{user.numFollower}} {{'timeline.header.followers' | translate}}</span>
+            <a *ngIf="user.followed" (click)="unFollow(user._id)" title="" data-ripple=""
+               style="color: white; cursor: pointer; background-color: orangered">{{'timeline.header.un-follow' | translate}}</a>
+            <a *ngIf="!user.followed" (click)="follow(user._id)" title="" data-ripple=""
+               style="color: white; cursor: pointer">{{'timeline.header.follow' | translate}}</a>
+        </div>
+        <div class="container-fluid">
+            <div class="row merged">
+                <div class="col-lg-2 col-sm-3">
+                    <div class="user-avatar">
+                        <figure>
+                            <img *ngIf="user.avatar == null" id="avatar" src="assets/images/resources/no_avatar.png"
+                                 alt="" style="width: 170px; height: 170px">
+                            <img *ngIf="user.avatar" id="avatar" [src]="user.avatar" alt=""
+                                 style="width: 170px; height: 170px">
+                            <form class="edit-phto" *ngIf="isMyProfile()">
+                                <i class="fa fa-camera-retro"></i>
+                                <label class="fileContainer">
+                                    <input type="file">
+                                    {{'timeline.header.edit-var' | translate}}
+                                    <input type="file" (change)="onFileChange($event)" accept="image/*">
+                                </label>
+                            </form>
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-sm-9">
+                    <div class="timeline-info">
+                        <ul>
+                            <li class="user-name">
+                                <h5>{{user.firstName + ' ' + user.lastName}}</h5>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/timeline/',user._id, 'timeline']"
+                                   routerLinkActive="active">{{'timeline.header.timeline' | translate}}</a>
+                                <a *ngIf="isMyProfile()" routerLinkActive="active"
+                                   [routerLink]="['/timeline/',user._id,'profile']">{{'timeline.header.profile' | translate}}</a>
+                                <a *ngIf="isMyProfile()" routerLinkActive="active"
+                                   [routerLink]="['/timeline/',user._id, 'follow']">{{'timeline.header.friend' | translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,20 @@
+@baseURL = http://localhost:3000/api/v1
+@postURL = {{baseURL}}/post
+
+GET {{postURL}}
+###
+
+GET {{postURL}}/search/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTM1YmZmOWRkZGIxZjRlNDRhMzdkN2QiLCJpYXQiOjE1ODA2MTkzMTEsImV4cCI6MTU4MDYyMjkxMX0.bEcamveVInxVN5cflB5NS8wphdyaciY6n1LLVlwOH3E
+###
+
+POST {{postURL}}
+Content-Type: application/json
+
+{
+    "name": "thien",
+}
+
+###
+
+DELETE {{postURL}}/2
