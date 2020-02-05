@@ -61,11 +61,12 @@
             (click)="markAllRead()"
             title=""
             class="more-mesg"
+            style="cursor: pointer;"
             >{{ "pheader.mark-as-read" | translate }}</a
           >
           <ul class="drops-menu">
             <li *ngFor="let notification of notifications">
-              <a (click)="clickNotification(notification)">
+              <a (click)="clickNotification(notification)" style="cursor: pointer;">
                 <img
                   src="{{ notification.senderId.avatar }}"
                   alt=""

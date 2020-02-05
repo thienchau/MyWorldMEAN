@@ -28,12 +28,12 @@
                         <li>
 
                             <span *ngIf="post.liked" [ngClass]="{'dislike': post.liked}" data-toggle="tooltip"
-                                  (click)="post.liked = false ; post.likeNum = post.likeNum - 1 ; unlike(post.id)">
+                                  (click)="post.liked = false ; post.likeNum = post.likeNum - 1 ; unlike()">
                                 <i class="ti-heart"></i>
                                 <ins>{{post.likeNum}}</ins>
                             </span>
                             <span *ngIf="!post.liked" [ngClass]="{'like': !post.liked}" data-toggle="tooltip"
-                                  (click)="post.liked = true ;post.likeNum = post.likeNum + 1 ; like(post.id)">
+                                  (click)="post.liked = true ;post.likeNum = post.likeNum + 1 ; like()">
                                 <i class="ti-heart"></i>
                                 <ins>{{post.likeNum}}</ins>
                             </span>
@@ -77,7 +77,7 @@
                         <img *ngIf="currentUser.avatar" [src]="currentUser.avatar" alt="" class="profile_37">
                     </div>
                     <div class="post-comt-box">
-                        <form method="post" (ngSubmit)="comment(post._id); post.commentNum = post.commentNum + 1;">
+                        <form method="post" (ngSubmit)="comment(); post.commentNum = post.commentNum + 1;">
                             <input placeholder="{{'post.post-comment' | translate}}" [(ngModel)]="newComment"
                                    [ngModelOptions]="{standalone: true}"/>
                         </form>

@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from '../../core/model/user.model';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../core/service/user.service';
 import {AuthService} from '../../core/service/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import {map} from 'rxjs/operators';
+import { Router } from '@angular/router';
+import {DataService} from '../../core/service/data.service';
 
 declare var $: any;
 
@@ -16,7 +19,8 @@ export class ProfileComponent implements OnInit {
     user: User;
 
     constructor(private userService: UserService, private authService: AuthService,
-                private fb: FormBuilder, public translate: TranslateService) {
+                private fb: FormBuilder, public translate: TranslateService, private route: Router,
+                private dataService: DataService) {
         this.editForm = this.fb.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
@@ -60,7 +64,18 @@ export class ProfileComponent implements OnInit {
                 .subscribe(
                     data => {
                         this.translate.get('timeline.profile.update-success').subscribe((res: string) => {
-                          alert(res)
+                          this.authService.currentUser.pipe(map(user => {
+                            user.firstName = payload.firstName;
+                            user.lastName = payload.lastName;
+                            user.gender = payload.gender;
+                            user.street = payload.street;
+                            user.zipCode = payload.zipCode;
+                            user.city = payload.city;
+                            user.phone = payload.phone;
+                            user.dob = payload.dob;
+                          })).subscribe();
+                          alert(res);
+                          this.dataService.changeUser(payload);
                         });
                     },
                     err => {

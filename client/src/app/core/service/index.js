@@ -7,3 +7,4 @@ export * from './auth-guard.service';
 export * from './follow.service';
 export * from './notification.service';
 export * from './user.service.ts';
+export * from './data.service.ts';
