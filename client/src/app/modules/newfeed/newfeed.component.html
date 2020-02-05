@@ -7,6 +7,8 @@
                         <div class="col-lg-3">
                             <aside class="sidebar static">
                                 <app-shortcut></app-shortcut>
+
+                                <app-following></app-following>
                             </aside>
                         </div><!-- sidebar -->
                         <div class="col-lg-6">
@@ -40,7 +42,7 @@
                                                         <i class="fa fa-video-camera"></i>
                                                         <label class="fileContainer">
                                                             <input type="file" (change)="createPost($event)" multiple
-                                                                   accept="video/*">
+                                                                   accept="video/mp4,video/x-m4v,video/*">
                                                         </label>
                                                     </li>
                                                     <li>
