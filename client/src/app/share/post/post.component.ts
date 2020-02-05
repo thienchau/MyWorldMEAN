@@ -38,7 +38,7 @@ export class PostComponent implements OnInit{
         return postTime.fromNow();
     }
 
-    comment(postId: string) {
+    comment() {
         const payload = {
             postId: this.post._id,
             comment: this.newComment
@@ -49,13 +49,13 @@ export class PostComponent implements OnInit{
         });
     }
 
-    like(postId: string) {
+    like() {
         this.postService.like(this.post._id).subscribe(data => {
             console.log('like success');
         });
     }
 
-    unlike(postId: string) {
+    unlike() {
         this.postService.unlike(this.post._id).subscribe(data => {
             console.log('Unlike success');
         });
