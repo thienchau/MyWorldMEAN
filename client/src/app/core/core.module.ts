@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from './service/auth-guard.service';
 import { UserService } from './service/user.service';
 import {PostService} from './service/post.service';
+import {DataService} from './service/data.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {PostService} from './service/post.service';
     AuthGuard,
     UserService,
     FollowService,
-    PostService
+    PostService,
+    DataService
   ],
   exports: [],
   declarations: []

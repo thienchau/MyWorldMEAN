@@ -9,6 +9,7 @@ import {ProfileComponent} from './profile.component';
 const routes: Routes = [
     {
         path: ':id',
+        runGuardsAndResolvers: "always",
         component: TimelineLayoutComponent,
         resolve: {
             user: TimelineResolver
