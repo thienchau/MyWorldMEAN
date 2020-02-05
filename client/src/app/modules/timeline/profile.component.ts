@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {DataService} from '../../core/service/data.service';
+import Swal from 'sweetalert2'
 
 declare var $: any;
 
@@ -74,7 +75,11 @@ export class ProfileComponent implements OnInit {
                             user.phone = payload.phone;
                             user.dob = payload.dob;
                           })).subscribe();
-                          alert(res);
+                          Swal.fire(
+                            '',
+                            res,
+                            'success'
+                          );
                           this.dataService.changeUser(payload);
                         });
                     },
